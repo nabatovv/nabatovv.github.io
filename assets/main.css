@@ -3221,3 +3221,110 @@ blockquote {
     border-radius: 52% 48% 35% 65% / 44% 56% 44% 56%;
     transform: scale(1.02);
 }
+
+.logo {
+    width:96px;
+    height: 96px;
+}
+
+
+
+/* ===== Scroll-driven image swap ===== */
+
+/* Shared ancestor of the images and the text blocks,
+   so the images can follow the text blocks' timelines */
+#service {
+    timeline-scope: --t1, --t2, --t3;
+}
+
+/* Each text block defines a timeline from its position in the viewport.
+   0% = block entering, 50% = block centered, 100% = block leaving */
+.sticky-text._1 { view-timeline: --t1 block; }
+.sticky-text._2 { view-timeline: --t2 block; }
+.sticky-text._3 { view-timeline: --t3 block; }
+
+/* Stack all three images; opacity is controlled by the animation.
+   !important beats the inline display:none / display:flex */
+.sticky-image-1,
+.sticky-image-2,
+.sticky-image-3 {
+    display: flex !important;
+    opacity: 0;
+    animation-duration: 1ms;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+}
+
+/* Each image follows its own text block */
+.sticky-image-1 { animation-name: show-first; animation-timeline: --t1; }
+.sticky-image-2 { animation-name: show-mid;   animation-timeline: --t2; }
+.sticky-image-3 { animation-name: show-last; animation-timeline: --t2; }
+
+/* First image: visible from the start, crossfades out as block 2 reaches center */
+@keyframes show-first {
+    0%, 85%   { opacity: 1; }
+    100%      { opacity: 0; }
+}
+
+/* Middle image: fades in as its block reaches center (35% to 50%),
+   holds, then fades out as the next block reaches center (85% to 100%) */
+@keyframes show-mid {
+    0%, 35%   { opacity: 0; }
+    50%, 85%  { opacity: 1; }
+    100%      { opacity: 0; }
+}
+
+/* Last image: follows block 2's timeline.
+   Fades in over 85-100% (same moment image 2 fades out, block 3 reaching center),
+   then stays visible */
+@keyframes show-last {
+    0%, 85%   { opacity: 0; }
+    100%      { opacity: 1; }
+}
+
+/* Browsers without scroll-driven animations: show only the first image */
+@supports not (animation-timeline: view()) {
+    .sticky-image-1 { opacity: 1; animation: none; }
+}
+
+/* Pin the last text block and add extra scroll distance after it */
+.sticky-text._3 {
+    position: sticky;
+    top: 0;
+}
+
+.flow-wrap::after {
+    content: "";
+    display: block;
+    height: 60vh;   /* how long the last block + image stay: increase for longer */
+}
+
+/* Desktop layout only: on mobile the images are hidden and the blocks just stack */
+@media screen and (max-width: 767px) {
+    .sticky-text._3 { position: static; }
+    .flow-wrap::after { display: none; }
+}
+
+/* ===== Infinite horizontal marquee ===== */
+
+.scroll-wrapper {
+    flex: none;
+    width: max-content;          /* wrapper is as wide as all 6 items */
+    padding-right: 64px;         /* same as the gap, so the two halves are exactly equal */
+    animation: marquee 30s linear infinite;
+}
+
+@keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }   /* half = one full set of 3 phrases */
+}
+
+/* optional: pause on hover */
+.scroll:hover .scroll-wrapper {
+    animation-play-state: paused;
+}
+
+/* optional: respect "reduce motion" settings */
+@media (prefers-reduced-motion: reduce) {
+    .scroll-wrapper { animation: none; }
+}
