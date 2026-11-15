@@ -1817,7 +1817,8 @@ textarea.w-input, textarea.w-select {
     float: left;
     color: #333;
     text-decoration: none;
-    position: relative
+    position: relative;
+    max-width: 10%
 }
 
 .w-nav-link {
@@ -1838,7 +1839,8 @@ textarea.w-input, textarea.w-select {
 
 .w-nav-menu {
     float: right;
-    position: relative
+    position: relative;
+    margin-top: 2rem;
 }
 
 [data-nav-menu-open] {
@@ -2217,7 +2219,8 @@ blockquote {
     justify-content: space-between;
     align-items: center;
     padding: 16px 64px;
-    display: flex
+    display: flex;
+    align-items: flex-start;
 }
 
 .nav-link {
