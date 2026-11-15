@@ -1,6 +1,22 @@
 <!doctype html>
 <html lang="ru">
 <head>
+    <!-- Event snippet for Contact conversion page
+In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
+    <script>
+        function gtag_report_conversion(url) {
+            var callback = function () {
+                if (typeof(url) != 'undefined') {
+                    window.location = url;
+                }
+            };
+            gtag('event', 'conversion', {
+                'send_to': 'AW-18528574939/ybGGCMqg5rgdENu7joNF',
+                'event_callback': callback
+            });
+            return false;
+        }
+    </script>
     <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-WKFSBT39"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -178,6 +194,7 @@
                                                   style="background:rgb(from var(--color--primary) r g b / 90%)">Природа</a>
                             </div>
                             <a data-wf--button--variant="white-small"
+                               onclick="gtag_report_conversion()"
                                href="https://www.instagram.com/dostyk_resort_topar" target="_blank"
                                class="button w-variant-3d9d3eee-8ac1-c6a8-fc62-ea95ebc37d24 w-button">Связаться с
                                 нами</a></nav>
