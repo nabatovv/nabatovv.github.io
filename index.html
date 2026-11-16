@@ -6,7 +6,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     <script>
         function gtag_report_conversion(url) {
             var callback = function () {
-                if (typeof(url) != 'undefined') {
+                if (typeof (url) != 'undefined') {
                     window.location = url;
                 }
             };
@@ -20,9 +20,16 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-WKFSBT39"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
         gtag('js', new Date());
     </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Manrope:wght@200..800&family=Marck+Script&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <link rel="icon" href="assets/logo-no-text.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
@@ -34,7 +41,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
           rel="stylesheet">
-    <link crossorigin="anonymous" href="https://cdn.prod.website-files.com" rel="preconnect">    <meta content="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/690c1e2305cc603890168cc6_8f1b0968fc484bd572ed82368dd1d92d_og-image.jpg"
+    <link crossorigin="anonymous" href="https://cdn.prod.website-files.com" rel="preconnect">
+    <meta content="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/690c1e2305cc603890168cc6_8f1b0968fc484bd572ed82368dd1d92d_og-image.jpg"
           name="twitter:image">
     <title>Достык — зона отдыха в Топаре</title>
     <meta content="Зона отдыха «Достык» в Топаре — место для отдыха у воды, пикников, встреч с семьёй и друзьями на природе."
@@ -206,10 +214,11 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             </div>
             <div class="subhero">
                 <div class="section-header"><h1 class="white-text"><span
-                        style="background:rgb(from var(--color--primary) r g b / 90%)">Отдых на природе в Топаре</span>
+                        style="font-family: 'Manrope'; background:rgb(from var(--color--primary) r g b / 90%)">Отдых на природе в Топаре</span>
                 </h1>
                     <p class="white-text" style="background:rgb(from var(--color--primary) r g b / 90%)">Добро
-                        пожаловать на зону отдыха «Достык» — место, где можно отдохнуть у воды, провести время с близкими
+                        пожаловать на зону отдыха «Достык» — место, где можно отдохнуть у воды, провести время с
+                        близкими
                         и насладиться природой.</p></div>
                 <a data-wf--button--variant="white-small" href="https://www.instagram.com/dostyk_resort_topar"
                    target="_blank" class="button w-variant-3d9d3eee-8ac1-c6a8-fc62-ea95ebc37d24 w-button">Узнать
@@ -242,11 +251,20 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                     <div class="script">Будем рады видеть вас в «Достыке»!</div>
                 </div>
             </div>
-            <div data-w-id="9d2c2e42-9374-c7ae-fb43-51668c038bca" class="image-reveal image-bridge-left"><img
-                    src="assets/image-left-resized_saturated.avif" loading="eager" alt="Открытые беседки и гамаки."/>
+            <div class="image-reveal image-bridge-left ">
+                <div data-w-id="9d2c2e42-9374-c7ae-fb43-51668c038bca" class="pebble-frame">
+                    <img class="resort-pebble-img"
+                         src="assets/image-left-resized_saturated.avif" loading="eager"
+                         alt="Открытые беседки и гамаки."/>
+                </div>
             </div>
-            <div class="image-reveal image-bridge-right"><img src="assets/twin-img-small_saturated.webp" loading="eager"
-                                                              alt="Спортивный зал на открытом воздухе и деревянная баня"/>
+            <div class="image-reveal image-bridge-right">
+                <div class="pebble-frame">
+                    <img class="resort-pebble-img"
+                         src="assets/twin-img-small_saturated.webp"
+                         loading="eager"
+                         alt="Спортивный зал на открытом воздухе и деревянная баня"/>
+                </div>
             </div>
         </section>
         <section id="about" class="section">
@@ -332,38 +350,51 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                 </div>
             </div>
         </div>
-<!--        <section class="split">-->
-<!--            <div class="media">-->
-<!--                <img class="i1" src="assets/bottom-main_saturated.avif" alt="">-->
-<!--                <img class="i2" src="assets/main.avif" alt="">-->
-<!--                <img class="i3" src="assets/top-cropped_saturated.avif" alt="">-->
-<!--            </div>-->
+        <!--        <section class="split">-->
+        <!--            <div class="media">-->
+        <!--                <img class="i1" src="assets/bottom-main_saturated.avif" alt="">-->
+        <!--                <img class="i2" src="assets/main.avif" alt="">-->
+        <!--                <img class="i3" src="assets/top-cropped_saturated.avif" alt="">-->
+        <!--            </div>-->
 
-<!--            <div class="texts">-->
-<!--                <article class="t t1"><p>First block of text…</p></article>-->
-<!--                <article class="t t2"><p>Second block of text…</p></article>-->
-<!--                <article class="t t3"><p>Third block of text…</p></article>-->
-<!--            </div>-->
-<!--        </section>-->
+        <!--            <div class="texts">-->
+        <!--                <article class="t t1"><p>First block of text…</p></article>-->
+        <!--                <article class="t t2"><p>Second block of text…</p></article>-->
+        <!--                <article class="t t3"><p>Third block of text…</p></article>-->
+        <!--            </div>-->
+        <!--        </section>-->
         <section id="service" class="section">
             <div class="sticky-wrap">
                 <div style="display:flex" class="sticky-image-1">
-                    <div class="feature-image"><img src="assets/top-cropped_saturated.avif" loading="eager"
-                                                    alt="Уютные беседки на берегу озера." class="image-effect"/></div>
+                    <div class="feature-image">
+                        <div class="pebble-frame">
+                            <img class="resort-pebble-img"
+                                 src="assets/house-front.avif" loading="eager"
+                                 alt="Аттракционы для детей" class="image-effect"/>
+                        </div>
+                    </div>
                 </div>
                 <div class="sticky-image-2">
-                    <div class="feature-image"><img
-                            src="assets/main.avif"
-                            loading="eager"
-                            alt="Outdoor restaurant seating area with wooden tables set with napkins, cutlery, and salt and pepper shakers, teal cushions on chairs, and a background of greenery and overcast sky."
-                            class="image-effect"/></div>
+                    <div class="feature-image">
+                        <div class="pebble-frame">
+                            <img class="resort-pebble-img"
+                                 src="assets/main.avif"
+                                 loading="eager"
+                                 alt="Уютные места на пляже."
+                                 class="image-effect"/>
+                        </div>
+                    </div>
                 </div>
                 <div class="sticky-image-3">
-                    <div class="feature-image"><img
-                            src="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/690c3f9de8deb92932abcb05_feature%203.webp"
-                            loading="eager"
-                            alt="View through a dark doorway of a room with a bed covered in brown and white bedding and a large window showing green trees outside."
-                            class="image-effect"/></div>
+                    <div class="feature-image">
+                        <div class="pebble-frame">
+                            <img class="resort-pebble-img"
+                                 src="assets/top-view-2.avif"
+                                 loading="eager"
+                                 alt="Outdoor restaurant seating area with wooden tables set with napkins, cutlery, and salt and pepper shakers, teal cushions on chairs, and a background of greenery and overcast sky."
+                                 class="image-effect"/>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="flow-wrap">
@@ -439,7 +470,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                         class="feature-mobile"/>
                     <div class="section-header">
                         <div class="chip">Отдых и восстановление</div>
-                        <h2>Подарите себе день отдыха</h2></div>
+                        <h2>Забудьте о заботах</h2></div>
                     <p>Отложите дела, насладитесь природой и проведите время с теми, кто вам дорог.</p>
                     <ul role="list" class="w-list-unstyled">
                         <li class="list-item">
@@ -570,11 +601,16 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         </section>
         <section id="contact" class="section">
             <div class="grid-contact">
-                <div class="grid-image"><img src="assets/bottom-main_saturated.avif" loading="lazy"
-                                             sizes="(max-width: 640px) 100vw, 640px"
-                                             srcSet="assets/bottom-main_saturated.avif 500w, assets/bottom-main_saturated.avif 640w"
-                                             alt="Three wooden lounge chairs with white fabric lined up beside a clear outdoor swimming pool in front of a modern building with vertical slatted walls and a balcony with green hanging plants."
-                                             class="contact-image"/></div>
+                <div class="grid-image">
+                    <div class="pebble-frame">
+                        <img class="contact-image resort-pebble-img"
+                             src="assets/bottom-main_saturated.avif" loading="lazy"
+                             sizes="(max-width: 640px) 100vw, 640px"
+                             srcSet="assets/bottom-main_saturated.avif 500w, assets/bottom-main_saturated.avif 640w"
+                             alt="Three wooden lounge chairs with white fabric lined up beside a clear outdoor swimming pool in front of a modern building with vertical slatted walls and a balcony with green hanging plants."
+                        />
+                    </div>
+                </div>
                 <div class="contact-text">
                     <div class="section-header">
                         <div class="chip">Связаться с нами</div>
@@ -589,9 +625,9 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                                 <p>hi@luwkey.com</p></div>
                             <div class="text-icon-wrap"><img
                                     src="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/690c4bcdac5d1b98852a880c_051db6445fc5c8300c8ce6e31eee6c82_phone.svg"
-                                    loading="lazy" alt="phone" class="icon"/><a href="tel:+77478407010"
-                                                                                style="color:inherit">+7 747 840
-                                7010</a></div>
+                                    loading="lazy" alt="phone" class="icon"/><a href="tel:+77782675901"
+                                                                                style="color:inherit">+7 (778) 267 59
+                                01</a></div>
                         </div>
                         <div>
                             <div style="display:none"><strong>Reservations &amp; General Inquiries</strong></div>

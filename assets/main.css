@@ -244,7 +244,7 @@ html.w-mod-touch * {
 }
 
 .w-inline-block {
-    max-width: 100%;
+    max-width: 10%;
     display: inline-block
 }
 
@@ -2123,7 +2123,7 @@ body {
 }
 
 h1 {
-    font-family: var(--typography--heading);
+    font-family: "Playfair Display";
     margin-top: 0;
     margin-bottom: 0;
     font-size: 48px;
@@ -2132,7 +2132,7 @@ h1 {
 }
 
 h2 {
-    font-family: var(--typography--heading);
+    font-family: "Playfair Display";
     margin-top: 0;
     margin-bottom: 0;
     font-size: 36px;
@@ -2397,7 +2397,6 @@ blockquote {
     grid-template-columns:2fr 3fr;
     grid-auto-columns: 1fr;
     padding: 64px;
-    display: grid
 }
 
 .footer-text {
@@ -2628,8 +2627,8 @@ blockquote {
 }
 
 .script {
-    font-family: var(--typography--script);
-    font-size: 32px;
+    font-family: "Marck Script", var(--typography--script);
+    font-size: 34px;
     line-height: 150%
 }
 
@@ -2647,7 +2646,7 @@ blockquote {
 
 .image-bridge-left {
     left: 0%;
-    top: var(--padding-vh\<deleted\|variable-ab9ce940-3a1c-5770-fb62-26227efa1a9e\>);
+    /*top: var(--padding-vh\<deleted\|variable-ab9ce940-3a1c-5770-fb62-26227efa1a9e\>);*/
     z-index: 2;
     justify-content: flex-end;
     align-items: center;
@@ -3329,4 +3328,52 @@ blockquote {
 /* optional: respect "reduce motion" settings */
 @media (prefers-reduced-motion: reduce) {
     .scroll-wrapper { animation: none; }
+}
+
+
+
+
+/* Wrapper hugs the natural size of the image */
+.pebble-frame {
+    position: relative;
+    display: inline-block;
+    width: fit-content; /* Shrinks/grows to match the exact image dimensions */
+    max-width: 100%;    /* Prevents overflow on mobile screens */
+    padding: 12px;
+}
+
+/* Decorative pebble outline that stretches dynamically */
+.pebble-frame::before {
+    content: "";
+    position: absolute;
+    inset: 2px; /* Follows the outer edge of the frame cleanly */
+    border: 1.5px solid #d4c5b3;
+    border-radius: 46% 54% 58% 42% / 48% 52% 48% 52%;
+    z-index: -1;
+    transition: transform 0.8s ease, border-radius 0.8s ease;
+}
+
+/* Base Pebble Image Styling (No forced aspect ratio) */
+.resort-pebble-img {
+    border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+
+    height: auto; /* Preserves original photo proportions */
+    display: block;
+
+    /* Soft coastal shadow and warm lighting */
+    box-shadow: 0 20px 35px -10px rgba(28, 43, 45, 0.18);
+    filter: contrast(1.03) saturate(1.08) brightness(1.02);
+    transition: border-radius 0.8s ease-in-out, transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* Coordinated hover effect for both the frame and image */
+.pebble-frame:hover .resort-pebble-img {
+    border-radius: 48% 52% 42% 58% / 58% 44% 56% 42%;
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 28px 45px -12px rgba(28, 43, 45, 0.25);
+}
+
+.pebble-frame:hover::before {
+    border-radius: 54% 46% 44% 56% / 52% 48% 54% 46%;
+    transform: rotate(2deg) scale(1.02);
 }
