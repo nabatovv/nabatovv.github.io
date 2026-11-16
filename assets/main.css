@@ -1818,7 +1818,10 @@ textarea.w-input, textarea.w-select {
     color: #333;
     text-decoration: none;
     position: relative;
-    max-width: 10%
+    max-width: 10%;
+    padding: 8px;
+    background: #EFEEDF;
+    border-radius: 50%;
 }
 
 .w-nav-link {
@@ -2489,10 +2492,6 @@ blockquote {
 
 .text-link:hover {
     color: var(--color--white)
-}
-
-.brand {
-    padding-left: 0
 }
 
 .utility-heading {
