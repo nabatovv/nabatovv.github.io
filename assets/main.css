@@ -3234,7 +3234,7 @@ blockquote {
 .flow-wrap::after {
     content: "";
     display: block;
-    height: 60vh;   /* how long the last block + image stay: increase for longer */
+    height: 12vh;   /* how long the last block + image stay: increase for longer */
 }
 
 /* Desktop layout only: on mobile the images are hidden and the blocks just stack */
@@ -3588,4 +3588,17 @@ svg.menu-icon {
     .sticky-text h2 {
         font-size: clamp(20px, 4vw, 26px);
     }
+}
+
+/* ===== Mobile horizontal-overflow guard + background fill =====
+   - `overflow-x: hidden` on <html> clips any accidental horizontal overflow
+     (fixed decorative leaves with negative insets, 100vw elements, etc.) without
+     creating a nested scroll container, so `position: sticky` keeps working.
+   - Do NOT add this to <body>: that would make body a scroll container and
+     break the sticky feature section.
+   - `background-color` on <html> prevents white overscroll flashes on iOS and
+     matches `<meta name="theme-color">` in the head. */
+html {
+    background-color: var(--color--background);
+    overflow-x: hidden;
 }
