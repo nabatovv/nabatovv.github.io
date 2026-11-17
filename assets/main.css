@@ -3434,3 +3434,158 @@ svg.menu-icon {
 .bottom-logo {
     min-width: 104px;
 }
+
+
+/* ===== Sticky feature section: viewport-safe layout ===== */
+
+/* Never make the image column taller than the visible viewport. */
+@media screen and (min-width: 768px) {
+    .sticky-wrap {
+        height: 100vh;
+        height: 100svh;
+        min-height: 0;
+        top: 0;
+    }
+
+    .feature-image {
+        height: 100vh;
+        height: 100svh;
+        min-height: 0;
+        padding: clamp(16px, 4vw, 64px);
+    }
+
+    .sticky-image-1,
+    .sticky-image-2,
+    .sticky-image-3 {
+        height: 100vh;
+        height: 100svh;
+        align-items: center;
+    }
+
+    .sticky-image-1 .pebble-frame,
+    .sticky-image-2 .pebble-frame,
+    .sticky-image-3 .pebble-frame {
+        max-height: calc(100svh - 32px);
+    }
+
+    .sticky-image-1 .resort-pebble-img,
+    .sticky-image-2 .resort-pebble-img,
+    .sticky-image-3 .resort-pebble-img {
+        width: auto;
+        max-width: 100%;
+        max-height: 80svh;
+        object-fit: contain;
+    }
+
+    /* Let text grow naturally when its content cannot fit in a short viewport. */
+    .sticky-text {
+        height: auto;
+        min-height: 100vh;
+        min-height: 100svh;
+        padding: clamp(20px, 4vw, 64px);
+    }
+
+    /* The final pinned panel can be scrolled internally on unusually short screens. */
+    .sticky-text._3 {
+        max-height: 100vh;
+        max-height: 100svh;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+}
+
+/* On phones, use ordinary document flow: no viewport-sized text panels
+   and no sticky positioning that can trap content below the fold. */
+@media screen and (max-width: 767px) {
+    .sticky-wrap {
+        display: none !important;
+    }
+
+    .flow-wrap {
+        width: 100%;
+        margin: 0;
+    }
+
+    .sticky-text,
+    .sticky-text._1,
+    .sticky-text._2,
+    .sticky-text._3 {
+        position: static;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        max-height: none;
+        overflow: visible;
+        padding: clamp(20px, 5vw, 32px);
+        gap: clamp(12px, 3vw, 20px);
+        text-align: center;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .sticky-text .section-header {
+        width: 100%;
+        align-items: center;
+    }
+
+    .sticky-text h2 {
+        margin-top: 8px;
+        margin-bottom: 8px;
+        font-size: clamp(22px, 6vw, 30px);
+        line-height: 1.2;
+    }
+
+    .sticky-text p,
+    .sticky-text li {
+        line-height: 1.5;
+    }
+
+    .sticky-text ul {
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .sticky-text .text-icon-wrap {
+        justify-content: center;
+    }
+
+    .sticky-text .button {
+        max-width: 100%;
+        white-space: normal;
+    }
+
+    .feature-mobile {
+        display: block;
+        width: min(100%, 320px);
+        max-width: 100%;
+        height: clamp(72px, 28svh, 220px);
+        margin: 0 auto;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .flow-wrap::after {
+        display: none;
+    }
+}
+
+/* Short landscape phones: keep the image compact and text unconstrained. */
+@media screen and (max-width: 767px) and (max-height: 500px) {
+    .sticky-text,
+    .sticky-text._1,
+    .sticky-text._2,
+    .sticky-text._3 {
+        padding-top: 16px;
+        padding-bottom: 16px;
+        gap: 10px;
+    }
+
+    .feature-mobile {
+        height: 22svh;
+        max-height: 120px;
+    }
+
+    .sticky-text h2 {
+        font-size: clamp(20px, 4vw, 26px);
+    }
+}
