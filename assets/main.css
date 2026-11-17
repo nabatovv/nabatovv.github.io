@@ -3451,6 +3451,30 @@ blockquote {
     transform: rotate(2deg) scale(1.02);
 }
 
+/* The three .sticky-image-N frames are absolutely stacked inside .sticky-wrap,
+   so only the topmost one in paint order ever receives :hover / :active on
+   touch. Drive the morph from the shared container instead, so whichever image
+   is visible at that scroll position reacts identically. Each .sticky-image-N
+   still supplies its own --pebble-*-hover values, so the shapes stay distinct. */
+.sticky-wrap:hover .sticky-image-1 .resort-pebble-img,
+.sticky-wrap:hover .sticky-image-2 .resort-pebble-img,
+.sticky-wrap:hover .sticky-image-3 .resort-pebble-img {
+    border-radius: var(--pebble-radius-hover, 48% 52% 42% 58% / 58% 44% 56% 42%);
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 28px 45px -12px rgba(28, 43, 45, 0.25);
+}
+
+.sticky-wrap:hover .sticky-image-1 .pebble-frame::before,
+.sticky-wrap:hover .sticky-image-2 .pebble-frame::before,
+.sticky-wrap:hover .sticky-image-3 .pebble-frame::before {
+    border-radius: var(--pebble-outline-radius-hover, 54% 46% 44% 56% / 52% 48% 54% 46%);
+    transform: rotate(2deg) scale(1.02);
+}
+
+.sticky-wrap:active .resort-pebble-img {
+    filter: blur(5px);
+}
+
 /* ===== Pebble shape variations =====
    Each framed image gets its own organic outline (base + hover) so the
    decorations don't all look identical, while each still morphs on hover.
@@ -3711,8 +3735,8 @@ svg.menu-icon {
         min-height: 0;
         max-height: none;
         overflow: visible;
-        padding: clamp(20px, 5vw, 32px);
-        gap: clamp(12px, 3vw, 20px);
+        padding: clamp(28px, 7vw, 40px) clamp(16px, 5vw, 24px);
+        gap: clamp(14px, 3.5vw, 20px);
         text-align: center;
         align-items: center;
         justify-content: flex-start;
@@ -3832,4 +3856,21 @@ body {
 
 .scroll-item > img {
     max-width: 60px;
+}
+
+/* ===== Mobile footer: trim the empty space around the logo and the © line.
+   The desktop rhythm (--section-space, 80px on phones) leaves the small mobile
+   footer column looking mostly empty. */
+@media screen and (max-width: 767px) {
+    .footer-top {
+        padding: 32px 24px;
+    }
+
+    .footer-bottom {
+        padding: 12px 24px;
+    }
+
+    .footer-text {
+        margin-top: 12px;
+    }
 }
