@@ -3590,15 +3590,53 @@ svg.menu-icon {
     }
 }
 
+
+
 /* ===== Mobile horizontal-overflow guard + background fill =====
-   - `overflow-x: hidden` on <html> clips any accidental horizontal overflow
-     (fixed decorative leaves with negative insets, 100vw elements, etc.) without
-     creating a nested scroll container, so `position: sticky` keeps working.
-   - Do NOT add this to <body>: that would make body a scroll container and
-     break the sticky feature section.
-   - `background-color` on <html> prevents white overscroll flashes on iOS and
-     matches `<meta name="theme-color">` in the head. */
-html {
+   - `overflow-x: clip` does NOT create a scroll container (unlike `hidden`),
+     so `position: sticky` on .sticky-wrap / .sticky-text._3 keeps working.
+   - We do NOT touch <html> — clipping on <html> is what was cutting .page-wrapper
+     off on iOS in landscape.
+   - `background-color` on <body> prevents white overscroll flashes on mobile
+     and matches `<meta name="theme-color">` in the head. */
+body {
+    overflow-x: clip;
     background-color: var(--color--background);
-    overflow-x: hidden;
+    min-height: 100%;
+}
+
+/* Fallback for browsers without overflow-x: clip support (Safari < 16) */
+@supports not (overflow: clip) {
+    body {
+        overflow-x: hidden;
+    }
+}
+
+/* Decorative leaves are 300×300 px with -64 px insets on fixed positioning —
+   on mobile they extend past the viewport and are the main source of the
+   "cut off on the sides" look. Hidden on ≤991 px, they won't be downloaded
+   either thanks to loading="lazy". */
+@media screen and (max-width: 991px) {
+    .right-leaf,
+    .left-leaf {
+        display: none;
+    }
+}
+
+/* Ensure no fixed-width child (small-box, medium-box, subhero, contact-text)
+   can blow the layout wider than the viewport on mid-size phones. */
+@media screen and (max-width: 991px) {
+    .small-box    { width: min(400px, 100%); }
+    .medium-box   { width: min(520px, 100%); }
+    .subhero      { width: min(480px, calc(100% - 32px)); }
+    .contact-text { max-width: 100%; }
+    .sticky-text  { max-width: 100%; }
+}
+
+@media screen and (max-width: 479px) {
+    .small-box,
+    .medium-box,
+    .subhero {
+        width: 100%;
+    }
 }
