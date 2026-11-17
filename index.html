@@ -41,13 +41,9 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
   <link rel="manifest" href="assets/site.webmanifest">
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
-        rel="stylesheet">
-  <meta
-    content="http://dostyk.zone/assets/twitter-image.avif"
-    name="twitter:image">
+  <link rel="preload" as="image" href="assets/main.avif" fetchpriority="high">
+  <meta content="https://dostyk.zone/assets/main.avif" property="og:image">
+  <meta content="https://dostyk.zone/assets/main.avif" name="twitter:image">
   <title>Достык — зона отдыха в Топаре</title>
   <meta
     content="Зона отдыха «Достык» в Топаре — место для отдыха у воды, пикников, встреч с семьёй и друзьями на природе."
@@ -62,7 +58,6 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     name="twitter:description">
   <meta content="website" property="og:type">
   <meta content="summary_large_image" name="twitter:card">
-  <meta content="Зона отдыха Достык" name="generator">
   <link href="assets/main.css"
         rel="stylesheet" type="text/css">
   <script type="text/javascript">!function(o, c) {
@@ -78,22 +73,22 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     "image": [
       {
         "@type": "ImageObject",
-        "url": "http://dostyk.zone/assets/main.avif",
+        "url": "https://dostyk.zone/assets/main.avif",
         "caption": "Место для отдыха на природе."
       },
       {
         "@type": "ImageObject",
-        "url": "http://dostyk.zone/assets/house-front.avif",
+        "url": "https://dostyk.zone/assets/house-front.avif",
         "caption": "Зона отдыха на свежем воздухе."
       },
       {
         "@type": "ImageObject",
-        "url": "http://dostyk.zone/assets/top-view-2.avif",
+        "url": "https://dostyk.zone/assets/top-view-2.avif",
         "caption": "Природа и спокойная атмосфера для отдыха."
       },
       {
         "@type": "ImageObject",
-        "url": "http://dostyk.zone/assets/bottom-main_saturated.avif",
+        "url": "https://dostyk.zone/assets/bottom-main_saturated.avif",
         "caption": "Уютное место для отдыха."
       }
     ],
@@ -156,41 +151,29 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
       }
     ],
     "sameAs": [
-      "https://www.instagram.com",
-      "https://www.facebook.com/",
-      "https://www.youtube.com/",
-      "https://x.com/home"
+      "https://www.instagram.com/dostyk_resort_topar"
     ]
   }</script>
   <style>::selection {
       color: #F7F6F1;
       background: #174F4B;
-  }
-
-
-  html.lenis {
-      height: auto;
-  }
-
-  .lenis.lenis-smooth {
-      scroll-behavior: auto;
-  }
-
-  .lenis.lenis-smooth [data-lenis-prevent] {
-      overscroll-behavior: contain;
-  }
-
-  .lenis.lenis-stopped {
-      overflow: hidden;
   }</style>
 </head>
 <body>
+<a class="skip-link" href="#hi">Перейти к содержанию</a>
+<svg class="glass-filter-defs" aria-hidden="true" focusable="false" width="0" height="0">
+  <filter id="footer-liquid" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.0035 0.006" numOctaves="1" seed="11" result="noise" />
+    <feGaussianBlur in="noise" stdDeviation="6" result="soft" />
+    <feDisplacementMap in="SourceGraphic" in2="soft" scale="15" xChannelSelector="R" yChannelSelector="G" />
+  </filter>
+</svg>
+<img class="page-leaf page-leaf--left" src="assets/left-leaf.avif" width="400" height="400" alt="" aria-hidden="true" decoding="async" />
+<img class="page-leaf page-leaf--center" src="assets/right-leaf.avif" width="400" height="400" alt="" aria-hidden="true" decoding="async" />
+<img class="page-leaf page-leaf--right" src="assets/right-leaf.avif" width="400" height="400" alt="" aria-hidden="true" decoding="async" />
+<img class="page-leaf page-leaf--bottom" src="assets/left-leaf.avif" width="400" height="400" alt="" aria-hidden="true" decoding="async" />
 <div id="root">
-  <div class="page-wrapper"><img
-    src="assets/right-leaf.avif"
-    loading="lazy" width="300" height="300" alt="" class="right-leaf" /><img
-    src="assets/left-leaf.avif"
-    loading="lazy" width="300" height="300" alt="" class="left-leaf" />
+  <div class="page-wrapper">
     <section class="section hero">
       <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease"
            data-easing2="ease" role="banner" class="navbar w-nav">
@@ -198,23 +181,21 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
           <div class="nav-content"><a href="/" class="brand w-nav-brand"><img
             src="assets/logo.svg" alt="Логотип зоны отдыха Достык" /></a>
             <!-- CSS-only toggle: checkbox + label. Must stay a sibling BEFORE .w-nav-menu and .menu-button -->
-            <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Меню" />
-            <nav role="navigation" id="site-nav" class="nav-menu w-nav-menu">
-              <div class="nav-menu-list" style="background:rgb(from var(--color--primary) r g b / 90%)"><a
-                href="#hi" class="nav-link w-nav-link">Достык</a><a href="#about"
-                                                                    class="nav-link w-nav-link"
-                                                                    style="background:rgb(from var(--color--primary) r g b / 90%)">О
-                нас</a><a href="#service" class="nav-link w-nav-link"
-                          style="background:rgb(from var(--color--primary) r g b / 90%)">Отдых и
-                развлечения</a><a href="#contact" class="nav-link w-nav-link"
-                                  style="background:rgb(from var(--color--primary) r g b / 90%)">Природа</a>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Меню"
+                   aria-expanded="false" aria-controls="site-nav" />
+            <nav role="navigation" id="site-nav" aria-label="Основная навигация"
+                 class="nav-menu w-nav-menu">
+              <div class="nav-menu-list"><a href="#hi" class="nav-link w-nav-link">Достык</a><a
+                href="#about" class="nav-link w-nav-link">О нас</a><a href="#service"
+                class="nav-link w-nav-link">Отдых и развлечения</a><a href="#contact"
+                class="nav-link w-nav-link">Природа</a>
               </div>
               <a data-wf--button--variant="white-small"
                  onclick="gtag_report_conversion()"
                  href="https://www.instagram.com/dostyk_resort_topar" target="_blank"
                  class="button w-variant-3d9d3eee-8ac1-c6a8-fc62-ea95ebc37d24 w-button top-contact-us-button">Связаться с
                 нами</a></nav>
-            <label for="nav-toggle" class="menu-button w-nav-button" aria-hidden="true">
+            <label for="nav-toggle" class="menu-button w-nav-button">
               <svg class="menu-icon" width="28" height="28" viewBox="0 0 24 24" fill="none"
                    stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"
                    focusable="false">
@@ -227,31 +208,22 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         </div>
       </div>
       <div class="subhero">
-        <div class="section-header"><h1 class="white-text"><span
-          style="font-family: 'Manrope'; background:rgb(from var(--color--primary) r g b / 90%)">Отдых на природе в Топаре</span>
-        </h1>
-          <p class="white-text" style="background:rgb(from var(--color--primary) r g b / 90%)">Добро
-            пожаловать на зону отдыха «Достык» — место, где можно отдохнуть у воды, провести время с
-            близкими
-            и насладиться природой.</p></div>
-        <a data-wf--button--variant="white-small" href="https://www.instagram.com/dostyk_resort_topar"
-           target="_blank" class="button w-variant-3d9d3eee-8ac1-c6a8-fc62-ea95ebc37d24 w-button">Узнать
-          больше</a></div>
-      <div class="video-wrap" style="background:#174f4b url(assets/main.avif) no-repeat fixed center / cover">
-        <div
-          data-poster-url="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6%2F690cd406f5128f448d1c1642_luwley-hero-poster-00001.jpg"
-          data-video-urls="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6%2F690cd406f5128f448d1c1642_luwley-hero-transcode.webm"
-          data-autoplay="true" data-loop="true" data-wf-ignore="true"
-          class="background-video w-background-video w-background-video-atom">
-          <video id="bg-video"
-                 style="background-image:url(https://luwley.webflow.io/&quot;https://cdn.prod.website-files.com/690c1e2305cc603890168ca6%2F690cd406f5128f448d1c1642_luwley-hero-poster-00001.jpg&quot;)"
-                 data-wf-ignore="true" data-object-fit="cover"></video>
+        <div class="section-header">
+          <p class="hero-eyebrow">Зона отдыха «Достык» · Топар</p>
+          <h1 class="hero-title">Отдых на природе в Топаре</h1>
+          <p class="hero-sub">Добро пожаловать на зону отдыха «Достык» — место, где можно отдохнуть у воды,
+            провести время с близкими и насладиться природой.</p>
         </div>
+        <a data-wf--button--variant="white-small" href="https://www.instagram.com/dostyk_resort_topar"
+           target="_blank"
+           class="button w-variant-3d9d3eee-8ac1-c6a8-fc62-ea95ebc37d24 w-button hero-cta">Узнать больше</a>
       </div>
+      <div class="video-wrap" role="img" aria-label="Живописный вид зоны отдыха «Достык»"></div>
     </section>
     <section id="hi" class="section">
       <div class="w-layout-blockcontainer container w-container">
         <div class="center-wrap">
+          <img class="card-leaf" src="assets/left-leaf.avif" width="400" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async" />
           <div class="section-header center-align"><img
             src="assets/logo.png"
             loading="lazy" alt="Достык" class="logo" />
@@ -269,7 +241,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
       <div class="image-reveal image-bridge-left ">
         <div data-w-id="9d2c2e42-9374-c7ae-fb43-51668c038bca" class="pebble-frame">
           <img class="resort-pebble-img"
-               src="assets/image-left-resized_saturated.avif" loading="eager"
+               src="assets/image-left-resized_saturated.avif" loading="lazy" decoding="async"
                alt="Открытые беседки и гамаки." />
         </div>
       </div>
@@ -277,7 +249,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         <div class="pebble-frame">
           <img class="resort-pebble-img"
                src="assets/twin-img-small_saturated.webp"
-               loading="eager"
+               loading="lazy" decoding="async"
                alt="Спортивный зал на открытом воздухе и деревянная баня" />
         </div>
       </div>
@@ -288,7 +260,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
           <div class="feature-image">
             <div class="pebble-frame">
               <img class="resort-pebble-img"
-                   src="assets/house-front.avif" loading="eager"
+                   src="assets/house-front.avif" loading="lazy" decoding="async"
                    alt="Аттракционы для детей" class="image-effect" />
             </div>
           </div>
@@ -298,7 +270,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             <div class="pebble-frame">
               <img class="resort-pebble-img"
                    src="assets/main.avif"
-                   loading="eager"
+                   loading="lazy" decoding="async"
                    alt="Уютные места на пляже."
                    class="image-effect" />
             </div>
@@ -309,7 +281,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             <div class="pebble-frame">
               <img class="resort-pebble-img"
                    src="assets/top-view-2.avif"
-                   loading="eager"
+                   loading="lazy" decoding="async"
                    alt="Outdoor restaurant seating area with wooden tables set with napkins, cutlery, and salt and pepper shakers, teal cushions on chairs, and a background of greenery and overcast sky."
                    class="image-effect" />
             </div>
@@ -322,6 +294,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
           loading="lazy"
           alt="Tranquil outdoor pool beside white wall with lush green plants and red flowers in a serene garden setting."
           class="feature-mobile" />
+          <div class="sticky-text-card">
+          <img class="card-leaf" src="assets/left-leaf.avif" width="400" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async" />
           <div class="section-header">
             <div class="chip">Домики и номера</div>
             <h2>Комфортный отдых на природе</h2></div>
@@ -329,32 +303,29 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             повседневной суеты.</p>
             <ul role="list" class="w-list-unstyled">
               <li class="list-item">
-                <div class="text-icon-wrap"><img
-                  src="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/69105ad5f30d265c029d6dd3_pool.svg"
-                  loading="lazy" alt="pool" class="icon" />
+                <div class="text-icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>
                   <p>Отдых у воды</p></div>
               </li>
               <li class="list-item">
-                <div class="text-icon-wrap"><img
-                  src="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/69105ad50b0940fe98f84ea5_shower.svg"
-                  loading="lazy" alt="shower" class="icon" />
+                <div class="text-icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.5 1 8-1 4-4 6-7 7"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
                   <p>Свежий воздух и природа</p></div>
               </li>
               <li class="list-item">
-                <div class="text-icon-wrap"><img
-                  src="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/69105ad4892e9c423423a232_furnish.svg"
-                  loading="lazy" alt="feather" class="icon" />
+                <div class="text-icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                   <p>Время с семьёй и друзьями</p></div>
               </li>
             </ul>
           </div>
           <a data-wf--button--variant="primary-small" href="https://www.instagram.com/dostyk_resort_topar"
-             target="_blank" class="button w-button">Планируйте свой отдых</a></div>
+             target="_blank" class="button w-button">Планируйте свой отдых</a>
+          </div></div>
         <div data-w-id="4deecaec-f016-b0ae-ca4b-1e0d7b0c5240" class="sticky-text _2"><img
           src="assets/top-view-2.avif"
           loading="lazy"
           alt="Outdoor restaurant seating area with wooden tables set with napkins, cutlery, and salt and pepper shakers, teal cushions on chairs, and a background of greenery and overcast sky."
           class="feature-mobile" />
+          <div class="sticky-text-card">
+          <img class="card-leaf" src="assets/right-leaf.avif" width="400" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async" />
           <div class="section-header">
             <div class="chip">Пикник и общение</div>
             <h2>Вкус хорошего отдыха</h2></div>
@@ -362,60 +333,52 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             природе.</p>
           <ul role="list" class="w-list-unstyled">
             <li class="list-item">
-              <div class="text-icon-wrap"><img
-                src="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/69105ad4d5a0f59942f8fd07_cuisine.svg"
-                loading="lazy" alt="cuisine" class="icon" />
+              <div class="text-icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
                 <p>Место для пикника на свежем воздухе</p></div>
             </li>
             <li class="list-item">
-              <div class="text-icon-wrap"><img
-                src="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/69105ad5d530f007676cd62f_scenery.svg"
-                loading="lazy" alt="scenery" class="icon" />
+              <div class="text-icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 10V2"/><path d="m4.93 10.93 1.41 1.41"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m19.07 10.93-1.41 1.41"/><path d="M22 22H2"/><path d="m16 6-4 4-4-4"/><path d="M16 18a4 4 0 0 0-8 0"/></svg>
                 <p>Красивые виды и вечерняя атмосфера</p></div>
             </li>
             <li class="list-item">
-              <div class="text-icon-wrap"><img
-                src="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/69105ad4ac4ec6a3aa9aab25_bed.svg"
-                loading="lazy" alt="bed" class="icon" />
+              <div class="text-icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
                 <p>Время для неспешного отдыха</p></div>
             </li>
           </ul>
           <a data-wf--button--variant="primary-small" href="https://www.instagram.com/dostyk_resort_topar"
-             target="_blank" class="button w-button">Откройте для себя отдых на природе</a></div>
+             target="_blank" class="button w-button">Откройте для себя отдых на природе</a>
+          </div></div>
         <div data-w-id="32b962f0-c0c0-297a-6c49-d1a76e5542d7" class="sticky-text _3"><img
           src="assets/bottom-main_saturated.avif"
           loading="lazy"
           alt="View through a dark doorway of a room with a bed covered in brown and white bedding and a large window showing green trees outside."
           class="feature-mobile" />
+          <div class="sticky-text-card">
+          <img class="card-leaf" src="assets/left-leaf.avif" width="400" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async" />
           <div class="section-header">
             <div class="chip">Отдых и восстановление</div>
             <h2>Забудьте о заботах</h2></div>
           <p>Отложите дела, насладитесь природой и проведите время с теми, кто вам дорог.</p>
           <ul role="list" class="w-list-unstyled">
             <li class="list-item">
-              <div class="text-icon-wrap"><img
-                src="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/69105ad45937befb6faa1a0e_massage.svg"
-                loading="lazy" alt="massage" class="icon" />
+              <div class="text-icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3"/><path d="M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5"/><path d="M12 7.5V9"/><path d="M7.5 12H9"/><path d="M16.5 12H15"/><path d="M12 16.5V15"/></svg>
                 <p>Спокойный отдых на природе</p></div>
             </li>
             <li class="list-item">
-              <div class="text-icon-wrap"><img
-                src="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/69105ad67c829dd113a5e73e_yoga.svg"
-                loading="lazy" alt="yoga" class="icon" />
+              <div class="text-icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>
                 <p>Свежий воздух у воды</p></div>
             </li>
             <li class="list-item">
-              <div class="text-icon-wrap"><img
-                src="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/69105ad543a9203e7ebf76b2_garden.svg"
-                loading="lazy" alt="garden" class="icon" />
+              <div class="text-icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>
                 <p>Перезагрузка вдали от суеты</p></div>
             </li>
           </ul>
           <a data-wf--button--variant="primary-small" href="https://www.instagram.com/dostyk_resort_topar"
-             target="_blank" class="button w-button">Как провести день</a></div>
+             target="_blank" class="button w-button">Как провести день</a>
+          </div></div>
       </div>
     </section>
-    <section data-w-id="05295cfc-7a86-f22c-15fe-ebbc6f5e43de" class="scroll">
+    <section data-w-id="05295cfc-7a86-f22c-15fe-ebbc6f5e43de" class="scroll" aria-hidden="true">
       <div class="scroll-wrapper">
         <div class="scroll-list">
           <div class="scroll-item">
@@ -567,6 +530,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
           </div>
         </div>
         <div class="contact-text">
+          <img class="card-leaf" src="assets/right-leaf.avif" width="400" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async" />
           <div class="section-header">
             <div class="chip">Связаться с нами</div>
             <h2>Подарите себе день отдыха</h2></div>
@@ -574,13 +538,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             рады ответить на ваши вопросы.</p>
             <div>
               <div><strong>Бронирование и общие вопросы</strong></div>
-              <div class="text-icon-wrap" style="display:none"><img
-                src="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/690c4bcd173f3195b7f6e90e_810977dd4b396e5b0d8ab3b6f200f001_email.svg"
-                loading="lazy" alt="email" class="icon" />
-                <p>hi@luwkey.com</p></div>
-              <div class="text-icon-wrap"><img
-                src="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/690c4bcdac5d1b98852a880c_051db6445fc5c8300c8ce6e31eee6c82_phone.svg"
-                loading="lazy" alt="phone" class="icon" /><a href="tel:+77782675901"
+              <div class="text-icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:+77782675901"
                                                              style="color:inherit">+7 (778) 267 59
                 01</a></div>
             </div>
@@ -594,7 +552,6 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
       </div>
     </section>
     <section class="footer">
-      <div class="w-layout-blockcontainer container no-padding w-container">
         <div class="footer-top">
           <div><a href="/" aria-current="page" class="w-inline-block w--current">
             <img class="bottom-logo"
@@ -613,44 +570,14 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
               <a href="utility-pages/licenses.html" class="footer-link">Лицензии</a><a
               href="utility-pages/changelog.html" class="footer-link">История изменений</a><a
               href="utility-pages/style-guide.html" class="footer-link">Руководство по стилю</a></div>
-            <div class="footer-menu" style="display:none">
-              <div class="footer-title">Мы в соцсетях</div>
-              <a href="https://www.instagram.com/dostyk_resort_topar" target="_blank"
-                 class="footer-social w-inline-block"><img
-                src="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/690c1e2305cc603890168cf0_557a0faf22879664315dd964e34e7d51_brand-instagram.svg"
-                loading="lazy" alt="instagram" class="icon" />
-                <div>Инстаграм</div>
-              </a><a href="https://www.facebook.com/" target="_blank" class="footer-social w-inline-block"
-                     style="display:none"><img
-              src="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/690c1e2305cc603890168cef_brand-facebook.svg"
-              loading="lazy" alt="facebook" class="icon" />
-              <div>Facebook</div>
-            </a><a href="https://www.youtube.com/" target="_blank" class="footer-social w-inline-block"
-                   style="display:none"><img
-              src="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/690c1e2305cc603890168cf1_brand-youtube.svg"
-              loading="lazy" alt="youtube" class="icon" />
-              <div>Youtube</div>
-            </a><a href="https://x.com/home" target="_blank" class="footer-social w-inline-block"
-                   style="display:none"><img
-              src="https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/690c1e2305cc603890168cf2_48801127ea98d244af30f0acce2fbe70_brand-x.svg"
-              loading="lazy" alt="twitter" class="icon" />
-              <div>Twitter</div>
-            </a></div>
           </div>
         </div>
         <div class="footer-bottom">
           <div>© 2026 «Достык».
           </div>
         </div>
-      </div>
     </section>
   </div>
-  <main><h1 style="display:none">Clojure + React SSR2222</h1>
-    <form style="display:none"><input type="text" placeholder="What needs doing?" value="" />
-      <button type="submit">Add</button>
-    </form>
-    <ul style="display:none"></ul>
-  </main>
 </div>
 
 <!-- OPTIONAL enhancement: the menu itself opens/closes with CSS only (#nav-toggle).
@@ -660,6 +587,12 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     function toggle() {
       return document.getElementById("nav-toggle")
     }
+
+    // Keep aria-expanded in sync with the CSS-only checkbox menu.
+    var checkbox = document.getElementById("nav-toggle")
+    checkbox.addEventListener("change", function() {
+      checkbox.setAttribute("aria-expanded", checkbox.checked ? "true" : "false")
+    })
 
     document.addEventListener("click", function(e) {
       var t = toggle()

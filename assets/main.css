@@ -1993,38 +1993,14 @@ textarea.w-input, textarea.w-select {
     display: grid
 }
 
-@font-face {
-    font-family: Manrope Variable;
-    src: url(https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/690c1ed65bcc439afc8615d4_Manrope-VariableFont_wght.ttf) format("truetype");
-    font-weight: 200 800;
-    font-style: normal;
-    font-display: swap
-}
-
-@font-face {
-    font-family: Dancing Script Variable;
-    src: url(https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/690c1ee0c2f3b635f5e2d359_DancingScript-VariableFont_wght.ttf) format("truetype");
-    font-weight: 400 700;
-    font-style: normal;
-    font-display: swap
-}
-
-@font-face {
-    font-family: Playfair Display Variable;
-    src: url(https://cdn.prod.website-files.com/690c1e2305cc603890168ca6/69105ea5ffdd7ff9f2f45215_PlayfairDisplay-VariableFont_wght.ttf) format("truetype");
-    font-weight: 400 900;
-    font-style: normal;
-    font-display: swap
-}
-
 :root {
     --color--background: #fcfaf8;
-    --typography--body: "Manrope Variable", Arial, sans-serif;
+    --typography--body: "Manrope", Arial, sans-serif;
     --color--primary: #174f4b;
-    --typography--heading: "Playfair Display Variable", "Palatino Linotype", sans-serif;
-    --typography--script: "Dancing Script Variable", "Palatino Linotype", sans-serif;
+    --typography--heading: "Playfair Display", "Palatino Linotype", serif;
+    --typography--script: "Dancing Script", "Palatino Linotype", serif;
     --color--white: white;
-    --color--accent: #d96226;
+    --color--accent: #c14f1a;
     --gap--gap: 12px;
     --section-space: 96px;   /* vertical breathing room between sections */
     --color--primary-10: #e4e8e6;
@@ -2582,16 +2558,115 @@ blockquote {
     line-height: 150%
 }
 
-.right-leaf {
-    z-index: 1;
-    position: fixed;
-    inset: -64px -64px auto auto
+/* A leaf tucked at the edge of each glass text block, peeking out from under it */
+#hi .center-wrap,
+.sticky-text-card,
+.contact-text {
+    position: relative;
 }
 
-.left-leaf {
+.sticky-text-card {
     z-index: 1;
+}
+
+.card-leaf {
+    position: absolute;
+    z-index: -1;
+    width: clamp(150px, 16vw, 210px);
+    height: auto;
+    opacity: .6;
+    pointer-events: none;
+    user-select: none;
+    filter: saturate(1.05);
+}
+
+#hi .center-wrap .card-leaf {
+    right: -18px;
+    bottom: -22px;
+    transform: rotate(-10deg);
+}
+
+.sticky-text-card .card-leaf {
+    right: -16px;
+    bottom: -20px;
+    transform: rotate(9deg) scaleX(-1);
+}
+
+.sticky-text._2 .sticky-text-card .card-leaf {
+    left: -18px;
+    right: auto;
+    top: -22px;
+    bottom: auto;
+    transform: rotate(-8deg);
+}
+
+.sticky-text._3 .sticky-text-card .card-leaf {
+    right: -18px;
+    bottom: -22px;
+    transform: rotate(-7deg);
+}
+
+.contact-text .card-leaf {
+    left: -18px;
+    bottom: -24px;
+    right: auto;
+    transform: rotate(8deg) scaleX(-1);
+}
+
+/* Big fixed palm leaves behind the whole page. They stay put while the glass
+   cards scroll above them, so each card passes over a stationary leaf. */
+.page-leaf {
     position: fixed;
-    inset: auto auto -64px -64px
+    z-index: 0;
+    height: auto;
+    pointer-events: none;
+    user-select: none;
+    filter: saturate(1.05);
+}
+
+.page-leaf--left {
+    width: clamp(220px, 26vw, 380px);
+    top: 7%;
+    left: -9%;
+    opacity: .42;
+    transform: rotate(14deg);
+}
+
+.page-leaf--center {
+    width: clamp(240px, 30vw, 460px);
+    top: 32%;
+    left: 44%;
+    opacity: .3;
+    transform: translateX(-50%) rotate(-12deg);
+}
+
+.page-leaf--right {
+    width: clamp(220px, 26vw, 380px);
+    top: 58%;
+    right: -9%;
+    opacity: .42;
+    transform: rotate(-9deg) scaleX(-1);
+}
+
+.page-leaf--bottom {
+    width: clamp(200px, 24vw, 340px);
+    bottom: -10%;
+    left: 20%;
+    opacity: .32;
+    transform: rotate(8deg) scaleX(-1);
+}
+
+@media screen and (max-width: 767px) {
+    .page-leaf--center {
+        width: 52vw;
+        opacity: .24;
+    }
+
+    .page-leaf--left,
+    .page-leaf--right {
+        width: 40vw;
+        opacity: .3;
+    }
 }
 
 .image-bridge-left {
@@ -3572,7 +3647,7 @@ blockquote {
 }
 
 .nav-toggle:focus-visible ~ .menu-button {
-    outline: 2px solid var(--color--accent);
+    outline: 2px solid var(--color--white);
     outline-offset: 2px;
 }
 
@@ -3831,17 +3906,6 @@ body {
     }
 }
 
-/* Decorative leaves are 300×300 px with -64 px insets on fixed positioning —
-   on mobile they extend past the viewport and are the main source of the
-   "cut off on the sides" look. Hidden on ≤991 px, they won't be downloaded
-   either thanks to loading="lazy". */
-@media screen and (max-width: 991px) {
-    .right-leaf,
-    .left-leaf {
-        display: none;
-    }
-}
-
 /* Ensure no fixed-width child (small-box, medium-box, subhero, contact-text)
    can blow the layout wider than the viewport on mid-size phones. */
 @media screen and (max-width: 991px) {
@@ -3878,5 +3942,436 @@ body {
 
     .footer-text {
         margin-top: 12px;
+    }
+}
+
+/* ==========================================================================
+   2026 UI/UX refresh
+   ========================================================================== */
+
+/* ---------- Base: smooth anchor scrolling (respect reduced motion) ---------- */
+html {
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* ---------- Keyboard focus visibility ---------- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--color--accent);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, .85);
+}
+
+/* ---------- Skip link (visually hidden until focused) ---------- */
+.skip-link {
+    position: absolute;
+    left: 16px;
+    top: -100px;
+    z-index: 2000;
+    padding: 12px 20px;
+    border-radius: 99px;
+    background: var(--color--accent);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    transition: top .25s ease;
+}
+
+.skip-link:focus {
+    top: 16px;
+    color: #fff;
+}
+
+/* ---------- Inline icons ---------- */
+.icon {
+    display: block;
+    flex: none;
+    width: 24px;
+    height: 24px;
+}
+
+/* ---------- Hero ---------- */
+.video-wrap {
+    background-color: #174f4b;
+    background-image: url(main.avif);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+/* Frosted-glass panel for the hero copy (replaces the old per-line highlight) */
+.subhero {
+    padding: 28px 30px;
+    border: 1px solid rgba(255, 255, 255, .18);
+    border-radius: 22px;
+    background: rgba(9, 30, 28, .46);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    backdrop-filter: blur(24px) saturate(1.6);
+    box-shadow: 0 24px 60px -24px rgba(0, 0, 0, .5);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .subhero {
+        background: rgba(9, 30, 28, .9);
+    }
+}
+
+.hero-eyebrow {
+    margin: 0;
+    color: rgba(255, 255, 255, .82);
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.hero-title {
+    font-family: "Manrope", var(--typography--body);
+    font-size: clamp(1.9rem, 3.8vw, 3rem);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0;
+    color: #fff;
+    text-wrap: balance;
+}
+
+.hero-sub {
+    margin: 0;
+    max-width: 42ch;
+    color: rgba(255, 255, 255, .92);
+    font-size: 1.0625rem;
+    line-height: 1.62;
+}
+
+.hero-cta::after {
+    content: "→";
+    margin-left: .55em;
+    transition: transform .3s ease;
+}
+
+.hero-cta:hover::after {
+    transform: translateX(4px);
+}
+
+/* ---------- Buttons: softer lift + shadow on hover ---------- */
+.button {
+    transition: background-color .25s ease, color .25s ease, border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+
+.button:hover {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 16px 30px -16px rgba(23, 79, 75, .55);
+}
+
+/* ---------- Neutralise the odd blur-on-click from the old template ---------- */
+.image-effect:active {
+    filter: none;
+}
+
+/* ---------- Subtle scroll-driven reveal ---------- */
+@keyframes fade-rise {
+    from {
+        opacity: 0;
+        transform: translateY(22px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    /* Hero copy fades up once on load */
+    .subhero {
+        animation: fade-rise .9s cubic-bezier(.22, .61, .36, 1) both;
+        animation-delay: .12s;
+    }
+
+    @supports (animation-timeline: view()) {
+        .await-card {
+            animation: fade-rise linear both;
+            animation-timeline: view();
+            animation-range: entry 12% cover 32%;
+        }
+    }
+}
+
+/* ---------- Hero glass panel: responsive padding ---------- */
+@media screen and (max-width: 767px) {
+    .subhero {
+        padding: 20px 22px;
+        border-radius: 18px;
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 8vw, 2.75rem);
+    }
+
+    .hero-sub {
+        font-size: 1rem;
+    }
+}
+
+/* ==========================================================================
+   Glassmorphism extensions
+   Nav bar, mobile menu, scroll-section text cards, footer panel, pebble frames
+   ========================================================================== */
+
+:root {
+    --glass-blur: 16px;
+    --glass-blur-strong: 22px;
+    --glass-saturate: 1.4;
+    --glass-border-light: rgba(255, 255, 255, .20);
+    --glass-border-dark: rgba(23, 79, 75, .12);
+    --glass-shadow: 0 26px 60px -30px rgba(6, 26, 24, .55);
+    --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, .55);
+}
+
+/* ---------- Navigation: plain bar, but a heavily-blurred menu pill ---------- */
+.navbar {
+    background-color: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border-bottom: 0;
+}
+
+/* Desktop link pill */
+@media screen and (min-width: 992px) {
+    .nav-menu-list {
+        grid-column-gap: 6px;
+        grid-row-gap: 6px;
+        padding: 6px;
+        border: 1px solid rgba(255, 255, 255, .16);
+        border-radius: 999px;
+        background: rgba(9, 30, 28, .42);
+        -webkit-backdrop-filter: blur(24px) saturate(1.6);
+        backdrop-filter: blur(24px) saturate(1.6);
+        box-shadow: var(--glass-highlight);
+    }
+
+    .nav-link {
+        border-radius: 999px;
+        transition: background-color .25s ease, opacity .25s ease, color .25s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+        opacity: 1;
+        background: rgba(255, 255, 255, .14);
+        transform: none;
+    }
+}
+
+/* Hamburger stays a plain icon (the navbar itself is not glass) */
+.menu-button {
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+
+/* Mobile dropdown menu */
+@media screen and (max-width: 991px) {
+    .nav-menu {
+        background: rgba(9, 30, 28, .55);
+        -webkit-backdrop-filter: blur(26px) saturate(1.6);
+        backdrop-filter: blur(26px) saturate(1.6);
+        border: 1px solid var(--glass-border-light);
+        box-shadow: var(--glass-shadow);
+    }
+
+    .nav-link {
+        border-radius: 12px;
+        transition: background-color .25s ease, opacity .25s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+        opacity: 1;
+        background: rgba(255, 255, 255, .10);
+        transform: none;
+    }
+}
+
+/* ---------- Scroll-section text blocks: frosted cards ---------- */
+.sticky-text-card {
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    gap: 24px;
+    align-items: flex-start;
+    padding: clamp(24px, 3vw, 44px);
+    border: 1px solid var(--glass-border-dark);
+    border-radius: 26px;
+    background: linear-gradient(160deg, rgba(255, 255, 255, .72), rgba(255, 255, 255, .40));
+    -webkit-backdrop-filter: blur(12px) saturate(1.3);
+    backdrop-filter: blur(12px) saturate(1.3);
+    box-shadow: 0 30px 60px -34px rgba(20, 60, 56, .40), inset 0 1px 0 rgba(255, 255, 255, .75);
+}
+
+@media screen and (max-width: 767px) {
+    .sticky-text-card {
+        align-items: center;
+        padding: 24px 20px;
+        border-radius: 22px;
+    }
+}
+
+/* ---------- Intro (#hi): frosted card around logo, heading and script ---------- */
+#hi .center-wrap {
+    position: relative;
+    z-index: 3;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: clamp(28px, 4vw, 56px);
+    border: 1px solid var(--glass-border-dark);
+    border-radius: 30px;
+    background: linear-gradient(160deg, rgba(255, 255, 255, .76), rgba(255, 255, 255, .44));
+    -webkit-backdrop-filter: blur(12px) saturate(1.3);
+    backdrop-filter: blur(12px) saturate(1.3);
+    box-shadow: 0 30px 60px -34px rgba(20, 60, 56, .40), inset 0 1px 0 rgba(255, 255, 255, .80);
+}
+
+/* ---------- Contact text block: frosted card ---------- */
+.contact-text {
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: clamp(28px, 4vw, 56px);
+    border: 1px solid var(--glass-border-dark);
+    border-radius: 30px;
+    background: linear-gradient(160deg, rgba(255, 255, 255, .76), rgba(255, 255, 255, .44));
+    -webkit-backdrop-filter: blur(12px) saturate(1.3);
+    backdrop-filter: blur(12px) saturate(1.3);
+    box-shadow: 0 30px 60px -34px rgba(20, 60, 56, .40), inset 0 1px 0 rgba(255, 255, 255, .80);
+}
+
+/* More transparent glass so the leaves behind the cards show blurred through them */
+.sticky-text-card,
+#hi .center-wrap,
+.contact-text {
+    background: linear-gradient(160deg, rgba(255, 255, 255, .52), rgba(255, 255, 255, .22));
+    -webkit-backdrop-filter: blur(9px) saturate(1.35);
+    backdrop-filter: blur(9px) saturate(1.35);
+}
+
+/* ---------- Footer: the section itself is the glass slab ---------- */
+.glass-filter-defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.footer {
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+    width: 100%;
+    max-width: 2000px;
+    margin: 0;
+    border-radius: 0;
+    border: 1px solid rgba(210, 255, 245, .14);
+    background: linear-gradient(180deg, rgba(47, 126, 114, .92) 0%, rgba(29, 95, 87, .94) 55%, rgba(18, 66, 61, .95) 100%);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: url(#footer-liquid) blur(7px) saturate(1.4);
+    backdrop-filter: url(#footer-liquid) blur(7px) saturate(1.4);
+    box-shadow:
+        0 -18px 46px -26px rgba(6, 26, 24, .55),
+        inset 0 1px 0 rgba(220, 255, 245, .26),
+        inset 0 0 130px -10px rgba(0, 0, 0, .24);
+}
+
+.footer-top,
+.footer-bottom {
+    position: relative;
+    z-index: 1;
+}
+
+/* ---------- Pebble frames: subtle glass sheen + rim ---------- */
+.pebble-frame::after {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border-radius: var(--pebble-radius, 50%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, .40) 0%, rgba(255, 255, 255, .10) 20%, rgba(255, 255, 255, 0) 42%);
+    pointer-events: none;
+    transition: background .5s ease, border-radius .8s ease;
+}
+
+.pebble-frame:hover::after {
+    background: linear-gradient(135deg, rgba(255, 255, 255, .55) 0%, rgba(255, 255, 255, .14) 22%, rgba(255, 255, 255, 0) 46%);
+    border-radius: var(--pebble-radius-hover, 50%);
+}
+
+.resort-pebble-img {
+    border: 1px solid rgba(255, 255, 255, .30);
+}
+
+/* Squircle tiles in the "what awaits" grid */
+.await-image {
+    position: relative;
+}
+
+.await-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255, 255, 255, .32) 0%, rgba(255, 255, 255, .06) 22%, rgba(255, 255, 255, 0) 44%);
+    pointer-events: none;
+    transition: background .5s ease;
+}
+
+/* Gallery + mobile feature photos: crisp glass rim at the photo edge */
+.marquee-item img {
+    border: 1px solid rgba(255, 255, 255, .38);
+    filter: saturate(1.05);
+}
+
+.feature-mobile {
+    border: 1px solid rgba(255, 255, 255, .38);
+}
+
+/* ---------- No-backdrop-filter fallbacks ---------- */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .nav-menu,
+    .nav-menu-list,
+    .sticky-text-card,
+    #hi .center-wrap,
+    .contact-text,
+    .footer {
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+
+    .nav-menu {
+        background: rgba(9, 30, 28, .94);
+    }
+
+    .nav-menu-list {
+        background: rgba(9, 30, 28, .78);
+    }
+
+    .sticky-text-card,
+    #hi .center-wrap,
+    .contact-text {
+        background: rgba(255, 255, 255, .90);
+    }
+
+    .footer {
+        background-color: var(--color--primary);
+        background-image: none;
     }
 }
