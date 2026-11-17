@@ -3602,3 +3602,23 @@ html {
     background-color: var(--color--background);
     overflow-x: hidden;
 }
+
+
+
+/* Уважаем безопасные зоны на устройствах с "вырезом" в ландшафтном режиме */
+.page-wrapper {
+    /* Сохраняем ваши существующие отступы (если они есть) и добавляем безопасные зоны */
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+}
+
+/* Для полноэкранных секций, которые должны игнорировать отступы родителя */
+.section.hero,
+.section.footer {
+    /* Убираем отступы, чтобы фон занимал всю ширину */
+    margin-left: calc(-1 * max(0px, env(safe-area-inset-left)));
+    margin-right: calc(-1 * max(0px, env(safe-area-inset-right)));
+    /* Добавляем внутренние отступы для контента, чтобы он не прилипал к краям */
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+}
