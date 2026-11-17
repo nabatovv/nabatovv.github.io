@@ -2705,6 +2705,7 @@ blockquote {
     align-items: flex-start;
     max-width: 640px;
     padding: var(--section-space) 64px;
+    padding-bottom: 0;
     display: flex
 }
 
@@ -3740,6 +3741,11 @@ svg.menu-icon {
         text-align: center;
         align-items: center;
         justify-content: flex-start;
+    }
+
+    .sticky-text._2,
+    .sticky-text._3 {
+        margin-top: 48px;
     }
 
     .sticky-text .section-header {
