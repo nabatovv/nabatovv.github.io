@@ -168,48 +168,11 @@ td, th {
     padding: 0
 }
 
-@font-face {
-    font-family: webflow-icons;
-    src: url(data:application/x-font-ttf;charset=utf-8;base64,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) format("truetype");
-    font-weight: 400;
-    font-style: normal
-}
-
-[class^=w-icon-], [class*=\ w-icon-] {
-    speak: none;
-    font-variant: normal;
-    text-transform: none;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1;
-    font-family: webflow-icons !important
-}
-
-.w-icon-slider-right:before {
-    content: "î˜€"
-}
-
-.w-icon-slider-left:before {
-    content: "î˜"
-}
-
-.w-icon-nav-menu:before {
-    content: "î˜‚"
-}
-
-.w-icon-arrow-down:before, .w-icon-dropdown-toggle:before {
-    content: "î˜ƒ"
-}
-
-.w-icon-file-upload-remove:before {
-    content: "î¤€"
-}
-
-.w-icon-file-upload-icon:before {
-    content: "î¤ƒ"
-}
+/*
+ * NOTE: the "webflow-icons" @font-face and the .w-icon-* rules were removed.
+ * Their glyph codes had been corrupted by an encoding error, and the hamburger
+ * now uses an inline SVG instead (see "Mobile hamburger menu" at the bottom).
+ */
 
 * {
     box-sizing: border-box
@@ -648,11 +611,6 @@ textarea.w-input, textarea.w-select {
     display: block
 }
 
-.w-icon-file-upload-remove {
-    margin: auto;
-    font-size: 10px
-}
-
 .w-file-upload-error-msg {
     color: #ea384c;
     padding: 2px 0;
@@ -674,16 +632,6 @@ textarea.w-input, textarea.w-select {
     font-size: 14px;
     font-weight: 400;
     display: inline-block
-}
-
-.w-icon-file-upload-icon, .w-icon-file-upload-uploading {
-    width: 20px;
-    margin-right: 8px;
-    display: inline-block
-}
-
-.w-icon-file-upload-uploading {
-    height: 20px
 }
 
 .w-container {
@@ -1401,12 +1349,6 @@ textarea.w-input, textarea.w-select {
     outline: 0
 }
 
-@media screen and (max-width: 767px) {
-    .w-nav-brand {
-        padding-left: 10px
-    }
-}
-
 .w-lightbox-backdrop {
     cursor: auto;
     letter-spacing: normal;
@@ -1819,6 +1761,7 @@ textarea.w-input, textarea.w-select {
     text-decoration: none;
     position: relative;
     max-width: 10%;
+    min-width: 120px;
     padding: 8px;
     background: #EFEEDF;
     border-radius: 50%;
@@ -1939,6 +1882,10 @@ textarea.w-input, textarea.w-select {
     .w-nav[data-collapse=medium] .w-nav-button {
         display: block
     }
+
+    .top-contact-us-button {
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 767px) {
@@ -1948,10 +1895,6 @@ textarea.w-input, textarea.w-select {
 
     .w-nav[data-collapse=small] .w-nav-button {
         display: block
-    }
-
-    .w-nav-brand {
-        padding-left: 10px
     }
 }
 
@@ -2246,7 +2189,10 @@ blockquote {
     border-radius: 99px;
     justify-content: center;
     align-items: center;
-    height: 40px;
+    /*height: 40px;*/
+    text-align: center;
+    min-height: 40px;
+    line-height: 18px;
     padding-left: 20px;
     padding-right: 20px;
     font-weight: 600;
@@ -2935,11 +2881,6 @@ blockquote {
         grid-template-columns:2fr
     }
 
-    .menu-button.w--open {
-        color: var(--color--primary);
-        background-color: #0000
-    }
-
     .utility-block {
         min-height: auto
     }
@@ -2973,10 +2914,6 @@ blockquote {
 
     .grid-contact {
         grid-template-columns:1fr
-    }
-
-    .icon-2 {
-        color: var(--color--white)
     }
 }
 
@@ -3376,4 +3313,124 @@ blockquote {
 .pebble-frame:hover::before {
     border-radius: 54% 46% 44% 56% / 52% 48% 54% 46%;
     transform: rotate(2deg) scale(1.02);
+}
+
+
+/* ===== Mobile hamburger menu (CSS-only toggle) =====
+   Markup: <input id="nav-toggle" class="nav-toggle"> + <nav class="w-nav-menu"> + <label for="nav-toggle" class="menu-button">
+   The three elements must be siblings (input first) so "~" selectors work. */
+
+/* Don't let the navbar container clip the dropdown */
+.navbar .container {
+    overflow: visible;
+}
+
+/* The real checkbox: invisible but still focusable (keyboard / screen readers) */
+.nav-toggle {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* Hamburger button (a <label>; only visible <= 991px via .w-nav[data-collapse=medium] .w-nav-button) */
+.menu-button {
+    color: var(--color--white);
+    align-self: center;
+    margin: 0;
+    padding: 14px;
+    line-height: 0;
+    font-weight: 400;
+    cursor: pointer;
+    border-radius: var(--corner-radius--corner-small);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.nav-toggle:focus-visible ~ .menu-button {
+    outline: 2px solid var(--color--accent);
+    outline-offset: 2px;
+}
+
+svg.menu-icon {
+    display: block;
+    overflow: visible;
+    pointer-events: none;
+}
+
+/* Three bars that morph into an X when the menu is open */
+.menu-icon .bar {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform .3s ease, opacity .2s ease;
+}
+
+.nav-toggle:checked ~ .menu-button .bar-1 {
+    transform: translateY(5px) rotate(45deg);
+}
+
+.nav-toggle:checked ~ .menu-button .bar-2 {
+    opacity: 0;
+}
+
+.nav-toggle:checked ~ .menu-button .bar-3 {
+    transform: translateY(-5px) rotate(-45deg);
+}
+
+@keyframes nav-menu-in {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* Opened dropdown. Selector is intentionally more specific than
+   ".w-nav[data-collapse=medium] .w-nav-menu { display: none }" */
+@media screen and (max-width: 991px) {
+    .w-nav[data-collapse=medium] .nav-toggle:checked ~ .w-nav-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        float: none;
+        margin: 0 16px;
+        max-height: calc(100vh - 190px);
+        max-height: calc(100dvh - 190px);
+        overflow-y: auto;
+        z-index: 1001;
+        animation: nav-menu-in .25s ease both;
+    }
+}
+
+@media screen and (max-width: 479px) {
+    .w-nav[data-collapse=medium] .nav-toggle:checked ~ .w-nav-menu {
+        padding: 28px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .w-nav[data-collapse=medium] .nav-toggle:checked ~ .w-nav-menu {
+        animation: none;
+    }
+
+    .menu-icon .bar {
+        transition: none;
+    }
+}
+
+
+
+.bottom-logo {
+    min-width: 104px;
 }
