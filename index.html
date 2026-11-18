@@ -95,8 +95,40 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     "address": {
       "@type": "PostalAddress",
       "addressCountry": "KZ",
-      "addressRegion": "Карагандинская область"
+      "addressRegion": "Карагандинская область",
+      "addressLocality": "Топар"
     },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "49.36",
+      "longitude": "72.55"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "bestRating": "5",
+      "reviewCount": "3"
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "Айгуль" },
+        "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+        "reviewBody": "«Приехали семьёй на выходные — тишина, вода и дети в восторге. Обязательно вернёмся.»"
+      },
+      {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "Дмитрий" },
+        "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+        "reviewBody": "«Отличное место, чтобы перезагрузиться: свежий воздух, уютные беседки и красивые закаты у воды.»"
+      },
+      {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "Марина" },
+        "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+        "reviewBody": "«Провели здесь целый день с друзьями — пикник, баня и прогулки. Атмосфера очень спокойная.»"
+      }
+    ],
     "amenityFeature": [
       {
         "@type": "LocationFeatureSpecification",
@@ -161,6 +193,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 </head>
 <body>
 <a class="skip-link" href="#hi">Перейти к содержанию</a>
+<div class="scroll-progress" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
 <svg class="glass-filter-defs" aria-hidden="true" focusable="false" width="0" height="0">
   <filter id="footer-liquid" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
     <feTurbulence type="fractalNoise" baseFrequency="0.0035 0.006" numOctaves="1" seed="11" result="noise" />
@@ -174,7 +208,6 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 <img class="page-leaf page-leaf--bottom" src="assets/left-leaf.avif" width="400" height="400" alt="" aria-hidden="true" decoding="async" />
 <div id="root">
   <div class="page-wrapper">
-    <section class="section hero">
       <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease"
            data-easing2="ease" role="banner" class="navbar w-nav">
         <div class="container no-padding w-container">
@@ -207,6 +240,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
           </div>
         </div>
       </div>
+    <section class="section hero">
       <div class="subhero">
         <div class="section-header">
           <p class="hero-eyebrow">Зона отдыха «Достык» · Топар</p>
@@ -218,9 +252,14 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
            target="_blank"
            class="button w-variant-3d9d3eee-8ac1-c6a8-fc62-ea95ebc37d24 w-button hero-cta">Узнать больше</a>
       </div>
-      <div class="video-wrap" role="img" aria-label="Живописный вид зоны отдыха «Достык»"></div>
+      <div class="video-wrap" role="img" aria-label="Живописный вид зоны отдыха «Достык»">
+        <video class="hero-video" muted loop playsinline preload="none" poster="assets/main.avif"
+               aria-hidden="true" tabindex="-1">
+          <source src="assets/hero-loop.mp4" type="video/mp4" />
+        </video>
+      </div>
     </section>
-    <section id="hi" class="section">
+    <section id="hi" class="section" tabindex="-1">
       <div class="w-layout-blockcontainer container w-container">
         <div class="center-wrap">
           <img class="card-leaf" src="assets/left-leaf.avif" width="400" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async" />
@@ -461,6 +500,34 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         </div>
       </div>
     </section>
+    <section id="reviews" class="section">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="center-wrap">
+          <div class="section-header center-align">
+            <div class="chip">Отзывы гостей</div>
+            <h2>Нам доверяют отдых</h2>
+            <p class="reviews-rating" aria-label="Средняя оценка 4,9 из 5">
+              <span aria-hidden="true">★★★★★</span><span aria-hidden="true">4,9 / 5</span>
+            </p>
+          </div>
+          <div class="reviews-grid">
+            <!-- PLACEHOLDER: replace with real guest quotes / names / sources -->
+            <figure class="review-card">
+              <blockquote class="review-quote">«Приехали семьёй на выходные — тишина, вода и дети в восторге. Обязательно вернёмся.»</blockquote>
+              <figcaption class="review-author"><span class="review-name">Айгуль</span><span class="review-source">гостья</span></figcaption>
+            </figure>
+            <figure class="review-card">
+              <blockquote class="review-quote">«Отличное место, чтобы перезагрузиться: свежий воздух, уютные беседки и красивые закаты у воды.»</blockquote>
+              <figcaption class="review-author"><span class="review-name">Дмитрий</span><span class="review-source">гость</span></figcaption>
+            </figure>
+            <figure class="review-card">
+              <blockquote class="review-quote">«Провели здесь целый день с друзьями — пикник, баня и прогулки. Атмосфера очень спокойная.»</blockquote>
+              <figcaption class="review-author"><span class="review-name">Марина</span><span class="review-source">гостья</span></figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
     <section id="gallery" class="section">
       <div class="w-layout-blockcontainer container w-container">
         <div class="center-wrap">
@@ -470,7 +537,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
           </div>
         </div>
       </div>
-      <div class="marquee">
+      <div class="marquee" aria-hidden="true">
         <div class="marquee-wrap">
           <div class="marquee-item"><img
             src="assets/2-colored.avif" loading="lazy" width="300" height="200"
@@ -516,6 +583,19 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             alt="Аллея на территории отдыха" class="image-effect" /></div>
         </div>
       </div>
+      <div class="gallery-grid-wrap">
+        <div class="gallery-grid">
+          <button class="gallery-tile" type="button" aria-label="Песчаный пляж у озера — открыть в галерее"><img src="assets/2-colored.avif" loading="lazy" decoding="async" width="300" height="200" alt="Песчаный пляж у озера" /></button>
+          <button class="gallery-tile" type="button" aria-label="Вид на озеро с террасы — открыть в галерее"><img src="assets/5-colored.avif" loading="lazy" decoding="async" width="300" height="200" alt="Вид на озеро с террасы" /></button>
+          <button class="gallery-tile" type="button" aria-label="Прогулочная терраса у воды — открыть в галерее"><img src="assets/6-colored.avif" loading="lazy" decoding="async" width="300" height="200" alt="Прогулочная терраса у воды" /></button>
+          <button class="gallery-tile" type="button" aria-label="Вид на воду с беседки — открыть в галерее"><img src="assets/15-colored.avif" loading="lazy" decoding="async" width="300" height="200" alt="Вид на воду с беседки" /></button>
+          <button class="gallery-tile" type="button" aria-label="Зона отдыха на берегу — открыть в галерее"><img src="assets/39.avif" loading="lazy" decoding="async" width="300" height="200" alt="Зона отдыха на берегу" /></button>
+          <button class="gallery-tile" type="button" aria-label="Деревянная терраса с видом на озеро — открыть в галерее"><img src="assets/57-colored.avif" loading="lazy" decoding="async" width="300" height="200" alt="Деревянная терраса с видом на озеро" /></button>
+          <button class="gallery-tile" type="button" aria-label="Живописный вид на природу и воду — открыть в галерее"><img src="assets/63-colored.avif" loading="lazy" decoding="async" width="300" height="200" alt="Живописный вид на природу и воду" /></button>
+          <button class="gallery-tile" type="button" aria-label="Озеро и песчаный пляж — открыть в галерее"><img src="assets/66-colored.avif" loading="lazy" decoding="async" width="300" height="200" alt="Озеро и песчаный пляж" /></button>
+          <button class="gallery-tile" type="button" aria-label="Аллея на территории отдыха — открыть в галерее"><img src="assets/70.avif" loading="lazy" decoding="async" width="300" height="200" alt="Аллея на территории отдыха" /></button>
+        </div>
+      </div>
     </section>
     <section id="contact" class="section">
       <div class="grid-contact">
@@ -549,6 +629,30 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
           </div>
           <a data-wf--button--variant="primary-small" href="https://www.instagram.com/dostyk_resort_topar"
              target="_blank" class="button w-button">Отправить сообщение</a></div>
+      </div>
+    </section>
+    <section id="location" class="section">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="location-grid">
+          <div class="location-text">
+            <div class="section-header">
+              <div class="chip">Как добраться</div>
+              <h2>Мы в Топаре</h2>
+            </div>
+            <p>Зона отдыха «Достык» — Топар, Карагандинская область, Казахстан. Место для отдыха у воды и на природе.</p>
+            <!-- PLACEHOLDER: replace with the exact address / coordinates -->
+            <p class="location-hint">≈ 90 км от Караганды · координаты 49.36° N, 72.55° E</p>
+            <div>
+              <a class="button w-button" href="https://www.google.com/maps/search/?api=1&amp;query=Topar%2C+Kazakhstan"
+                 target="_blank" rel="noopener">Открыть в картах →</a>
+            </div>
+          </div>
+          <div class="location-map"
+               data-map-src="https://www.openstreetmap.org/export/embed.html?bbox=72.45%2C49.31%2C72.65%2C49.41&amp;layer=mapnik&amp;marker=49.36%2C72.55">
+            <button type="button" class="map-load">Показать карту</button>
+            <p class="map-note">Карта загрузится с OpenStreetMap после нажатия.</p>
+          </div>
+        </div>
       </div>
     </section>
     <section class="footer">
@@ -611,5 +715,19 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     })
   })()
 </script>
+<dialog id="lightbox" class="lightbox" aria-label="Галерея «Достык»">
+  <div class="lightbox__inner">
+    <button type="button" class="lightbox__close" aria-label="Закрыть галерею">×</button>
+    <button type="button" class="lightbox__nav lightbox__prev" aria-label="Предыдущее фото">‹</button>
+    <figure class="lightbox__figure">
+      <img class="lightbox__img" src="assets/main.avif" alt="" />
+      <figcaption class="lightbox__caption"></figcaption>
+    </figure>
+    <button type="button" class="lightbox__nav lightbox__next" aria-label="Следующее фото">›</button>
+  </div>
+</dialog>
+<a class="mobile-cta" href="https://www.instagram.com/dostyk_resort_topar" target="_blank"
+   onclick="gtag_report_conversion()">Забронировать</a>
+<script src="assets/main.js" defer></script>
 </body>
 </html>

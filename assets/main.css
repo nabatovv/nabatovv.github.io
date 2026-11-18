@@ -3952,6 +3952,7 @@ body {
 /* ---------- Base: smooth anchor scrolling (respect reduced motion) ---------- */
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 84px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -4009,15 +4010,26 @@ summary:focus-visible,
     background-attachment: fixed;
 }
 
+/* Ambient hero video sits over the poster image; the image remains the fallback */
+.hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    pointer-events: none;
+}
+
 /* Frosted-glass panel for the hero copy (replaces the old per-line highlight) */
 .subhero {
     padding: 28px 30px;
-    border: 1px solid rgba(255, 255, 255, .18);
+    border: 1px solid var(--glass-border-light);
     border-radius: 22px;
-    background: rgba(9, 30, 28, .46);
-    -webkit-backdrop-filter: blur(24px) saturate(1.6);
-    backdrop-filter: blur(24px) saturate(1.6);
-    box-shadow: 0 24px 60px -24px rgba(0, 0, 0, .5);
+    background: var(--glass-dark);
+    -webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate));
+    backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate));
+    box-shadow: var(--glass-shadow);
 }
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
@@ -4137,12 +4149,107 @@ summary:focus-visible,
     --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, .55);
 }
 
-/* ---------- Navigation: plain bar, but a heavily-blurred menu pill ---------- */
+/* ---------- Navigation: fixed, frosted header that condenses on scroll ---------- */
 .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
     background-color: transparent;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
-    border-bottom: 0;
+    border-bottom: 1px solid transparent;
+    transition: background-color .35s ease, box-shadow .35s ease, border-color .35s ease;
+}
+
+.navbar.is-stuck {
+    background-color: rgba(9, 30, 28, .55);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    backdrop-filter: blur(24px) saturate(1.6);
+    border-bottom-color: rgba(255, 255, 255, .12);
+    box-shadow: 0 12px 34px -20px rgba(6, 26, 24, .65);
+}
+
+.navbar .nav-content {
+    transition: padding-top .35s ease, padding-bottom .35s ease;
+}
+
+.navbar.is-stuck .nav-content {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.navbar .brand {
+    transform-origin: left center;
+    transition: transform .35s ease;
+}
+
+.navbar.is-stuck .brand {
+    transform: scale(.84);
+}
+
+/* Top-left logo: min-width 6% (6vw) on every screen, with an 80px floor
+   so it never collapses on narrow phones */
+.navbar .brand {
+    min-width: max(6vw, 80px);
+}
+
+/* ---------- Scroll-progress cue ---------- */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    background: var(--color--accent);
+    z-index: 1001;
+    pointer-events: none;
+    will-change: transform;
+}
+
+/* ---------- Active nav link (scroll-spy) ---------- */
+.nav-link.is-active {
+    opacity: 1;
+    background: rgba(255, 255, 255, .16);
+}
+
+/* ---------- Compact sticky CTA on phones ---------- */
+.mobile-cta {
+    position: fixed;
+    left: 50%;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    z-index: 1000;
+    display: none;
+    padding: 14px 28px;
+    border-radius: 999px;
+    background: var(--color--accent);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 14px 30px -12px rgba(193, 79, 26, .6);
+    transform: translate(-50%, 140%);
+    opacity: 0;
+    transition: transform .35s ease, opacity .35s ease;
+}
+
+.mobile-cta.is-visible {
+    transform: translate(-50%, 0);
+    opacity: 1;
+}
+
+@media screen and (max-width: 767px) {
+    .mobile-cta {
+        display: block;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mobile-cta {
+        transition: none;
+    }
 }
 
 /* Desktop link pill */
@@ -4151,11 +4258,11 @@ summary:focus-visible,
         grid-column-gap: 6px;
         grid-row-gap: 6px;
         padding: 6px;
-        border: 1px solid rgba(255, 255, 255, .16);
+        border: 1px solid var(--glass-border-light);
         border-radius: 999px;
-        background: rgba(9, 30, 28, .42);
-        -webkit-backdrop-filter: blur(24px) saturate(1.6);
-        backdrop-filter: blur(24px) saturate(1.6);
+        background: var(--glass-dark);
+        -webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate));
+        backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate));
         box-shadow: var(--glass-highlight);
     }
 
@@ -4260,7 +4367,7 @@ summary:focus-visible,
 .sticky-text-card,
 #hi .center-wrap,
 .contact-text {
-    background: linear-gradient(160deg, rgba(255, 255, 255, .52), rgba(255, 255, 255, .22));
+    background: var(--glass-light);
     -webkit-backdrop-filter: blur(9px) saturate(1.35);
     backdrop-filter: blur(9px) saturate(1.35);
 }
@@ -4281,7 +4388,7 @@ summary:focus-visible,
     max-width: 2000px;
     margin: 0;
     border-radius: 0;
-    border: 1px solid rgba(210, 255, 245, .14);
+    border: 1px solid var(--glass-border-light);
     background: linear-gradient(180deg, rgba(47, 126, 114, .92) 0%, rgba(29, 95, 87, .94) 55%, rgba(18, 66, 61, .95) 100%);
     -webkit-backdrop-filter: blur(16px) saturate(1.4);
     backdrop-filter: blur(16px) saturate(1.4);
@@ -4373,5 +4480,462 @@ summary:focus-visible,
     .footer {
         background-color: var(--color--primary);
         background-image: none;
+    }
+}
+
+/* ==========================================================================
+   Fluid type scale & editorial hierarchy (2026)
+   ========================================================================== */
+:root {
+    --type-h2: clamp(1.9rem, 1.25rem + 2.6vw, 2.9rem);
+    --type-h3: clamp(1.4rem, 1.1rem + 1.3vw, 1.9rem);
+    --type-body: clamp(1rem, 0.97rem + 0.16vw, 1.0625rem);
+    --type-lead: clamp(1.0625rem, 1rem + 0.45vw, 1.3rem);
+}
+
+body {
+    font-size: var(--type-body);
+    line-height: 1.65;
+}
+
+h2 {
+    font-size: var(--type-h2);
+    line-height: 1.1;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+}
+
+h3 {
+    font-size: var(--type-h3);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+}
+
+.chip {
+    font-size: .76rem;
+    letter-spacing: .16em;
+}
+
+/* Editorial section intros: give the opening paragraph standfirst weight */
+.small-box > p,
+.section-text > p:first-of-type,
+.sticky-text-card > p,
+.contact-wrap > p:first-of-type {
+    font-size: var(--type-lead);
+    line-height: 1.55;
+    max-width: 48ch;
+}
+
+.await-title {
+    font-size: 1.35rem;
+    line-height: 1.35;
+}
+
+/* ==========================================================================
+   Motion & micro-interactions (reduced-motion aware)
+   ========================================================================== */
+.reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .7s cubic-bezier(.22, .61, .36, 1), transform .7s cubic-bezier(.22, .61, .36, 1);
+    will-change: opacity, transform;
+}
+
+.reveal.is-in {
+    opacity: 1;
+    transform: none;
+}
+
+/* Button arrow slide on the in-content CTAs */
+.sticky-text-card .button::after,
+.contact-text .button::after {
+    content: "→";
+    margin-left: .5em;
+    transition: transform .3s ease;
+}
+
+.sticky-text-card .button:hover::after,
+.contact-text .button:hover::after {
+    transform: translateX(4px);
+}
+
+/* Animated list-icon states */
+.text-icon-wrap .icon {
+    transition: transform .3s ease, color .3s ease;
+}
+
+.list-item:hover .text-icon-wrap .icon {
+    transform: translateX(3px) scale(1.06);
+    color: var(--color--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    .sticky-text-card .button::after,
+    .contact-text .button::after,
+    .text-icon-wrap .icon {
+        transition: none;
+    }
+}
+
+/* ==========================================================================
+   Unified glass tokens, film grain & view transitions (2026)
+   ========================================================================== */
+:root {
+    --glass-dark: rgba(9, 30, 28, .48);
+    --glass-light: linear-gradient(160deg, rgba(255, 255, 255, .52), rgba(255, 255, 255, .22));
+}
+
+/* Subtle film-grain overlay across the whole page */
+.grain {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    pointer-events: none;
+    opacity: .04;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+}
+
+/* Progressive View Transitions for page navigations */
+@view-transition {
+    navigation: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation-duration: .32s;
+    }
+}
+
+/* ==========================================================================
+   Gallery lightbox
+   ========================================================================== */
+body.lightbox-open {
+    overflow: hidden;
+}
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #fff;
+}
+
+.lightbox::backdrop {
+    background: rgba(6, 22, 20, .8);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+}
+
+.lightbox__inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.lightbox__figure {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    max-width: min(1200px, 92vw);
+}
+
+.lightbox__img {
+    max-width: 100%;
+    max-height: 78vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 16px;
+    box-shadow: 0 30px 80px -30px rgba(0, 0, 0, .7);
+    background: #0b2a27;
+}
+
+.lightbox__caption {
+    color: rgba(255, 255, 255, .85);
+    font-size: .95rem;
+    text-align: center;
+    max-width: 60ch;
+}
+
+.lightbox__close,
+.lightbox__nav {
+    position: absolute;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, .25);
+    background: rgba(9, 30, 28, .55);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    color: #fff;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background .2s ease, transform .2s ease;
+}
+
+.lightbox__close { top: 18px; right: 18px; }
+.lightbox__prev { left: 18px; top: 50%; transform: translateY(-50%); }
+.lightbox__next { right: 18px; top: 50%; transform: translateY(-50%); }
+
+.lightbox__close:hover,
+.lightbox__nav:hover { background: rgba(9, 30, 28, .78); }
+.lightbox__prev:hover,
+.lightbox__next:hover { transform: translateY(-50%) scale(1.06); }
+
+.lightbox__close:focus-visible,
+.lightbox__nav:focus-visible {
+    outline: 2px solid var(--color--accent);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .lightbox[open] .lightbox__figure {
+        animation: lb-in .3s cubic-bezier(.22, .61, .36, 1) both;
+    }
+}
+
+@keyframes lb-in {
+    from { opacity: 0; transform: scale(.97); }
+    to { opacity: 1; transform: none; }
+}
+
+/* ---------- Responsive gallery grid (accessible lightbox entry) ---------- */
+.gallery-grid-wrap {
+    width: min(2000px, 100%);
+    margin: 0 auto;
+    padding: clamp(28px, 5vw, 64px) clamp(20px, 5vw, 64px);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
+    gap: clamp(12px, 1.6vw, 20px);
+}
+
+.gallery-tile {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    border-radius: 18px;
+    overflow: hidden;
+    aspect-ratio: 3 / 2;
+    cursor: zoom-in;
+    box-shadow: 0 14px 30px -18px rgba(20, 60, 56, .38);
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.gallery-tile img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+    transition: transform .5s ease;
+}
+
+.gallery-tile:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 22px 42px -18px rgba(20, 60, 56, .45);
+}
+
+.gallery-tile:hover img {
+    transform: scale(1.05);
+}
+
+.gallery-tile:focus-visible {
+    outline: 2px solid var(--color--accent);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gallery-tile,
+    .gallery-tile img {
+        transition: none;
+    }
+
+    .gallery-tile:hover {
+        transform: none;
+    }
+
+    .gallery-tile:hover img {
+        transform: none;
+    }
+}
+
+/* Lightbox close animation */
+@media (prefers-reduced-motion: no-preference) {
+    .lightbox.is-closing .lightbox__figure {
+        animation: lb-out .2s ease both;
+    }
+
+    .lightbox.is-closing::backdrop {
+        animation: lb-backdrop-out .2s ease both;
+    }
+}
+
+@keyframes lb-out {
+    to { opacity: 0; transform: scale(.97); }
+}
+
+@keyframes lb-backdrop-out {
+    to { opacity: 0; }
+}
+
+/* ==========================================================================
+   Testimonials & location map
+   ========================================================================== */
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+    gap: clamp(16px, 2vw, 28px);
+    margin-top: 40px;
+    width: min(1200px, 100%);
+}
+
+.review-card {
+    margin: 0;
+    padding: clamp(20px, 2.5vw, 32px);
+    border: 1px solid var(--glass-border-dark);
+    border-radius: 22px;
+    background: var(--glass-light);
+    -webkit-backdrop-filter: blur(9px) saturate(1.35);
+    backdrop-filter: blur(9px) saturate(1.35);
+    box-shadow: 0 24px 50px -30px rgba(20, 60, 56, .4);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: left;
+}
+
+.review-quote {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.55;
+}
+
+.review-author {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.review-name { font-weight: 700; }
+.review-source { opacity: .6; font-size: .9rem; }
+
+.reviews-rating {
+    margin: 0;
+    font-size: 1.1rem;
+    letter-spacing: .16em;
+    color: var(--color--accent);
+}
+
+.reviews-rating span {
+    letter-spacing: normal;
+    color: var(--color--primary);
+    font-weight: 600;
+    margin-left: .5em;
+}
+
+.reviews-rating span:first-child { margin-left: 0; }
+
+.location-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(24px, 4vw, 56px);
+    align-items: center;
+}
+
+.location-text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 520px;
+}
+
+.location-hint {
+    font-size: .95rem;
+    opacity: .75;
+}
+
+.location-map {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border-dark);
+    background: var(--color--primary-20);
+    display: grid;
+    place-items: center;
+    box-shadow: 0 24px 50px -30px rgba(20, 60, 56, .4);
+}
+
+.location-map iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+}
+
+.map-load {
+    padding: 12px 24px;
+    border-radius: 999px;
+    border: 1px solid var(--glass-border-dark);
+    background: #fff;
+    color: var(--color--primary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s ease, transform .2s ease;
+}
+
+.map-load:hover {
+    background: var(--color--primary-10);
+    transform: translateY(-1px);
+}
+
+.map-note {
+    position: absolute;
+    bottom: 12px;
+    left: 0;
+    right: 0;
+    margin: 0;
+    text-align: center;
+    font-size: .8rem;
+    opacity: .6;
+}
+
+@media screen and (max-width: 767px) {
+    .location-grid {
+        grid-template-columns: 1fr;
     }
 }
