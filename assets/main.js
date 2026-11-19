@@ -423,6 +423,95 @@
     });
   }
 
+  /* ---------- Secondary MapLibre map (site-styled, Dostyk only) ---------- */
+  function initLibreMap() {
+    var el = document.getElementById("maplibre-map");
+    if (!el || typeof maplibregl === "undefined") return;
+
+    var bounds = [[72.77361, 49.51278], [72.830423, 49.5172874]];
+    var fitOptions = { padding: { top: 48, bottom: 48, left: 48, right: 96 }, maxZoom: 14 };
+
+    var map = new maplibregl.Map({
+      container: el,
+      style: "https://tiles.openfreemap.org/styles/positron",
+      bounds: bounds,
+      fitBoundsOptions: fitOptions,
+      attributionControl: false
+    });
+    map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
+
+    function refit() {
+      var cam = map.cameraForBounds(bounds, fitOptions);
+      if (!cam || typeof cam.zoom !== "number") return;
+      /* fit both places, then step one zoom level out for a little more context */
+      map.jumpTo({ center: cam.center, zoom: cam.zoom - 0.8 });
+    }
+    map.on("load", refit);
+    map.on("resize", refit);
+
+    map.on("style.load", function () {
+      var layers = (map.getStyle().layers || []).slice();
+
+      /* Hide every label layer so no other places are shown */
+      layers.forEach(function (l) {
+        if (l.type === "symbol") {
+          try { map.setLayoutProperty(l.id, "visibility", "none"); } catch (e) {}
+        }
+      });
+
+      /* Recolour the vector map to the site's cream/teal palette */
+      var paint = {
+        "background": { "background-color": "#f4f1ea" },
+        "park": { "fill-color": "#e3ebe0" },
+        "water": { "fill-color": "#c7dad6" },
+        "waterway": { "line-color": "#b7d0cc" },
+        "landuse_residential": { "fill-color": "#efece4" },
+        "landcover_wood": { "fill-color": "#dae3d6" },
+        "landcover_ice_shelf": { "fill-color": "#f7f4ee" },
+        "landcover_glacier": { "fill-color": "#f7f4ee" },
+        "building": { "fill-color": "#e8e4da", "fill-outline-color": "#ddd8cc" },
+        "highway_major_inner": { "line-color": "#fbf8f1" },
+        "highway_major_casing": { "line-color": "#e2dccf" },
+        "highway_minor": { "line-color": "#f1ede4" },
+        "highway_path": { "line-color": "#ece7dc" },
+        "highway_motorway_inner": { "line-color": "#fbf8f1" },
+        "highway_motorway_casing": { "line-color": "#e2dccf" },
+        "highway_motorway_bridge_inner": { "line-color": "#fbf8f1" },
+        "highway_motorway_bridge_casing": { "line-color": "#e2dccf" },
+        "tunnel_motorway_inner": { "line-color": "#f1ede4" },
+        "tunnel_motorway_casing": { "line-color": "#e2dccf" },
+        "road_pier": { "line-color": "#f4f1ea" },
+        "road_area_pier": { "fill-color": "#f4f1ea" },
+        "boundary_2": { "line-color": "#d7d1c4" },
+        "boundary_3": { "line-color": "#d7d1c4" },
+        "railway": { "line-color": "#dcd6c9" },
+        "railway_transit": { "line-color": "#dcd6c9" },
+        "railway_service": { "line-color": "#dcd6c9" }
+      };
+      Object.keys(paint).forEach(function (id) {
+        if (!map.getLayer(id)) return;
+        Object.keys(paint[id]).forEach(function (prop) {
+          try { map.setPaintProperty(id, prop, paint[id][prop]); } catch (e) {}
+        });
+      });
+
+      /* Places shown on the map: Dostyk resort + the town of Topar */
+      var markerEl = document.createElement("div");
+      markerEl.className = "dostyk-marker";
+      markerEl.innerHTML = '<span class="dostyk-marker__label">Зона отдыха «Достык»</span>';
+      new maplibregl.Marker({ element: markerEl })
+        .setLngLat([72.77361, 49.51278])
+        .addTo(map);
+
+      var cityEl = document.createElement("div");
+      cityEl.className = "topar-marker";
+      cityEl.innerHTML = '<span class="topar-marker__label">Топар</span>';
+      new maplibregl.Marker({ element: cityEl })
+        .setLngLat([72.8304230, 49.5172874])
+        .addTo(map);
+    });
+  }
+
   function boot() {
     initHeroVideo();
     initStickyHeader();
@@ -432,6 +521,7 @@
     initReveals();
     initGallery();
     initMap();
+    initLibreMap();
   }
 
   if (document.readyState === "loading") {

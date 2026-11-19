@@ -100,8 +100,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": "49.36",
-      "longitude": "72.55"
+      "latitude": "49.51278",
+      "longitude": "72.77361"
     },
     "aggregateRating": {
       "@type": "AggregateRating",
@@ -190,6 +190,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
       color: #F7F6F1;
       background: #174F4B;
   }</style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
 </head>
 <body>
 <a class="skip-link" href="#hi">Перейти к содержанию</a>
@@ -252,12 +253,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
            target="_blank"
            class="button w-variant-3d9d3eee-8ac1-c6a8-fc62-ea95ebc37d24 w-button hero-cta">Узнать больше</a>
       </div>
-      <div class="video-wrap" role="img" aria-label="Живописный вид зоны отдыха «Достык»">
-        <video class="hero-video" muted loop playsinline preload="none" poster="assets/main.avif"
-               aria-hidden="true" tabindex="-1">
-          <source src="assets/hero-loop.mp4" type="video/mp4" />
-        </video>
-      </div>
+      <div class="video-wrap" role="img" aria-label="Живописный вид зоны отдыха «Достык»"></div>
     </section>
     <section id="hi" class="section" tabindex="-1">
       <div class="w-layout-blockcontainer container w-container">
@@ -583,19 +579,6 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             alt="Аллея на территории отдыха" class="image-effect" /></div>
         </div>
       </div>
-      <div class="gallery-grid-wrap">
-        <div class="gallery-grid">
-          <button class="gallery-tile" type="button" aria-label="Песчаный пляж у озера — открыть в галерее"><img src="assets/2-colored.avif" loading="lazy" decoding="async" width="300" height="200" alt="Песчаный пляж у озера" /></button>
-          <button class="gallery-tile" type="button" aria-label="Вид на озеро с террасы — открыть в галерее"><img src="assets/5-colored.avif" loading="lazy" decoding="async" width="300" height="200" alt="Вид на озеро с террасы" /></button>
-          <button class="gallery-tile" type="button" aria-label="Прогулочная терраса у воды — открыть в галерее"><img src="assets/6-colored.avif" loading="lazy" decoding="async" width="300" height="200" alt="Прогулочная терраса у воды" /></button>
-          <button class="gallery-tile" type="button" aria-label="Вид на воду с беседки — открыть в галерее"><img src="assets/15-colored.avif" loading="lazy" decoding="async" width="300" height="200" alt="Вид на воду с беседки" /></button>
-          <button class="gallery-tile" type="button" aria-label="Зона отдыха на берегу — открыть в галерее"><img src="assets/39.avif" loading="lazy" decoding="async" width="300" height="200" alt="Зона отдыха на берегу" /></button>
-          <button class="gallery-tile" type="button" aria-label="Деревянная терраса с видом на озеро — открыть в галерее"><img src="assets/57-colored.avif" loading="lazy" decoding="async" width="300" height="200" alt="Деревянная терраса с видом на озеро" /></button>
-          <button class="gallery-tile" type="button" aria-label="Живописный вид на природу и воду — открыть в галерее"><img src="assets/63-colored.avif" loading="lazy" decoding="async" width="300" height="200" alt="Живописный вид на природу и воду" /></button>
-          <button class="gallery-tile" type="button" aria-label="Озеро и песчаный пляж — открыть в галерее"><img src="assets/66-colored.avif" loading="lazy" decoding="async" width="300" height="200" alt="Озеро и песчаный пляж" /></button>
-          <button class="gallery-tile" type="button" aria-label="Аллея на территории отдыха — открыть в галерее"><img src="assets/70.avif" loading="lazy" decoding="async" width="300" height="200" alt="Аллея на территории отдыха" /></button>
-        </div>
-      </div>
     </section>
     <section id="contact" class="section">
       <div class="grid-contact">
@@ -639,18 +622,20 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
               <div class="chip">Как добраться</div>
               <h2>Мы в Топаре</h2>
             </div>
-            <p>Зона отдыха «Достык» — Топар, Карагандинская область, Казахстан. Место для отдыха у воды и на природе.</p>
+            <p>Зона отдыха «Достык» — первая на выезде из Топара.</p>
             <!-- PLACEHOLDER: replace with the exact address / coordinates -->
-            <p class="location-hint">≈ 90 км от Караганды · координаты 49.36° N, 72.55° E</p>
+            <div class="location-hint">
+              <span>≈ 60 км от Караганды</span>
+              <span>≈ 260 км от Астаны</span>
+              <span>49°30′46″N, 72°46′25″E</span>
+            </div>
             <div>
-              <a class="button w-button" href="https://www.google.com/maps/search/?api=1&amp;query=Topar%2C+Kazakhstan"
-                 target="_blank" rel="noopener">Открыть в картах →</a>
+              <a class="button w-button" href="https://yandex.com/maps/?ll=72.77361%2C49.51278&amp;z=13&amp;pt=72.77361%2C49.51278"
+                 target="_blank" rel="noopener">Открыть в Яндекс Картах →</a>
             </div>
           </div>
-          <div class="location-map"
-               data-map-src="https://www.openstreetmap.org/export/embed.html?bbox=72.45%2C49.31%2C72.65%2C49.41&amp;layer=mapnik&amp;marker=49.36%2C72.55">
-            <button type="button" class="map-load">Показать карту</button>
-            <p class="map-note">Карта загрузится с OpenStreetMap после нажатия.</p>
+          <div class="location-map location-map--libre">
+            <div id="maplibre-map" class="map-libre" role="region" aria-label="Карта зоны отдыха «Достык» — Топар"></div>
           </div>
         </div>
       </div>
@@ -728,6 +713,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 </dialog>
 <a class="mobile-cta" href="https://www.instagram.com/dostyk_resort_topar" target="_blank"
    onclick="gtag_report_conversion()">Забронировать</a>
+<script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" defer></script>
 <script src="assets/main.js" defer></script>
 </body>
 </html>
