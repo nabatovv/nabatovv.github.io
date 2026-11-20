@@ -3050,7 +3050,10 @@ blockquote {
         border: 1px solid var(--color--primary-10);
         border-radius: var(--corner-radius--corner-medium);
         background-color: var(--color--primary);
-        padding: 64px;
+        /* One measure for the whole panel: the padding and the gap between the
+           links and the CTA are both 32px, so the block reads as a single rhythm
+           instead of a 64px hole under the button. */
+        padding: 32px;
         box-shadow: 0 8px 24px #0003
     }
 
@@ -3060,7 +3063,9 @@ blockquote {
         flex-flow: column;
         justify-content: space-between;
         align-items: flex-start;
-        margin-bottom: 32px
+        /* The flex row-gap already spaces the list from the CTA; this margin
+           used to double it to 64px. */
+        margin-bottom: 0
     }
 
     .grid-two, .text-block {
@@ -3134,7 +3139,10 @@ blockquote {
     }
 
     .nav-menu {
-        padding: 40px
+        /* 24px matches the bar's own 24px side inset, and the row-gap shrinks
+           with it so the panel keeps one measure. */
+        padding: 24px;
+        row-gap: 24px
     }
 
     .nav-menu-list {
@@ -3794,7 +3802,8 @@ svg.menu-icon {
 
 @media screen and (max-width: 479px) {
     .w-nav[data-collapse=medium] .nav-toggle:checked ~ .w-nav-menu {
-        padding: 28px;
+        /* 24px matches the bar's 24px side inset; the panel keeps one measure. */
+        padding: 24px;
     }
 }
 
