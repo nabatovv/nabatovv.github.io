@@ -523,6 +523,67 @@
     });
   }
 
+  /* ---------- Hero copy: glide instead of jumping on viewport resize ---------- */
+  /* Phones: the hero tracks the viewport height and the copy panel is anchored
+     to its bottom edge, so when the URL bar collapses the panel lands ~120px
+     lower in a single step. We measure that layout shift, cancel it at once
+     with a translate, and ease the translate away — the panel glides into its
+     new place instead of snapping. `translate` is used rather than `transform`
+     because the entrance animation owns `transform` (fill-mode: both). */
+  function initHeroGlide() {
+    var sub = document.querySelector(".subhero");
+    if (!sub || typeof sub.animate !== "function") return;
+
+    var lastTop = sub.offsetTop;
+    var glide = null;
+
+    function onChange() {
+      var top = sub.offsetTop;          // layout position, unaffected by translate
+      var moved = top - lastTop;
+      lastTop = top;
+      if (!moved) return;
+      if (reduceMotion.matches) return;
+      if (!window.matchMedia("(max-width: 767px)").matches) return;
+
+      if (glide) glide.cancel();
+      glide = sub.animate(
+        [{ translate: "0 " + -moved + "px" }, { translate: "0 0" }],
+        { duration: 420, easing: "cubic-bezier(.22, .61, .36, 1)" }
+      );
+    }
+
+    window.addEventListener("resize", onChange, { passive: true });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", onChange, { passive: true });
+    }
+  }
+
+  /* ---------- Hero scroll hint: steps aside once the hero is behind us ---------- */
+  function initScrollHint() {
+    var hint = document.querySelector(".scroll-hint");
+    var hero = document.querySelector(".section.hero");
+    if (!hint || !hero) return;
+    var ticking = false;
+
+    function update() {
+      // Keep the cue while the main screen still dominates the view; drop it
+      // once three quarters of it has scrolled away.
+      var heroBottom = hero.getBoundingClientRect().bottom;
+      hint.classList.toggle("is-hidden", heroBottom < window.innerHeight * 0.25);
+      ticking = false;
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(update);
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    update();
+  }
+
   function boot() {
     initHeroVideo();
     initStickyHeader();
@@ -530,6 +591,8 @@
     initScrollSpy();
     initMobileCta();
     initReveals();
+    initHeroGlide();
+    initScrollHint();
     initGallery();
     initMap();
     initLibreMap();

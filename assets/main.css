@@ -5153,3 +5153,95 @@ body.lightbox-open {
         padding-right: var(--sticky-edge);
     }
 }
+
+/* ==========================================================================
+   Hero scroll hint — a quiet "there is more below" cue
+   --------------------------------------------------------------------------
+   Composition: the hint lives in the empty band at the bottom centre of the
+   hero. On desktop the copy panel sits bottom-right (64px in from the edge) so
+   the centre band is free; on phones the panel is anchored to the bottom, so
+   the hero reserves an extra 64px of bottom padding to keep a clear lane for
+   the cue. Nothing overlaps the copy, its button, or the fixed mobile CTA.
+   ========================================================================== */
+.scroll-hint {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(12px, 2.2vh, 20px);
+    z-index: 4;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, .46);
+    /* A touch denser than the plain glass token so the cue stays legible over
+       bright sand, sky and dark roof beams alike. */
+    background: rgba(9, 30, 28, .58);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    box-shadow:
+        0 10px 24px -12px rgba(6, 26, 24, .75),
+        inset 0 1px 0 rgba(255, 255, 255, .34);
+    color: #fff;
+    text-decoration: none;
+    translate: -50% 0;
+    transition: opacity .4s ease, translate .4s ease, background-color .25s ease;
+}
+
+.scroll-hint:hover,
+.scroll-hint:focus-visible {
+    background: rgba(255, 255, 255, .24);
+}
+
+.scroll-hint svg {
+    display: block;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .scroll-hint {
+        background: rgba(9, 30, 28, .9);
+    }
+}
+
+/* A small, slow bob — the only motion in the hero besides the video */
+@keyframes hint-bob {
+    0%, 100% { translate: 0 0; }
+    50%      { translate: 0 4px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .scroll-hint__icon {
+        animation: hint-bob 2s ease-in-out infinite;
+    }
+}
+
+/* Once the main screen is behind you the cue steps aside */
+.scroll-hint.is-hidden {
+    opacity: 0;
+    translate: -50% 10px;
+    pointer-events: none;
+}
+
+/* Phones: reserve a lane under the copy panel for the cue. */
+@media screen and (max-width: 767px) {
+    .section.hero {
+        padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 64px);
+    }
+
+    .scroll-hint {
+        width: 40px;
+        height: 40px;
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+    }
+}
+
+/* Tablet band: the copy panel sits 64px off the bottom edge and is wide enough
+   to pass over the centre line, so the cue tucks in tighter to keep a clear gap
+   underneath it (at <=767 the hero reserves a lane instead). */
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .scroll-hint {
+        bottom: 10px;
+        width: 40px;
+        height: 40px;
+    }
+}
