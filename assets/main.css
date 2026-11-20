@@ -2851,6 +2851,34 @@ blockquote {
     display: flex
 }
 
+/* The booking label and the phone line are one group inside .contact-wrap, so
+   that 24px row gap never landed between them and the number sat right under
+   the bold label. Give the block itself a rhythm: a real gap between the two
+   lines, plus equal padding above and below so the group stays balanced
+   between the intro paragraph and the address. */
+.contact-wrap > div:first-of-type {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-block: 8px;
+}
+
+.contact-wrap > div:first-of-type strong {
+    display: block;
+}
+
+/* Tighten the phone row's own line box so the 10px gap reads as the space
+   between the label and the number, not as stray leading. */
+.contact-wrap > div:first-of-type .text-icon-wrap {
+    line-height: 1.4;
+}
+
+/* The number is split across two source lines ("… 267 59" / "01"); keep it on
+   one line. It is short enough that this still fits the narrowest phone. */
+.contact-wrap > div:first-of-type a[href^="tel:"] {
+    white-space: nowrap;
+}
+
 .sticky-wrap {
     justify-content: center;
     align-items: center;
@@ -4492,6 +4520,39 @@ summary:focus-visible,
 
 .resort-pebble-img {
     border: 1px solid rgba(255, 255, 255, .30);
+}
+
+/* ---------- Clickable photos: pebble frames + "what awaits" tiles ---------- */
+/* These open the lightbox (see initGallery in main.js), so they get the same
+   pointer cue as the marquee images and a keyboard focus ring. The ring is
+   drawn inset because the photos sit inside overflow:hidden wrappers
+   (.image-reveal, .sticky-image-N, .await-image). */
+.pebble-frame img {
+    cursor: pointer;
+}
+
+.pebble-frame img:focus-visible,
+.await-icon:focus-visible {
+    outline: 3px solid var(--color--accent);
+    outline-offset: -6px;
+    border-radius: inherit;
+}
+
+/* The sticky #service stack is a single opener (its layers are cross-faded and
+   overlap, see initGallery): the wrapper takes the focus, and only the visible
+   layer paints the ring — invisible layers are not rendered. */
+.sticky-wrap {
+    cursor: pointer;
+}
+
+.sticky-wrap:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+
+.sticky-wrap:focus-visible .resort-pebble-img {
+    outline: 3px solid var(--color--accent);
+    outline-offset: -6px;
 }
 
 /* Squircle tiles in the "what awaits" grid */

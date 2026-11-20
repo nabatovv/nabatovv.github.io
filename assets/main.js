@@ -273,8 +273,10 @@
     var nextBtn = dialog.querySelector(".lightbox__next");
     var closeBtn = dialog.querySelector(".lightbox__close");
     var galleryTiles = qsa("#gallery .marquee-item img");
-    var awaitTiles = qsa("#about .await-icon");
-    var tiles = galleryTiles.concat(awaitTiles);
+    var awaitTiles = qsa("#await-section .await-card .await-icon");
+    var pebbleTiles = qsa(".pebble-frame img");
+    var featureTiles = qsa("#service .feature-mobile");
+    var tiles = galleryTiles.concat(awaitTiles, pebbleTiles, featureTiles);
     if (!tiles.length || !imgEl) return;
 
     var items = [];
@@ -289,6 +291,8 @@
     }
     collect(galleryTiles, true);
     collect(awaitTiles, false);
+    collect(pebbleTiles, false);
+    collect(featureTiles, false);
     if (!items.length) return;
 
     var index = 0;
@@ -345,9 +349,86 @@
     });
 
     // The marquee is a decorative teaser — mouse only, not a tab stop
-    tiles.forEach(function (img) {
+    galleryTiles.forEach(function (img) {
       img.addEventListener("click", function () {
         openByRaw(img.getAttribute("src"), img);
+      });
+    });
+
+    // Content photos (pebbles + "what awaits" cards) open the same lightbox and
+    // are real tab stops: Enter/Space work like a click.
+    function isActivationKey(e) {
+      return e.key === "Enter" || e.key === " " || e.key === "Spacebar";
+    }
+
+    function makePhotoActivatable(img) {
+      if (!img.hasAttribute("tabindex")) img.setAttribute("tabindex", "0");
+      if (!img.hasAttribute("role")) img.setAttribute("role", "button");
+      if (!img.hasAttribute("aria-label") && img.getAttribute("alt")) {
+        img.setAttribute("aria-label", img.getAttribute("alt").trim() + " — открыть фото");
+      }
+      img.addEventListener("click", function () {
+        openByRaw(img.getAttribute("src"), img);
+      });
+      img.addEventListener("keydown", function (e) {
+        if (isActivationKey(e)) {
+          e.preventDefault();
+          openByRaw(img.getAttribute("src"), img);
+        }
+      });
+    }
+
+    // The three photos in the sticky #service stack are cross-faded on top of
+    // each other: only one is visible per scroll position, and the topmost
+    // (usually invisible) layer would swallow clicks aimed at the visible one.
+    // So that stack is one opener: it resolves the photo you can actually see.
+    var stackedTiles = qsa(".sticky-image-1 img, .sticky-image-2 img, .sticky-image-3 img");
+    var directTiles = awaitTiles.concat(pebbleTiles, featureTiles).filter(function (img) {
+      return stackedTiles.indexOf(img) === -1;
+    });
+    directTiles.forEach(makePhotoActivatable);
+
+    qsa(".sticky-wrap").forEach(function (wrap) {
+      if (!wrap.querySelector(".sticky-image-1, .sticky-image-2, .sticky-image-3")) return;
+      var layers = qsa(".sticky-image-1, .sticky-image-2, .sticky-image-3", wrap);
+
+      function visiblePhoto() {
+        var best = null;
+        var bestOpacity = 0;
+        layers.forEach(function (layer) {
+          var im = layer.querySelector("img");
+          var o = parseFloat(window.getComputedStyle(layer).opacity);
+          // ">=" so the later sibling wins ties, matching paint order.
+          if (im && !isNaN(o) && o >= bestOpacity) {
+            bestOpacity = o;
+            best = im;
+          }
+        });
+        return bestOpacity > 0 ? best : null;
+      }
+
+      function syncLabel() {
+        var im = visiblePhoto();
+        var alt = im && im.getAttribute("alt") ? im.getAttribute("alt").trim() : "";
+        wrap.setAttribute("aria-label", alt ? alt + " — открыть фото" : "Открыть фото");
+      }
+
+      function openVisible() {
+        syncLabel();
+        var im = visiblePhoto();
+        if (im) openByRaw(im.getAttribute("src"), wrap);
+      }
+
+      wrap.setAttribute("tabindex", "0");
+      wrap.setAttribute("role", "button");
+      syncLabel();
+      wrap.addEventListener("click", openVisible);
+      wrap.addEventListener("focus", syncLabel);
+      wrap.addEventListener("keydown", function (e) {
+        if (isActivationKey(e)) {
+          e.preventDefault();
+          openVisible();
+        }
       });
     });
 
