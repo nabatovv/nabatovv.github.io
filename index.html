@@ -112,20 +112,38 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     "review": [
       {
         "@type": "Review",
-        "author": { "@type": "Person", "name": "Екатерина Яворская" },
-        "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+        "author": {
+          "@type": "Person",
+          "name": "Екатерина Яворская"
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5"
+        },
         "reviewBody": "Очень классная зона отдыха, отдыхали компанией, нам обеспечили тишину и комфорт только для нас, те кто держат эту зону большие молодцы!! Не стоят на месте, обустраивают и создают новые условия и идеи для людей, так же имеется мини магазинчик, где можно будет купить попить, перекусить и самое главное мороженое😂 Берег чистый, недавно завезли песок туда, стало ещё лучше, буквально за ночь появились новые какие-то качели, гамаки и т.д. Приедем ещё в июле 🥰"
       },
       {
         "@type": "Review",
-        "author": { "@type": "Person", "name": "Дархан" },
-        "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+        "author": {
+          "@type": "Person",
+          "name": "Дархан"
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5"
+        },
         "reviewBody": "Посещали эту базу в конце октября. Были на рыбалке , Закрывали жидкую воду. После рыбалки пошли в номер , переоделись , пожарили шашлыки на территории, есть беседки с мангала и , позже пошли в баню. Банька отличная , номер чистый , белье свежее, нашли нам стол и стулья - спасибо администратору. Короче очень понравилось."
       },
       {
         "@type": "Review",
-        "author": { "@type": "Person", "name": "Нурбота Сергей" },
-        "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+        "author": {
+          "@type": "Person",
+          "name": "Нурбота Сергей"
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5"
+        },
         "reviewBody": "Отличная зона отдыха! Всё чисто, уютно и красиво. Приятная атмосфера, вежливый персонал и прекрасный вид. Отличное место, чтобы отдохнуть с семьёй или друзьями. Обязательно приедем ещё! 🌅"
       }
     ],
@@ -203,45 +221,50 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     <feDisplacementMap in="SourceGraphic" in2="soft" scale="15" xChannelSelector="R" yChannelSelector="G" />
   </filter>
 </svg>
-<img class="page-leaf page-leaf--left" src="assets/left-leaf.avif" width="400" height="400" alt="" aria-hidden="true" decoding="async" />
-<img class="page-leaf page-leaf--center" src="assets/right-leaf.avif" width="400" height="400" alt="" aria-hidden="true" decoding="async" />
-<img class="page-leaf page-leaf--right" src="assets/right-leaf.avif" width="400" height="400" alt="" aria-hidden="true" decoding="async" />
-<img class="page-leaf page-leaf--bottom" src="assets/left-leaf.avif" width="400" height="400" alt="" aria-hidden="true" decoding="async" />
+<img class="page-leaf page-leaf--left" src="assets/left-leaf.avif" width="400" height="400" alt="" aria-hidden="true"
+     decoding="async" />
+<img class="page-leaf page-leaf--center" src="assets/right-leaf.avif" width="400" height="400" alt="" aria-hidden="true"
+     decoding="async" />
+<img class="page-leaf page-leaf--right" src="assets/right-leaf.avif" width="400" height="400" alt="" aria-hidden="true"
+     decoding="async" />
+<img class="page-leaf page-leaf--bottom" src="assets/left-leaf.avif" width="400" height="400" alt="" aria-hidden="true"
+     decoding="async" />
 <div id="root">
   <div class="page-wrapper">
-      <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease"
-           data-easing2="ease" role="banner" class="navbar w-nav">
-        <div class="container no-padding w-container">
-          <div class="nav-content"><a href="/" class="brand w-nav-brand">
-            <img class="brand-logo brand-logo--full" src="assets/logo.svg" alt="Логотип зоны отдыха Достык" />
-            <img class="brand-logo brand-logo--mark" src="assets/logo-no-text.svg" alt="" aria-hidden="true" /></a>
-            <!-- CSS-only toggle: checkbox + label. Must stay a sibling BEFORE .w-nav-menu and .menu-button -->
-            <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Меню"
-                   aria-expanded="false" aria-controls="site-nav" />
-            <nav role="navigation" id="site-nav" aria-label="Основная навигация"
-                 class="nav-menu w-nav-menu">
-              <div class="nav-menu-list"><a href="#hi" class="nav-link w-nav-link">Достык</a><a
-                href="#about" class="nav-link w-nav-link">О нас</a><a href="#service"
-                class="nav-link w-nav-link">Отдых и развлечения</a><a href="#contact"
-                class="nav-link w-nav-link">Природа</a>
-              </div>
-              <a data-wf--button--variant="white-small"
-                 onclick="gtag_report_conversion()"
-                 href="https://www.instagram.com/dostyk_resort_topar" target="_blank"
-                 class="button w-variant-3d9d3eee-8ac1-c6a8-fc62-ea95ebc37d24 w-button top-contact-us-button">Связаться с
-                нами</a></nav>
-            <label for="nav-toggle" class="menu-button w-nav-button">
-              <svg class="menu-icon" width="28" height="28" viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"
-                   focusable="false">
-                <path class="bar bar-1" d="M4 7h16" />
-                <path class="bar bar-2" d="M4 12h16" />
-                <path class="bar bar-3" d="M4 17h16" />
-              </svg>
-            </label>
-          </div>
+    <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease"
+         data-easing2="ease" role="banner" class="navbar w-nav">
+      <div class="container no-padding w-container">
+        <div class="nav-content"><a href="/" class="brand w-nav-brand">
+          <img class="brand-logo brand-logo--full" src="assets/logo.svg" alt="Логотип зоны отдыха Достык" />
+          <img class="brand-logo brand-logo--mark" src="assets/logo-no-text.svg" alt="" aria-hidden="true" /></a>
+          <!-- CSS-only toggle: checkbox + label. Must stay a sibling BEFORE .w-nav-menu and .menu-button -->
+          <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Меню"
+                 aria-expanded="false" aria-controls="site-nav" />
+          <nav role="navigation" id="site-nav" aria-label="Основная навигация"
+               class="nav-menu w-nav-menu">
+            <div class="nav-menu-list">
+              <a href="#hi" class="nav-link w-nav-link">Достык</a>
+              <a href="#service" class="nav-link w-nav-link">Отдых и развлечения</a>
+              <a href="#await-section" class="nav-link w-nav-link">Природа</a>
+              <a href="#reviews" class="nav-link w-nav-link">Отзывы</a>
+            </div>
+            <a data-wf--button--variant="white-small"
+               onclick="gtag_report_conversion()"
+               href="https://www.instagram.com/dostyk_resort_topar" target="_blank"
+               class="button w-variant-3d9d3eee-8ac1-c6a8-fc62-ea95ebc37d24 w-button top-contact-us-button">Связаться с
+              нами</a></nav>
+          <label for="nav-toggle" class="menu-button w-nav-button">
+            <svg class="menu-icon" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"
+                 focusable="false">
+              <path class="bar bar-1" d="M4 7h16" />
+              <path class="bar bar-2" d="M4 12h16" />
+              <path class="bar bar-3" d="M4 17h16" />
+            </svg>
+          </label>
         </div>
       </div>
+    </div>
     <section class="section hero">
       <div class="subhero">
         <div class="section-header">
@@ -259,7 +282,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     <section id="hi" class="section" tabindex="-1">
       <div class="w-layout-blockcontainer container w-container">
         <div class="center-wrap">
-          <img class="card-leaf" src="assets/left-leaf.avif" width="400" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+          <img class="card-leaf" src="assets/left-leaf.avif" width="400" height="400" alt="" aria-hidden="true"
+               loading="lazy" decoding="async" />
           <div class="section-header center-align"><img
             src="assets/logo.svg"
             loading="lazy" alt="Достык" class="logo" />
@@ -331,87 +355,157 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
           alt="Tranquil outdoor pool beside white wall with lush green plants and red flowers in a serene garden setting."
           class="feature-mobile" />
           <div class="sticky-text-card">
-          <img class="card-leaf" src="assets/left-leaf.avif" width="400" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async" />
-          <div class="section-header">
-            <div class="chip">Домики и номера</div>
-            <h2>Комфортный отдых на природе</h2></div>
-          <div class="section-text"><p>Выбирайте свой формат отдыха и наслаждайтесь временем вдали от
-            повседневной суеты.</p>
-            <ul role="list" class="w-list-unstyled">
-              <li class="list-item">
-                <div class="text-icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>
-                  <p>Отдых у воды</p></div>
-              </li>
-              <li class="list-item">
-                <div class="text-icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.5 1 8-1 4-4 6-7 7"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
-                  <p>Свежий воздух и природа</p></div>
-              </li>
-              <li class="list-item">
-                <div class="text-icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                  <p>Время с семьёй и друзьями</p></div>
-              </li>
-            </ul>
+            <img class="card-leaf" src="assets/left-leaf.avif" width="400" height="400" alt="" aria-hidden="true"
+                 loading="lazy" decoding="async" />
+            <div class="section-header">
+              <div class="chip">Домики и номера</div>
+              <h2>Комфортный отдых на природе</h2></div>
+            <div class="section-text"><p>Выбирайте свой формат отдыха и наслаждайтесь временем вдали от
+              повседневной суеты.</p>
+              <ul role="list" class="w-list-unstyled">
+                <li class="list-item">
+                  <div class="text-icon-wrap">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                      <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+                      <path
+                        d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+                      <path
+                        d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+                    </svg>
+                    <p>Отдых у воды</p></div>
+                </li>
+                <li class="list-item">
+                  <div class="text-icon-wrap">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                      <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.5 1 8-1 4-4 6-7 7" />
+                      <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+                    </svg>
+                    <p>Свежий воздух и природа</p></div>
+                </li>
+                <li class="list-item">
+                  <div class="text-icon-wrap">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                    <p>Время с семьёй и друзьями</p></div>
+                </li>
+              </ul>
+            </div>
+            <a data-wf--button--variant="primary-small" href="https://www.instagram.com/dostyk_resort_topar"
+               target="_blank" class="button w-button">Планируйте свой отдых</a>
           </div>
-          <a data-wf--button--variant="primary-small" href="https://www.instagram.com/dostyk_resort_topar"
-             target="_blank" class="button w-button">Планируйте свой отдых</a>
-          </div></div>
+        </div>
         <div data-w-id="4deecaec-f016-b0ae-ca4b-1e0d7b0c5240" class="sticky-text _2"><img
           src="assets/top-view-2.avif"
           loading="lazy"
           alt="Outdoor restaurant seating area with wooden tables set with napkins, cutlery, and salt and pepper shakers, teal cushions on chairs, and a background of greenery and overcast sky."
           class="feature-mobile" />
           <div class="sticky-text-card">
-          <img class="card-leaf" src="assets/right-leaf.avif" width="400" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async" />
-          <div class="section-header">
-            <div class="chip">Пикник и общение</div>
-            <h2>Вкус хорошего отдыха</h2></div>
-          <p>Возьмите с собой любимые угощения, устройте пикник и проведите время за приятной беседой на
-            природе.</p>
-          <ul role="list" class="w-list-unstyled">
-            <li class="list-item">
-              <div class="text-icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
-                <p>Место для пикника на свежем воздухе</p></div>
-            </li>
-            <li class="list-item">
-              <div class="text-icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 10V2"/><path d="m4.93 10.93 1.41 1.41"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m19.07 10.93-1.41 1.41"/><path d="M22 22H2"/><path d="m16 6-4 4-4-4"/><path d="M16 18a4 4 0 0 0-8 0"/></svg>
-                <p>Красивые виды и вечерняя атмосфера</p></div>
-            </li>
-            <li class="list-item">
-              <div class="text-icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-                <p>Время для неспешного отдыха</p></div>
-            </li>
-          </ul>
-          <a data-wf--button--variant="primary-small" href="https://www.instagram.com/dostyk_resort_topar"
-             target="_blank" class="button w-button">Откройте для себя отдых на природе</a>
-          </div></div>
+            <img class="card-leaf" src="assets/right-leaf.avif" width="400" height="400" alt="" aria-hidden="true"
+                 loading="lazy" decoding="async" />
+            <div class="section-header">
+              <div class="chip">Пикник и общение</div>
+              <h2>Вкус хорошего отдыха</h2></div>
+            <p>Возьмите с собой любимые угощения, устройте пикник и проведите время за приятной беседой на
+              природе.</p>
+            <ul role="list" class="w-list-unstyled">
+              <li class="list-item">
+                <div class="text-icon-wrap">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+                    <path d="M7 2v20" />
+                    <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
+                  </svg>
+                  <p>Место для пикника на свежем воздухе</p></div>
+              </li>
+              <li class="list-item">
+                <div class="text-icon-wrap">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <path d="M12 10V2" />
+                    <path d="m4.93 10.93 1.41 1.41" />
+                    <path d="M2 18h2" />
+                    <path d="M20 18h2" />
+                    <path d="m19.07 10.93-1.41 1.41" />
+                    <path d="M22 22H2" />
+                    <path d="m16 6-4 4-4-4" />
+                    <path d="M16 18a4 4 0 0 0-8 0" />
+                  </svg>
+                  <p>Красивые виды и вечерняя атмосфера</p></div>
+              </li>
+              <li class="list-item">
+                <div class="text-icon-wrap">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                  </svg>
+                  <p>Время для неспешного отдыха</p></div>
+              </li>
+            </ul>
+            <a data-wf--button--variant="primary-small" href="https://www.instagram.com/dostyk_resort_topar"
+               target="_blank" class="button w-button">Откройте для себя отдых на природе</a>
+          </div>
+        </div>
         <div data-w-id="32b962f0-c0c0-297a-6c49-d1a76e5542d7" class="sticky-text _3"><img
           src="assets/bottom-main_saturated.avif"
           loading="lazy"
           alt="View through a dark doorway of a room with a bed covered in brown and white bedding and a large window showing green trees outside."
           class="feature-mobile" />
           <div class="sticky-text-card">
-          <img class="card-leaf" src="assets/left-leaf.avif" width="400" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async" />
-          <div class="section-header">
-            <div class="chip">Отдых и восстановление</div>
-            <h2>Забудьте о заботах</h2></div>
-          <p>Отложите дела, насладитесь природой и проведите время с теми, кто вам дорог.</p>
-          <ul role="list" class="w-list-unstyled">
-            <li class="list-item">
-              <div class="text-icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3"/><path d="M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5"/><path d="M12 7.5V9"/><path d="M7.5 12H9"/><path d="M16.5 12H15"/><path d="M12 16.5V15"/></svg>
-                <p>Спокойный отдых на природе</p></div>
-            </li>
-            <li class="list-item">
-              <div class="text-icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>
-                <p>Свежий воздух у воды</p></div>
-            </li>
-            <li class="list-item">
-              <div class="text-icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>
-                <p>Перезагрузка вдали от суеты</p></div>
-            </li>
-          </ul>
-          <a data-wf--button--variant="primary-small" href="https://www.instagram.com/dostyk_resort_topar"
-             target="_blank" class="button w-button">Как провести день</a>
-          </div></div>
+            <img class="card-leaf" src="assets/left-leaf.avif" width="400" height="400" alt="" aria-hidden="true"
+                 loading="lazy" decoding="async" />
+            <div class="section-header">
+              <div class="chip">Отдых и восстановление</div>
+              <h2>Забудьте о заботах</h2></div>
+            <p>Отложите дела, насладитесь природой и проведите время с теми, кто вам дорог.</p>
+            <ul role="list" class="w-list-unstyled">
+              <li class="list-item">
+                <div class="text-icon-wrap">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="12" r="3" />
+                    <path
+                      d="M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5" />
+                    <path d="M12 7.5V9" />
+                    <path d="M7.5 12H9" />
+                    <path d="M16.5 12H15" />
+                    <path d="M12 16.5V15" />
+                  </svg>
+                  <p>Спокойный отдых на природе</p></div>
+              </li>
+              <li class="list-item">
+                <div class="text-icon-wrap">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2" />
+                    <path d="M9.6 4.6A2 2 0 1 1 11 8H2" />
+                    <path d="M12.6 19.4A2 2 0 1 0 14 16H2" />
+                  </svg>
+                  <p>Свежий воздух у воды</p></div>
+              </li>
+              <li class="list-item">
+                <div class="text-icon-wrap">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                    <path d="M21 3v5h-5" />
+                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                    <path d="M3 21v-5h5" />
+                  </svg>
+                  <p>Перезагрузка вдали от суеты</p></div>
+              </li>
+            </ul>
+            <a data-wf--button--variant="primary-small" href="https://www.instagram.com/dostyk_resort_topar"
+               target="_blank" class="button w-button">Как провести день</a>
+          </div>
+        </div>
       </div>
     </section>
     <section data-w-id="05295cfc-7a86-f22c-15fe-ebbc6f5e43de" class="scroll" aria-hidden="true">
@@ -466,7 +560,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         </div>
       </div>
     </section>
-    <section id="about" class="section">
+    <section id="await-section" class="section">
       <div class="w-layout-blockcontainer container w-container">
         <div class="center-wrap">
           <div class="section-header center-align">
@@ -564,29 +658,61 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             </p>
           </div>
           <div class="reviews-grid">
-            <a class="review-card" href="https://2gis.kz/firm/70000001101591424/tab/reviews" target="_blank" rel="noopener">
+            <a class="review-card" href="https://2gis.kz/firm/70000001101591424/tab/reviews" target="_blank"
+               rel="noopener">
               <div class="review-head">
-                <img class="review-avatar" src="assets/reviews/ekaterina-yavorskaya.avif" alt="Екатерина Яворская" loading="lazy" />
-                <span class="review-stars" role="img" aria-label="Оценка 5 из 5"><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /></span>
+                <img class="review-avatar" src="assets/reviews/ekaterina-yavorskaya.jpg" alt="Екатерина Яворская"
+                     loading="lazy" />
+                <span class="review-stars" role="img" aria-label="Оценка 5 из 5"><img src="assets/star.svg"
+                                                                                      alt="" /><img
+                  src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg"
+                                                                                          alt="" /><img
+                  src="assets/star.svg" alt="" /></span>
               </div>
-              <blockquote class="review-quote">Очень классная зона отдыха, отдыхали компанией, нам обеспечили тишину и комфорт только для нас, те кто держат эту зону большие молодцы!! Не стоят на месте, обустраивают и создают новые условия и идеи для людей, так же имеется мини магазинчик, где можно будет купить попить, перекусить и самое главное мороженое😂 Берег чистый, недавно завезли песок туда, стало ещё лучше, буквально за ночь появились новые какие-то качели, гамаки и т.д. Приедем ещё в июле 🥰</blockquote>
-              <div class="review-author"><span class="review-name">Екатерина Яворская</span><span class="review-source">гостья</span></div>
+              <blockquote class="review-quote">Очень классная зона отдыха, отдыхали компанией, нам обеспечили тишину и
+                комфорт только для нас, те кто держат эту зону большие молодцы!! Не стоят на месте, обустраивают и
+                создают новые условия и идеи для людей, так же имеется мини магазинчик, где можно будет купить попить,
+                перекусить и самое главное мороженое😂 Берег чистый, недавно завезли песок туда, стало ещё лучше,
+                буквально за ночь появились новые какие-то качели, гамаки и т.д. Приедем ещё в июле 🥰
+              </blockquote>
+              <div class="review-author"><span class="review-name">Екатерина Яворская</span><span class="review-source">гостья</span>
+              </div>
             </a>
-            <a class="review-card" href="https://2gis.kz/firm/70000001101591424/tab/reviews" target="_blank" rel="noopener">
+            <a class="review-card" href="https://2gis.kz/firm/70000001101591424/tab/reviews" target="_blank"
+               rel="noopener">
               <div class="review-head">
-                <img class="review-avatar" src="assets/reviews/darkhan.avif" alt="Дархан" loading="lazy" />
-                <span class="review-stars" role="img" aria-label="Оценка 5 из 5"><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /></span>
+                <img class="review-avatar" src="assets/reviews/darkhan.webp" alt="Дархан" loading="lazy" />
+                <span class="review-stars" role="img" aria-label="Оценка 5 из 5"><img src="assets/star.svg"
+                                                                                      alt="" /><img
+                  src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg"
+                                                                                          alt="" /><img
+                  src="assets/star.svg" alt="" /></span>
               </div>
-              <blockquote class="review-quote">Посещали эту базу в конце октября. Были на рыбалке , Закрывали жидкую воду. После рыбалки пошли в номер , переоделись , пожарили шашлыки на территории, есть беседки с мангала и , позже пошли в баню. Банька отличная , номер чистый , белье свежее, нашли нам стол и стулья - спасибо администратору. Короче очень понравилось.</blockquote>
-              <div class="review-author"><span class="review-name">Дархан</span><span class="review-source">гость</span></div>
+              <blockquote class="review-quote">Посещали эту базу в конце октября. Были на рыбалке , Закрывали жидкую
+                воду. После рыбалки пошли в номер , переоделись , пожарили шашлыки на территории, есть беседки с мангала
+                и , позже пошли в баню. Банька отличная , номер чистый , белье свежее, нашли нам стол и стулья - спасибо
+                администратору. Короче очень понравилось.
+              </blockquote>
+              <div class="review-author"><span class="review-name">Дархан</span><span class="review-source">гость</span>
+              </div>
             </a>
-            <a class="review-card" href="https://2gis.kz/firm/70000001101591424/tab/reviews" target="_blank" rel="noopener">
+            <a class="review-card" href="https://2gis.kz/firm/70000001101591424/tab/reviews" target="_blank"
+               rel="noopener">
               <div class="review-head">
-                <img class="review-avatar" src="assets/reviews/nurbota-sergey.avif" alt="Нурбота Сергей" loading="lazy" />
-                <span class="review-stars" role="img" aria-label="Оценка 5 из 5"><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /></span>
+                <img class="review-avatar" src="assets/reviews/nurbota-sergey.jpg" alt="Нурбота Сергей"
+                     loading="lazy" />
+                <span class="review-stars" role="img" aria-label="Оценка 5 из 5"><img src="assets/star.svg"
+                                                                                      alt="" /><img
+                  src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg"
+                                                                                          alt="" /><img
+                  src="assets/star.svg" alt="" /></span>
               </div>
-              <blockquote class="review-quote">Отличная зона отдыха! Всё чисто, уютно и красиво. Приятная атмосфера, вежливый персонал и прекрасный вид. Отличное место, чтобы отдохнуть с семьёй или друзьями. Обязательно приедем ещё! 🌅</blockquote>
-              <div class="review-author"><span class="review-name">Нурбота Сергей</span><span class="review-source">гость</span></div>
+              <blockquote class="review-quote">Отличная зона отдыха! Всё чисто, уютно и красиво. Приятная атмосфера,
+                вежливый персонал и прекрасный вид. Отличное место, чтобы отдохнуть с семьёй или друзьями. Обязательно
+                приедем ещё! 🌅
+              </blockquote>
+              <div class="review-author"><span class="review-name">Нурбота Сергей</span><span class="review-source">гость</span>
+              </div>
             </a>
           </div>
           <div class="reviews-actions">
@@ -609,7 +735,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
           </div>
         </div>
         <div class="contact-text">
-          <img class="card-leaf" src="assets/right-leaf.avif" width="400" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+          <img class="card-leaf" src="assets/right-leaf.avif" width="400" height="400" alt="" aria-hidden="true"
+               loading="lazy" decoding="async" />
           <div class="section-header">
             <div class="chip">Связаться с нами</div>
             <h2>Подарите себе день отдыха</h2></div>
@@ -617,9 +744,15 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             рады ответить на ваши вопросы.</p>
             <div>
               <div><strong>Бронирование и общие вопросы</strong></div>
-              <div class="text-icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:+77782675901"
-                                                             style="color:inherit">+7 (778) 267 59
-                01</a></div>
+              <div class="text-icon-wrap">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+                <a href="tel:+77782675901"
+                   style="color:inherit">+7 (778) 267 59
+                  01</a></div>
             </div>
             <div>
               <div style="display:none"><strong>Reservations &amp; General Inquiries</strong></div>
@@ -646,43 +779,44 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
               <span>49°30′46″N, 72°46′25″E</span>
             </div>
             <div>
-<!--              <a class="button w-button" href="https://yandex.com/maps/?ll=72.77361%2C49.51278&amp;z=13&amp;pt=72.77361%2C49.51278"-->
-<!--                 target="_blank" rel="noopener">Открыть в Яндекс Картах →</a>-->
+              <!--              <a class="button w-button" href="https://yandex.com/maps/?ll=72.77361%2C49.51278&amp;z=13&amp;pt=72.77361%2C49.51278"-->
+              <!--                 target="_blank" rel="noopener">Открыть в Яндекс Картах →</a>-->
               <a class="button w-button" href="https://2gis.kz/firm/70000001101591424"
                  target="_blank" rel="noopener">Открыть в картах 2ГИС →</a>
             </div>
           </div>
           <div class="location-map location-map--libre">
-            <div id="maplibre-map" class="map-libre" role="region" aria-label="Карта зоны отдыха «Достык» — Топар"></div>
+            <div id="maplibre-map" class="map-libre" role="region"
+                 aria-label="Карта зоны отдыха «Достык» — Топар"></div>
           </div>
         </div>
       </div>
     </section>
     <section class="footer">
-        <div class="footer-top">
-          <div><a href="/" aria-current="page" class="w-inline-block w--current">
-            <img class="bottom-logo"
-                 src="assets/logo.svg" loading="lazy" alt="Логотип зоны отдыха Достык" /></a>
-            <p class="footer-text">Зона отдыха «Достык» — место для встреч, пикников и отдыха на природе в
-              Топаре.</p></div>
-          <div class="footer-right">
-            <div class="footer-menu" style="display:none">
-              <div class="footer-title">Меню</div>
-              <a href="#hi" class="footer-link">Достык</a><a href="#about" class="footer-link">О нас</a><a
-              href="#service" class="footer-link">Отдых и развлечения</a><a href="#contact"
-                                                                            class="footer-link">Природа</a>
-            </div>
-            <div class="footer-menu" style="display:none">
-              <div class="footer-title">Служебные страницы</div>
-              <a href="utility-pages/licenses.html" class="footer-link">Лицензии</a><a
-              href="utility-pages/changelog.html" class="footer-link">История изменений</a><a
-              href="utility-pages/style-guide.html" class="footer-link">Руководство по стилю</a></div>
+      <div class="footer-top">
+        <div><a href="/" aria-current="page" class="w-inline-block w--current">
+          <img class="bottom-logo"
+               src="assets/logo.svg" loading="lazy" alt="Логотип зоны отдыха Достык" /></a>
+          <p class="footer-text">Зона отдыха «Достык» — место для встреч, пикников и отдыха на природе в
+            Топаре.</p></div>
+        <div class="footer-right">
+          <div class="footer-menu" style="display:none">
+            <div class="footer-title">Меню</div>
+            <a href="#hi" class="footer-link">Достык</a><a href="#service" class="footer-link">Отдых и развлечения</a><a
+            href="#about" class="footer-link">Природа</a>
+            <a href="#no-bustle" class="footer-link">О нас</a>
           </div>
+          <div class="footer-menu" style="display:none">
+            <div class="footer-title">Служебные страницы</div>
+            <a href="utility-pages/licenses.html" class="footer-link">Лицензии</a><a
+            href="utility-pages/changelog.html" class="footer-link">История изменений</a><a
+            href="utility-pages/style-guide.html" class="footer-link">Руководство по стилю</a></div>
         </div>
-        <div class="footer-bottom">
-          <div>© 2026 «Достык».
-          </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2026 «Достык».
         </div>
+      </div>
     </section>
   </div>
 </div>
