@@ -1786,7 +1786,6 @@ textarea.w-input, textarea.w-select {
 .w-nav-menu {
     float: right;
     position: relative;
-    margin-top: 2rem;
 }
 
 [data-nav-menu-open] {
@@ -2143,7 +2142,6 @@ blockquote {
     align-items: center;
     padding: 16px 64px;
     display: flex;
-    align-items: flex-start;
 }
 
 .nav-link {
@@ -2696,7 +2694,7 @@ blockquote {
     grid-column-gap: 48px;
     grid-row-gap: 48px;
     grid-template-rows:auto;
-    grid-template-columns:1fr 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-auto-columns: 1fr;
     align-items: stretch;
     max-width: 1200px;
@@ -2704,41 +2702,75 @@ blockquote {
     display: grid
 }
 
+/* Three tiles per row only when they fit as a row — never two plus one. */
+@media screen and (min-width: 960px) {
+    .await-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* Same frosted-card language as the review cards, so the "what awaits"
+   tiles read as panels instead of captions floating on the page. The photo
+   sits in a slim, even inset, with corners concentric to the card's, so the
+   gap reads as a deliberate frame rather than a stray margin. */
 .await-card {
+    --await-gap: clamp(10px, 1.1vw, 14px);
+    --await-radius: clamp(26px, 3.4vw, 44px);
     grid-column-gap: 16px;
     grid-row-gap: 16px;
     flex-flow: column;
+    align-items: center;
+    max-width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: var(--await-gap) var(--await-gap) clamp(16px, 1.8vw, 22px);
+    border: 1px solid var(--glass-border-dark);
+    border-radius: var(--await-radius);
+    corner-shape: squircle;
+    background: var(--glass-light);
+    -webkit-backdrop-filter: blur(9px) saturate(1.35);
+    backdrop-filter: blur(9px) saturate(1.35);
+    box-shadow: 0 24px 50px -30px rgba(20, 60, 56, .4);
+    overflow: hidden;
     display: flex
 }
 
+/* The caption indents a touch past the photo inset, so text never feels
+   pinned to the frame. */
+.await-card > .await-title,
+.await-card > p {
+    padding-left: clamp(6px, .8vw, 10px);
+    padding-right: clamp(6px, .8vw, 10px);
+}
+
 .await-image {
+    width: 100%;
     aspect-ratio: 1;
     background-color: var(--color--primary-20);
     justify-content: center;
     align-items: center;
-    margin-bottom: 16px;
+    margin: 0;
     display: flex;
     overflow: hidden;
-    /* symmetrical squircle (continuous rounded square, not a circle) */
-    border-radius: 30%;
-    corner-shape: squircle;
-    outline: 1.5px solid #d4c5b3;
-    outline-offset: 8px;
-    transition: border-radius .8s ease, transform .5s ease
+    /* Concentric corners: photo radius = card radius − inset, so the gap stays
+       even from corner to corner. */
+    border-radius: calc(var(--await-radius) - var(--await-gap));
+    corner-shape: squircle
 }
 
-/* Let the photo fill the whole squircle tile */
+/* Let the photo fill the whole tile */
 .await-icon {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block
+    display: block;
+    cursor: pointer;
+    transition: transform .5s ease
 }
 
-/* pebble-style morph on hover (symmetric, so the tile stays a squircle) */
-.await-card:hover .await-image {
-    border-radius: 36%;
-    transform: scale(1.02)
+/* gentle zoom inside the inset tile (the tile clips it) */
+.await-card:hover .await-icon {
+    transform: scale(1.05)
 }
 
 .marquee {
@@ -3145,8 +3177,7 @@ blockquote {
     }
 
     .sticky-text._1 {
-        text-align: center;
-        max-width: 400px
+        text-align: center
     }
 
     .flow-wrap {
@@ -3442,6 +3473,7 @@ blockquote {
     width: 300px;
     height: 200px;
     object-fit: cover;
+    cursor: pointer;
     border-radius: 12% 16% 10% 14% / 14% 10% 16% 12%;
     corner-shape: squircle;
     outline: 1.5px solid #d4c5b3;
@@ -4153,12 +4185,17 @@ summary:focus-visible,
 }
 
 .navbar.is-stuck {
-    background-color: rgba(9, 30, 28, .55);
-    -webkit-backdrop-filter: blur(24px) saturate(1.6);
-    backdrop-filter: blur(24px) saturate(1.6);
-    border-bottom-color: rgba(255, 255, 255, .12);
-    box-shadow: 0 12px 34px -20px rgba(6, 26, 24, .65);
+    /*-webkit-backdrop-filter: blur(26px) saturate(1.4);*/
+    /*backdrop-filter: blur(26px) saturate(1.4);*/
+    box-shadow: var(--glass-shadow);
+    background: rgba(9, 30, 28, 0.55);
+    border: 1px solid var(--glass-border-light);
 }
+
+/*.navbar.is-stuck *:not(#site-nav) {*/
+/*    -webkit-backdrop-filter: blur(26px) saturate(1.4);*/
+/*    backdrop-filter: blur(26px) saturate(1.4);*/
+/*}*/
 
 .navbar .nav-content {
     transition: padding-top .35s ease, padding-bottom .35s ease;
@@ -4169,19 +4206,45 @@ summary:focus-visible,
     padding-bottom: 8px;
 }
 
+/* Top-left logo: a circular badge that shrinks to 40px and swaps to the
+   text-less mark on scroll, with a super-fast transition. */
 .navbar .brand {
-    transform-origin: left center;
-    transition: transform .35s ease;
+    --brand-base: clamp(80px, 9vw, 132px);
+    width: var(--brand-base);
+    height: var(--brand-base);
+    min-width: 0;
+    max-width: none;
+    padding: 8px;
+    display: grid;
+    place-items: center;
+    transition: width .12s ease, height .12s ease, padding .12s ease;
 }
 
 .navbar.is-stuck .brand {
-    transform: scale(.84);
+    width: 60px;
+    height: 60px;
+    padding: 3px;
 }
 
-/* Top-left logo: min-width 6% (6vw) on every screen, with an 80px floor
-   so it never collapses on narrow phones */
-.navbar .brand {
-    min-width: max(6vw, 80px);
+.navbar .brand-logo {
+    grid-area: 1 / 1;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    transition: opacity .12s ease;
+}
+
+.navbar .brand-logo--mark {
+    opacity: 0;
+}
+
+.navbar.is-stuck .brand-logo--full {
+    opacity: 0;
+}
+
+.navbar.is-stuck .brand-logo--mark {
+    opacity: 1;
 }
 
 /* ---------- Scroll-progress cue ---------- */
@@ -4806,10 +4869,18 @@ body.lightbox-open {
    ========================================================================== */
 .reviews-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+    /* one review per row until all three genuinely fit side by side,
+       so the grid is never two cards plus a lonely third */
+    grid-template-columns: minmax(0, 1fr);
     gap: clamp(16px, 2vw, 28px);
     margin-top: 40px;
     width: min(1200px, 100%);
+}
+
+@media screen and (min-width: 960px) {
+    .reviews-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 }
 
 .review-card {
@@ -4825,6 +4896,9 @@ body.lightbox-open {
     flex-direction: column;
     gap: 16px;
     text-align: left;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .review-quote {
@@ -4842,11 +4916,56 @@ body.lightbox-open {
 .review-name { font-weight: 700; }
 .review-source { opacity: .6; font-size: .9rem; }
 
+.review-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.review-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    flex: none;
+    border: 2px solid rgba(23, 79, 75, .15);
+}
+
+.review-stars {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.review-stars img {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+.review-quote a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.review-quote a:hover,
+.review-quote a:focus-visible {
+    text-decoration: underline;
+}
+
 .reviews-rating {
     margin: 0;
     font-size: 1.1rem;
     letter-spacing: .16em;
     color: var(--color--accent);
+}
+
+/* "More reviews" CTA sits under the cards, aligned with the centred head. */
+.reviews-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(24px, 3vw, 36px);
 }
 
 .reviews-rating span {
@@ -4870,6 +4989,19 @@ body.lightbox-open {
     flex-direction: column;
     gap: 20px;
     max-width: 520px;
+}
+
+/* Match the centered intro blocks (e.g. the "Reviews" heading) on the
+   contact and location sections. */
+.contact-text,
+.location-text {
+    text-align: center;
+    align-items: center;
+}
+
+.contact-text .section-header,
+.location-text .section-header {
+    align-items: center;
 }
 
 .location-hint {

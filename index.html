@@ -112,21 +112,21 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     "review": [
       {
         "@type": "Review",
-        "author": { "@type": "Person", "name": "Айгуль" },
+        "author": { "@type": "Person", "name": "Екатерина Яворская" },
         "reviewRating": { "@type": "Rating", "ratingValue": "5" },
-        "reviewBody": "«Приехали семьёй на выходные — тишина, вода и дети в восторге. Обязательно вернёмся.»"
+        "reviewBody": "Очень классная зона отдыха, отдыхали компанией, нам обеспечили тишину и комфорт только для нас, те кто держат эту зону большие молодцы!! Не стоят на месте, обустраивают и создают новые условия и идеи для людей, так же имеется мини магазинчик, где можно будет купить попить, перекусить и самое главное мороженое😂 Берег чистый, недавно завезли песок туда, стало ещё лучше, буквально за ночь появились новые какие-то качели, гамаки и т.д. Приедем ещё в июле 🥰"
       },
       {
         "@type": "Review",
-        "author": { "@type": "Person", "name": "Дмитрий" },
+        "author": { "@type": "Person", "name": "Дархан" },
         "reviewRating": { "@type": "Rating", "ratingValue": "5" },
-        "reviewBody": "«Отличное место, чтобы перезагрузиться: свежий воздух, уютные беседки и красивые закаты у воды.»"
+        "reviewBody": "Посещали эту базу в конце октября. Были на рыбалке , Закрывали жидкую воду. После рыбалки пошли в номер , переоделись , пожарили шашлыки на территории, есть беседки с мангала и , позже пошли в баню. Банька отличная , номер чистый , белье свежее, нашли нам стол и стулья - спасибо администратору. Короче очень понравилось."
       },
       {
         "@type": "Review",
-        "author": { "@type": "Person", "name": "Марина" },
+        "author": { "@type": "Person", "name": "Нурбота Сергей" },
         "reviewRating": { "@type": "Rating", "ratingValue": "5" },
-        "reviewBody": "«Провели здесь целый день с друзьями — пикник, баня и прогулки. Атмосфера очень спокойная.»"
+        "reviewBody": "Отличная зона отдыха! Всё чисто, уютно и красиво. Приятная атмосфера, вежливый персонал и прекрасный вид. Отличное место, чтобы отдохнуть с семьёй или друзьями. Обязательно приедем ещё! 🌅"
       }
     ],
     "amenityFeature": [
@@ -212,8 +212,9 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
       <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease"
            data-easing2="ease" role="banner" class="navbar w-nav">
         <div class="container no-padding w-container">
-          <div class="nav-content"><a href="/" class="brand w-nav-brand"><img
-            src="assets/logo.svg" alt="Логотип зоны отдыха Достык" /></a>
+          <div class="nav-content"><a href="/" class="brand w-nav-brand">
+            <img class="brand-logo brand-logo--full" src="assets/logo.svg" alt="Логотип зоны отдыха Достык" />
+            <img class="brand-logo brand-logo--mark" src="assets/logo-no-text.svg" alt="" aria-hidden="true" /></a>
             <!-- CSS-only toggle: checkbox + label. Must stay a sibling BEFORE .w-nav-menu and .menu-button -->
             <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Меню"
                    aria-expanded="false" aria-controls="site-nav" />
@@ -496,34 +497,6 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         </div>
       </div>
     </section>
-    <section id="reviews" class="section">
-      <div class="w-layout-blockcontainer container w-container">
-        <div class="center-wrap">
-          <div class="section-header center-align">
-            <div class="chip">Отзывы гостей</div>
-            <h2>Нам доверяют отдых</h2>
-            <p class="reviews-rating" aria-label="Средняя оценка 4,9 из 5">
-              <span aria-hidden="true">★★★★★</span><span aria-hidden="true">4,9 / 5</span>
-            </p>
-          </div>
-          <div class="reviews-grid">
-            <!-- PLACEHOLDER: replace with real guest quotes / names / sources -->
-            <figure class="review-card">
-              <blockquote class="review-quote">«Приехали семьёй на выходные — тишина, вода и дети в восторге. Обязательно вернёмся.»</blockquote>
-              <figcaption class="review-author"><span class="review-name">Айгуль</span><span class="review-source">гостья</span></figcaption>
-            </figure>
-            <figure class="review-card">
-              <blockquote class="review-quote">«Отличное место, чтобы перезагрузиться: свежий воздух, уютные беседки и красивые закаты у воды.»</blockquote>
-              <figcaption class="review-author"><span class="review-name">Дмитрий</span><span class="review-source">гость</span></figcaption>
-            </figure>
-            <figure class="review-card">
-              <blockquote class="review-quote">«Провели здесь целый день с друзьями — пикник, баня и прогулки. Атмосфера очень спокойная.»</blockquote>
-              <figcaption class="review-author"><span class="review-name">Марина</span><span class="review-source">гостья</span></figcaption>
-            </figure>
-          </div>
-        </div>
-      </div>
-    </section>
     <section id="gallery" class="section">
       <div class="w-layout-blockcontainer container w-container">
         <div class="center-wrap">
@@ -580,6 +553,49 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         </div>
       </div>
     </section>
+    <section id="reviews" class="section">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="center-wrap">
+          <div class="section-header center-align">
+            <div class="chip">Отзывы гостей</div>
+            <h2>Нам доверяют отдых</h2>
+            <p class="reviews-rating" aria-label="Средняя оценка 4,9 из 5">
+              <span aria-hidden="true">★★★★★</span><span aria-hidden="true">4,9 / 5</span>
+            </p>
+          </div>
+          <div class="reviews-grid">
+            <a class="review-card" href="https://2gis.kz/firm/70000001101591424/tab/reviews" target="_blank" rel="noopener">
+              <div class="review-head">
+                <img class="review-avatar" src="assets/reviews/ekaterina-yavorskaya.jpg" alt="Екатерина Яворская" loading="lazy" />
+                <span class="review-stars" role="img" aria-label="Оценка 5 из 5"><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /></span>
+              </div>
+              <blockquote class="review-quote">Очень классная зона отдыха, отдыхали компанией, нам обеспечили тишину и комфорт только для нас, те кто держат эту зону большие молодцы!! Не стоят на месте, обустраивают и создают новые условия и идеи для людей, так же имеется мини магазинчик, где можно будет купить попить, перекусить и самое главное мороженое😂 Берег чистый, недавно завезли песок туда, стало ещё лучше, буквально за ночь появились новые какие-то качели, гамаки и т.д. Приедем ещё в июле 🥰</blockquote>
+              <div class="review-author"><span class="review-name">Екатерина Яворская</span><span class="review-source">гостья</span></div>
+            </a>
+            <a class="review-card" href="https://2gis.kz/firm/70000001101591424/tab/reviews" target="_blank" rel="noopener">
+              <div class="review-head">
+                <img class="review-avatar" src="assets/reviews/darkhan.webp" alt="Дархан" loading="lazy" />
+                <span class="review-stars" role="img" aria-label="Оценка 5 из 5"><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /></span>
+              </div>
+              <blockquote class="review-quote">Посещали эту базу в конце октября. Были на рыбалке , Закрывали жидкую воду. После рыбалки пошли в номер , переоделись , пожарили шашлыки на территории, есть беседки с мангала и , позже пошли в баню. Банька отличная , номер чистый , белье свежее, нашли нам стол и стулья - спасибо администратору. Короче очень понравилось.</blockquote>
+              <div class="review-author"><span class="review-name">Дархан</span><span class="review-source">гость</span></div>
+            </a>
+            <a class="review-card" href="https://2gis.kz/firm/70000001101591424/tab/reviews" target="_blank" rel="noopener">
+              <div class="review-head">
+                <img class="review-avatar" src="assets/reviews/nurbota-sergey.jpg" alt="Нурбота Сергей" loading="lazy" />
+                <span class="review-stars" role="img" aria-label="Оценка 5 из 5"><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /><img src="assets/star.svg" alt="" /></span>
+              </div>
+              <blockquote class="review-quote">Отличная зона отдыха! Всё чисто, уютно и красиво. Приятная атмосфера, вежливый персонал и прекрасный вид. Отличное место, чтобы отдохнуть с семьёй или друзьями. Обязательно приедем ещё! 🌅</blockquote>
+              <div class="review-author"><span class="review-name">Нурбота Сергей</span><span class="review-source">гость</span></div>
+            </a>
+          </div>
+          <div class="reviews-actions">
+            <a class="button w-button" href="https://2gis.kz/firm/70000001101591424/tab/reviews"
+               target="_blank" rel="noopener">Больше отзывов</a>
+          </div>
+        </div>
+      </div>
+    </section>
     <section id="contact" class="section">
       <div class="grid-contact">
         <div class="grid-image">
@@ -630,8 +646,10 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
               <span>49°30′46″N, 72°46′25″E</span>
             </div>
             <div>
-              <a class="button w-button" href="https://yandex.com/maps/?ll=72.77361%2C49.51278&amp;z=13&amp;pt=72.77361%2C49.51278"
-                 target="_blank" rel="noopener">Открыть в Яндекс Картах →</a>
+<!--              <a class="button w-button" href="https://yandex.com/maps/?ll=72.77361%2C49.51278&amp;z=13&amp;pt=72.77361%2C49.51278"-->
+<!--                 target="_blank" rel="noopener">Открыть в Яндекс Картах →</a>-->
+              <a class="button w-button" href="https://2gis.kz/firm/70000001101591424"
+                 target="_blank" rel="noopener">Открыть в картах 2ГИС →</a>
             </div>
           </div>
           <div class="location-map location-map--libre">

@@ -272,17 +272,23 @@
     var prevBtn = dialog.querySelector(".lightbox__prev");
     var nextBtn = dialog.querySelector(".lightbox__next");
     var closeBtn = dialog.querySelector(".lightbox__close");
-    var tiles = qsa("#gallery .marquee-item img");
+    var galleryTiles = qsa("#gallery .marquee-item img");
+    var awaitTiles = qsa("#about .await-icon");
+    var tiles = galleryTiles.concat(awaitTiles);
     if (!tiles.length || !imgEl) return;
 
     var items = [];
     var seen = {};
-    tiles.forEach(function (img) {
-      var raw = img.getAttribute("src");
-      if (!raw || seen[raw]) return;
-      seen[raw] = true;
-      items.push({ raw: raw, src: img.currentSrc || img.src, alt: img.getAttribute("alt") || "" });
-    });
+    function collect(list, small) {
+      list.forEach(function (img) {
+        var raw = img.getAttribute("src");
+        if (!raw || seen[raw]) return;
+        seen[raw] = true;
+        items.push({ raw: raw, src: img.currentSrc || img.src, alt: img.getAttribute("alt") || "", small: small });
+      });
+    }
+    collect(galleryTiles, true);
+    collect(awaitTiles, false);
     if (!items.length) return;
 
     var index = 0;
@@ -290,9 +296,14 @@
 
     function render() {
       var it = items[index];
-      var small = it.raw.replace(/\.avif$/i, "-960.avif");
-      imgEl.srcset = small + " 960w, " + it.raw + " 1600w";
-      imgEl.sizes = "min(1200px, 92vw)";
+      if (it.small) {
+        var small = it.raw.replace(/\.avif$/i, "-960.avif");
+        imgEl.srcset = small + " 960w, " + it.raw + " 1600w";
+        imgEl.sizes = "min(1200px, 92vw)";
+      } else {
+        imgEl.removeAttribute("srcset");
+        imgEl.removeAttribute("sizes");
+      }
       imgEl.width = 1600;
       imgEl.height = 900;
       imgEl.src = it.src;
