@@ -11,6 +11,65 @@
     return c.effectiveType === "slow-2g" || c.effectiveType === "2g";
   }
 
+  /* ---------- Horizontal strip: moves with page scroll, not on its own ---------- */
+  function initScrollMarquee() {
+    var wrap = document.querySelector(".scroll-wrapper");
+    var section = wrap && wrap.closest(".scroll");
+    if (!wrap || !section) return;
+
+    var cycle = 0;
+    var ticking = false;
+
+    // .scroll-wrapper holds the same three phrases twice, so half its width is
+    // exactly one seamless cycle (the extra 64px padding matches the gap).
+    function measure() {
+      cycle = wrap.getBoundingClientRect().width / 2;
+    }
+
+    function update() {
+      ticking = false;
+      if (reduceMotion.matches || !cycle) {
+        wrap.style.transform = "";
+        return;
+      }
+      var rect = section.getBoundingClientRect();
+      var travel = rect.height + window.innerHeight;
+      var progress = travel > 0 ? (window.innerHeight - rect.top) / travel : 0;
+      progress = Math.min(1, Math.max(0, progress));
+      var x = progress * cycle;
+      wrap.style.transform = "translate3d(" + (-x).toFixed(2) + "px, 0, 0)";
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(update);
+    }
+
+    function refresh() {
+      measure();
+      update();
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", refresh, { passive: true });
+    window.addEventListener("load", refresh);
+    // Late layout changes (webfont swap, zoom) alter the strip's width.
+    if ("ResizeObserver" in window) {
+      new ResizeObserver(function () {
+        measure();
+        update();
+      }).observe(wrap);
+    }
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(refresh);
+    }
+    if (typeof reduceMotion.addEventListener === "function") {
+      reduceMotion.addEventListener("change", refresh);
+    }
+    refresh();
+  }
+
   /* ---------- Hero video: deferred, visibility-aware, motion/save-data aware ---------- */
   function initHeroVideo() {
     var video = document.querySelector(".hero-video");
@@ -672,6 +731,7 @@
     initScrollSpy();
     initMobileCta();
     initReveals();
+    initScrollMarquee();
     initHeroGlide();
     initScrollHint();
     initGallery();

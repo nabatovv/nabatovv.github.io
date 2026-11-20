@@ -3468,28 +3468,21 @@ blockquote {
     .flow-wrap::after { display: none; }
 }
 
-/* ===== Infinite horizontal marquee ===== */
+/* ===== Horizontal text strip: driven by page scroll ===== */
 
+/* No autonomous animation here — main.js (initScrollMarquee) translates this
+   wrapper in proportion to how far the section has travelled through the
+   viewport, so the phrases only move while the page is being scrolled. */
 .scroll-wrapper {
     flex: none;
     width: max-content;          /* wrapper is as wide as all 6 items */
     padding-right: 64px;         /* same as the gap, so the two halves are exactly equal */
-    animation: marquee 30s linear infinite;
-}
-
-@keyframes marquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }   /* half = one full set of 3 phrases */
-}
-
-/* optional: pause on hover */
-.scroll:hover .scroll-wrapper {
-    animation-play-state: paused;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
 }
 
 /* optional: respect "reduce motion" settings */
 @media (prefers-reduced-motion: reduce) {
-    .scroll-wrapper,
     .marquee-wrap { animation: none; }
 }
 
@@ -4077,6 +4070,10 @@ summary:focus-visible,
 }
 
 /* ---------- Hero ---------- */
+/* Art-directed background: full landscape frame on large screens, a lighter
+   downscale on tablets, and a portrait crop on phones/portrait tablets that
+   keeps the water and the hanging hammock chair in frame instead of a centre
+   slice of the wide shot. */
 .video-wrap {
     background-color: #174f4b;
     background-image: url(main.avif);
@@ -4084,6 +4081,30 @@ summary:focus-visible,
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
+}
+
+/* 1280-wide encode (133 KB instead of 254 KB). */
+@media screen and (max-width: 1439px) {
+    .video-wrap {
+        background-image: url("main-1280.avif");
+    }
+}
+
+/* Tablets: 960-wide encode. A fixed background is janky while touch-scrolling,
+   so it follows the page here. */
+@media screen and (max-width: 1023px) {
+    .video-wrap {
+        background-image: url("main-960.avif");
+        background-attachment: scroll;
+    }
+}
+
+/* Portrait phones and portrait tablets: the tall crop (water + hammock chair). */
+@media screen and (max-width: 1023px) and (orientation: portrait) {
+    .video-wrap {
+        background-image: url("main-portrait.avif");
+        background-position: center;
+    }
 }
 
 /* Frosted-glass panel for the hero copy (replaces the old per-line highlight) */
@@ -4132,7 +4153,6 @@ summary:focus-visible,
 
 .hero-cta::after {
     content: "→";
-    margin-left: .55em;
     transition: transform .3s ease;
 }
 
@@ -4142,7 +4162,18 @@ summary:focus-visible,
 
 /* ---------- Buttons: softer lift + shadow on hover ---------- */
 .button {
+    /* The label and the arrow are two flex items, so centring them needs the
+       same rhythm on every button size: one gap instead of per-rule margins. */
+    gap: .5em;
     transition: background-color .25s ease, color .25s ease, border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+
+/* The "→" glyph hangs ~0.1em below the optical centre of Manrope's cap band,
+   which is what made arrows look low inside the pill. Lift it onto the label's
+   centre; the hover slide still works because this is not a transform. */
+.button::after {
+    position: relative;
+    top: -0.1em;
 }
 
 .button:hover {
@@ -4679,15 +4710,16 @@ h3 {
 /* Button arrow slide on the in-content CTAs */
 .sticky-text-card .button::after,
 .contact-text .button::after,
-.reviews-actions .button::after {
+.reviews-actions .button::after,
+.location-text .button::after {
     content: "→";
-    margin-left: .5em;
     transition: transform .3s ease;
 }
 
 .sticky-text-card .button:hover::after,
 .contact-text .button:hover::after,
-.reviews-actions .button:hover::after {
+.reviews-actions .button:hover::after,
+.location-text .button:hover::after {
     transform: translateX(4px);
 }
 
@@ -4710,6 +4742,7 @@ h3 {
 
     .sticky-text-card .button::after,
     .contact-text .button::after,
+    .location-text .button::after,
     .text-icon-wrap .icon {
         transition: none;
     }
