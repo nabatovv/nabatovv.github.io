@@ -2140,7 +2140,7 @@ blockquote {
     flex: 1;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 64px;
+    padding: 12px 64px;
     display: flex;
 }
 
@@ -2167,7 +2167,12 @@ blockquote {
     /*height: 40px;*/
     text-align: center;
     min-height: 40px;
-    line-height: 18px;
+    line-height: 1;
+    /* Optical centring only: with lowercase-heavy Cyrillic labels the descenders
+       fill the space under the baseline, so an even text box still reads low.
+       1px more padding below lifts the label onto the visual centre. */
+    padding-top: 8px;
+    padding-bottom: 10px;
     padding-left: 20px;
     padding-right: 20px;
     font-weight: 600;
@@ -3026,7 +3031,12 @@ blockquote {
     }
 
     .nav-content {
-        padding-right: 48px
+        /* Side insets stay on the 8px module: 64 left / 56 right puts the
+           hamburger's 48px box + 10px inner padding within 2px of the logo's
+           optical inset, so both ends read level. */
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-right: 56px
     }
 
     .nav-link {
@@ -3113,8 +3123,10 @@ blockquote {
     }
 
     .nav-content {
-        padding-left: 40px;
-        padding-right: 24px
+        padding-top: 8px;
+        padding-bottom: 8px;
+        padding-left: 24px;
+        padding-right: 16px
     }
 
     .nav-link {
@@ -3254,7 +3266,9 @@ blockquote {
     }
 
     .nav-content {
-        padding: 8px 12px 8px 24px
+        /* Right inset on the 8px module (16px + the hamburger's own 10px inner
+           padding ≈ the logo's 24px optical inset). */
+        padding: 8px 16px 8px 24px
     }
 
     .nav-link {
@@ -4170,8 +4184,10 @@ summary:focus-visible,
 
 /* The "→" glyph hangs ~0.1em below the optical centre of Manrope's cap band,
    which is what made arrows look low inside the pill. Lift it onto the label's
-   centre; the hover slide still works because this is not a transform. */
+   centre; the hover slide still works because this is not a transform.
+   line-height 1 keeps the arrow's own box exactly as tall as the label's. */
 .button::after {
+    line-height: 1;
     position: relative;
     top: -0.1em;
 }
@@ -4179,6 +4195,30 @@ summary:focus-visible,
 .button:hover {
     transform: translateY(-1px) scale(1.02);
     box-shadow: 0 16px 30px -16px rgba(23, 79, 75, .55);
+}
+
+/* Some CTAs have labels long enough to wrap on narrow screens. There line-height
+   1 sets the two lines almost on top of each other, so those buttons get the
+   previous 18px measure back at the widths where they actually wrap (measured:
+   "Планируйте свой отдых" ≤320px, "Откройте для себя отдых на природе"
+   ≤440px and 770–990px, "Открыть в картах 2ГИС" ≤300px). */
+@media screen and (max-width: 330px) {
+    .sticky-text._1 .button,
+    .location-text .button {
+        line-height: 18px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .sticky-text._2 .button {
+        line-height: 18px;
+    }
+}
+
+@media screen and (min-width: 760px) and (max-width: 1000px) {
+    .sticky-text._2 .button {
+        line-height: 18px;
+    }
 }
 
 /* ---------- Neutralise the odd blur-on-click from the old template ---------- */
@@ -4277,28 +4317,97 @@ summary:focus-visible,
 }
 
 .navbar.is-stuck .nav-content {
+    /* 8px of vertical padding is the gutter divided by eight, and the 64px
+       min-height puts the condensed bar on the same module as the 64px content
+       gutter and the 64px phone band, so the compressed header reads as a
+       deliberate step rather than a shrunken one. The flex row centres every
+       child (brand, links, CTA, hamburger) on the same axis. */
     padding-top: 8px;
     padding-bottom: 8px;
+    min-height: 64px;
 }
 
-/* Top-left logo: a circular badge that shrinks to 40px and swaps to the
-   text-less mark on scroll, with a super-fast transition. */
+/* The link pill (45px) and the CTA (40px) used to sit at different heights, so
+   the empty band above and below them differed by 2.5px. In the condensed bar
+   both are 44px, centred, which leaves exactly 10px of air above and below each
+   of them — the same measure for the menu and for the button. */
+.navbar.is-stuck .nav-menu-list,
+.navbar.is-stuck .nav-menu .button {
+    height: 44px;
+    min-height: 44px;
+}
+
+.navbar.is-stuck .nav-menu-list {
+    align-items: center;
+}
+
+/* Top-left logo: the round emblem (assets/logo.svg) as a medallion whose
+   diameter is set by the header band, not by taste:
+   • the drawn diameter is 8/7 of --brand-layout, and the band is
+     --brand-layout + 24px of padding, so the badge is exactly 4/5 of the band —
+     a classic 4:5 subdivision that leaves an 8px optical margin above and below
+     at every width (the "breathing room ≥ 1/10 of the container" rule);
+   • on desktop the diameter lands on 64px, i.e. the same 64px as the content
+     gutter, so the medallion spans exactly one grid module and its right edge
+     sits on the second grid line;
+   • the emblem sits inside the cream disc with a 5%-of-diameter margin (twice
+     the emblem's own green ring), so the badge keeps the cream halo the brand
+     always had, at every size;
+   • --brand-layout is still the slice the badge reports to the flex line, so the
+     row keeps its 80/68/64px height and the menu keeps its centre. */
 .navbar .brand {
-    --brand-base: clamp(80px, 9vw, 132px);
-    width: var(--brand-base);
-    height: var(--brand-base);
+    --brand-layout: clamp(48px, 4vw, 56px);   /* row share — never changes the header */
+    --brand-visual: 96px;                     /* seal diameter = 1.5 × the 64px gutter */
+    --brand-top: 4px;                         /* margin-box offset → 16px from the viewport edge */
+    width: var(--brand-visual);
+    height: var(--brand-visual);
+    margin-top: var(--brand-top);
+    margin-bottom: calc(var(--brand-layout) - var(--brand-visual) - var(--brand-top));
     min-width: 0;
     max-width: none;
-    padding: 8px;
+    /* Cream halo around the emblem. Measured from assets/logo.svg: its enclosing
+       green ring is 2.5% of the diameter, so the padding is 2× that (5%), which
+       keeps the halo in the same visual measure as the ring it surrounds and
+       scales with every badge size. */
+    padding: calc(var(--brand-visual) * .05);
     display: grid;
     place-items: center;
-    transition: width .12s ease, height .12s ease, padding .12s ease;
+    transition: width .12s ease, height .12s ease, margin .12s ease, padding .12s ease;
 }
 
+@media screen and (max-width: 991px) {
+    .navbar .brand {
+        --brand-layout: 48px;
+        --brand-visual: 80px;                 /* 2 × the 40px gutter */
+        --brand-top: 2px;                     /* → 12px from the edge */
+    }
+
+    /* Hamburger keeps a 48x48 tap target so the header row stays 68px, not 76px. */
+    .menu-button {
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .navbar .brand {
+        --brand-layout: 44px;
+        --brand-visual: 72px;
+        --brand-top: 2px;
+    }
+}
+
+/* Scrolled: back to the compact 40px badge the site uses while scrolling.
+   The padding is derived from the same variable, so the cream halo stays 2px. */
 .navbar.is-stuck .brand {
-    width: 60px;
-    height: 60px;
-    padding: 3px;
+    --brand-visual: 40px;
+    --brand-top: 0px;
+    margin-block: 0;
+}
+
+/* The badge is taller than the header row on purpose, so the nav shell must not
+   clip it (the Webflow .container defaults to overflow: hidden). */
+.navbar .container {
+    overflow: visible;
 }
 
 .navbar .brand-logo {
