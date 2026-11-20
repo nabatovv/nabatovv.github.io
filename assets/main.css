@@ -4330,15 +4330,20 @@ summary:focus-visible,
 /* The link pill (45px) and the CTA (40px) used to sit at different heights, so
    the empty band above and below them differed by 2.5px. In the condensed bar
    both are 44px, centred, which leaves exactly 10px of air above and below each
-   of them — the same measure for the menu and for the button. */
-.navbar.is-stuck .nav-menu-list,
-.navbar.is-stuck .nav-menu .button {
-    height: 44px;
-    min-height: 44px;
-}
+   of them — the same measure for the menu and for the button.
+   Desktop only: below 992px .nav-menu-list is the vertical dropdown list, which
+   must keep its natural height (a fixed 44px there squashed the links and let
+   the CTA overlap them). */
+@media screen and (min-width: 992px) {
+    .navbar.is-stuck .nav-menu-list,
+    .navbar.is-stuck .nav-menu .button {
+        height: 44px;
+        min-height: 44px;
+    }
 
-.navbar.is-stuck .nav-menu-list {
-    align-items: center;
+    .navbar.is-stuck .nav-menu-list {
+        align-items: center;
+    }
 }
 
 /* Top-left logo: the round emblem (assets/logo.svg) as a medallion whose
