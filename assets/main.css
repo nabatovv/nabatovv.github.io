@@ -2837,6 +2837,13 @@ blockquote {
     display: flex
 }
 
+/* In the contact panel the copy is centred, but this row is a full-width flex
+   box, so the icon + number stayed pinned to the left. Centre them as one
+   group so the phone lines up under the centred label above it. */
+.contact-text .text-icon-wrap {
+    justify-content: center;
+}
+
 .contact-wrap {
     grid-column-gap: 24px;
     grid-row-gap: 24px;
@@ -2869,7 +2876,9 @@ blockquote {
     flex-flow: column;
     justify-content: center;
     align-items: flex-start;
-    max-width: 560px;
+    /* No width cap: the panel must follow its column so it stays exactly as
+       wide as the photo beside it (see the #service grid at the file's end). */
+    max-width: none;
     height: 100vh;
     min-height: 800px;
     padding: 64px;
@@ -2957,6 +2966,13 @@ blockquote {
     width: 100%;
     max-width: none;
     height: 100%
+}
+
+/* The contact photo filled its grid cell edge to edge, so on some widths the
+   frame (and its pebble rim) sat right on — or past — the screen border.
+   A hair of inset keeps it comfortably inside the viewport. */
+.grid-image .pebble-frame {
+    width: 92%;
 }
 
 .list-item {
@@ -4601,14 +4617,16 @@ h3 {
 
 /* Button arrow slide on the in-content CTAs */
 .sticky-text-card .button::after,
-.contact-text .button::after {
+.contact-text .button::after,
+.reviews-actions .button::after {
     content: "→";
     margin-left: .5em;
     transition: transform .3s ease;
 }
 
 .sticky-text-card .button:hover::after,
-.contact-text .button:hover::after {
+.contact-text .button:hover::after,
+.reviews-actions .button:hover::after {
     transform: translateX(4px);
 }
 
@@ -5093,5 +5111,45 @@ body.lightbox-open {
 @media screen and (max-width: 767px) {
     .location-grid {
         grid-template-columns: 1fr;
+    }
+}
+/* ==========================================================================
+   Sticky feature section: one proportional system (desktop)
+   --------------------------------------------------------------------------
+   The photo column and the text column are both 50% wide, so the panel and
+   the photo share one inner width — they always read as a matched pair.
+   The spacing follows a single rhythm:
+     • outer air   : --sticky-edge (equal on both sides of the composition)
+     • column gutters: --sticky-edge × 1.618 (golden section, = 2 × half-edge)
+   The pair is capped at 1600px and centred, so on very wide screens the
+   composition gains air outside instead of stretching, and the panel's
+   measure stays in the comfortable 60–75 character range.
+   ========================================================================== */
+@media screen and (min-width: 768px) {
+    #service {
+        --sticky-edge: clamp(20px, 3.4vw, 64px);
+        --sticky-gutter: calc(var(--sticky-edge) * 1.618);
+        /* .page-wrapper is a flex column, so an explicit width + align-self is
+           what centres the capped canvas — auto margins here would switch the
+           item from stretch to shrink-to-fit and collapse both columns. */
+        width: 100%;
+        max-width: 1600px;
+        align-self: center;
+    }
+
+    /* Photo column: full outer air on the left, half a gutter on the right. */
+    .feature-image {
+        padding-left: var(--sticky-edge);
+        padding-right: calc(var(--sticky-gutter) / 2);
+    }
+
+    /* Panel column mirrors it, so photo and panel keep identical widths. */
+    .sticky-text,
+    .sticky-text._1,
+    .sticky-text._2,
+    .sticky-text._3 {
+        max-width: none;
+        padding-left: calc(var(--sticky-gutter) / 2);
+        padding-right: var(--sticky-edge);
     }
 }
