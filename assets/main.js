@@ -124,6 +124,16 @@
     }
   }
 
+  /* ---------- CTA tracking: every conversion link reports its section ---------- */
+  function initCtaTracking() {
+    qsa("a[data-cta]").forEach(function (link) {
+      link.addEventListener("click", function () {
+        if (typeof window.gtag_report_conversion !== "function") return;
+        window.gtag_report_conversion(link.getAttribute("data-cta"));
+      });
+    });
+  }
+
   /* ---------- Sticky, condensed glass header ---------- */
   function initStickyHeader() {
     var nav = document.querySelector(".navbar");
@@ -730,6 +740,7 @@
     initScrollProgress();
     initScrollSpy();
     initMobileCta();
+    initCtaTracking();
     initReveals();
     initScrollMarquee();
     initHeroGlide();

@@ -11,17 +11,14 @@
     <!-- Event snippet for Contact conversion page
   In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
     <script>
-      function gtag_report_conversion(url) {
-        var callback = function () {
-          if (typeof url != "undefined") {
-            window.location = url;
-          }
-        };
-        gtag("event", "conversion", {
+      function gtag_report_conversion(source) {
+        // gtag may be blocked (adblock / offline): never break the click.
+        if (typeof window.gtag !== "function") return;
+        window.gtag("event", "conversion", {
           send_to: "AW-18528574939/ybGGCMqg5rgdENu7joNF",
-          event_callback: callback,
+          event_category: "cta",
+          event_label: source || "unknown",
         });
-        return false;
       }
     </script>
     <script
@@ -138,11 +135,16 @@
           "latitude": "49.51278",
           "longitude": "72.77361"
         },
+        "telephone": "+77782675901",
+        "url": "https://dostyk.zone/",
+        "priceRange": "от 6 000 ₸",
+        "hasMap": "https://2gis.kz/firm/70000001101591424",
         "aggregateRating": {
           "@type": "AggregateRating",
-          "ratingValue": "4.9",
-          "bestRating": "5",
-          "reviewCount": "3"
+          "ratingValue": 4.9,
+          "bestRating": 5,
+          "ratingCount": 177,
+          "reviewCount": 177
         },
         "review": [
           {
@@ -153,7 +155,7 @@
             },
             "reviewRating": {
               "@type": "Rating",
-              "ratingValue": "5"
+              "ratingValue": 5
             },
             "reviewBody": "Очень классная зона отдыха, отдыхали компанией, нам обеспечили тишину и комфорт только для нас, те кто держат эту зону большие молодцы!! Не стоят на месте, обустраивают и создают новые условия и идеи для людей, так же имеется мини магазинчик, где можно будет купить попить, перекусить и самое главное мороженое😂 Берег чистый, недавно завезли песок туда, стало ещё лучше, буквально за ночь появились новые какие-то качели, гамаки и т.д. Приедем ещё в июле 🥰"
           },
@@ -165,7 +167,7 @@
             },
             "reviewRating": {
               "@type": "Rating",
-              "ratingValue": "5"
+              "ratingValue": 5
             },
             "reviewBody": "Посещали эту базу в конце октября. Были на рыбалке , Закрывали жидкую воду. После рыбалки пошли в номер , переоделись , пожарили шашлыки на территории, есть беседки с мангала и , позже пошли в баню. Банька отличная , номер чистый , белье свежее, нашли нам стол и стулья - спасибо администратору. Короче очень понравилось."
           },
@@ -177,7 +179,7 @@
             },
             "reviewRating": {
               "@type": "Rating",
-              "ratingValue": "5"
+              "ratingValue": 5
             },
             "reviewBody": "Отличная зона отдыха! Всё чисто, уютно и красиво. Приятная атмосфера, вежливый персонал и прекрасный вид. Отличное место, чтобы отдохнуть с семьёй или друзьями. Обязательно приедем ещё! 🌅"
           }
@@ -372,11 +374,10 @@
                 </div>
                 <a
                   data-wf--button--variant="white-small"
-                  onclick="gtag_report_conversion()"
                   href="https://www.instagram.com/dostyk_resort_topar"
                   target="_blank"
                   class="button w-variant-3d9d3eee-8ac1-c6a8-fc62-ea95ebc37d24 w-button top-contact-us-button"
-                  >Связаться с нами</a
+                   data-cta="nav">Связаться с нами</a
                 >
               </nav>
               <label for="nav-toggle" class="menu-button w-nav-button">
@@ -405,19 +406,32 @@
             <div class="section-header">
               <p class="hero-eyebrow">Зона отдыха «Достык» · Топар</p>
               <h1 class="hero-title">Отдых на природе в Топаре</h1>
+              <p class="hero-price">Отдых от 6&nbsp;000&nbsp;₸</p>
               <p class="hero-sub">
                 Добро пожаловать на зону отдыха «Достык» — место, где можно
                 отдохнуть у воды, провести время с близкими и насладиться
                 природой.
               </p>
+              <p class="hero-trust">
+                <span class="hero-trust__stars" aria-hidden="true">★★★★★</span>
+                <a
+                  href="https://2gis.kz/firm/70000001101591424/tab/reviews"
+                  target="_blank"
+                  rel="noopener"
+                  >4,9 из 5 · 177 отзывов на 2ГИС</a
+                >
+              </p>
             </div>
-            <a
-              data-wf--button--variant="white-small"
-              href="https://www.instagram.com/dostyk_resort_topar"
-              target="_blank"
-              class="button w-variant-3d9d3eee-8ac1-c6a8-fc62-ea95ebc37d24 w-button hero-cta"
-              >Узнать больше</a
-            >
+            <div class="hero-actions">
+              <a
+                data-wf--button--variant="white-small"
+                href="https://www.instagram.com/dostyk_resort_topar"
+                target="_blank"
+                class="button w-variant-3d9d3eee-8ac1-c6a8-fc62-ea95ebc37d24 w-button hero-cta"
+                 data-cta="hero">Забронировать в Instagram</a
+              >
+              <a class="hero-more" href="#service">Узнать больше</a>
+            </div>
           </div>
           <a
             class="scroll-hint"
@@ -480,6 +494,15 @@
                   — повод замедлиться и провести день так, как нравится именно
                   вам.
                 </p>
+                <div class="included">
+                  <p class="included-title">Что входит</p>
+                  <ul class="included-list">
+                    <li>Беседка<!-- TODO: подтвердить, что входит в цену --></li>
+                    <li>Мангал<!-- TODO: подтвердить, что входит в цену --></li>
+                    <li>Доступ к воде<!-- TODO: подтвердить, что входит в цену --></li>
+                    <li>Парковка<!-- TODO: подтвердить, что входит в цену --></li>
+                  </ul>
+                </div>
               </div>
               <div class="script">Будем рады видеть вас в «Достыке»!</div>
             </div>
@@ -664,7 +687,7 @@
                   href="https://www.instagram.com/dostyk_resort_topar"
                   target="_blank"
                   class="button w-button"
-                  >Планируйте свой отдых</a
+                   data-cta="service">Планируйте свой отдых</a
                 >
               </div>
             </div>
@@ -769,7 +792,7 @@
                   href="https://www.instagram.com/dostyk_resort_topar"
                   target="_blank"
                   class="button w-button"
-                  >Откройте для себя отдых на природе</a
+                   data-cta="service">Откройте для себя отдых на природе</a
                 >
               </div>
             </div>
@@ -879,12 +902,29 @@
                   href="https://www.instagram.com/dostyk_resort_topar"
                   target="_blank"
                   class="button w-button"
-                  >Как провести день</a
+                   data-cta="service">Как провести день</a
                 >
               </div>
             </div>
           </div>
         </section>
+        <div class="offer-strip">
+          <div class="offer-strip__inner">
+            <p class="offer-strip__text">
+              <span class="offer-strip__price">Отдых от 6&nbsp;000&nbsp;₸</span>
+              <span class="offer-strip__meta"
+                >4,9 из 5 · 177 отзывов на 2ГИС</span
+              >
+            </p>
+            <a
+              class="button w-button offer-strip__cta"
+              href="https://www.instagram.com/dostyk_resort_topar"
+              target="_blank"
+              rel="noopener"
+               data-cta="strip">Забронировать</a
+            >
+          </div>
+        </div>
         <section
           data-w-id="05295cfc-7a86-f22c-15fe-ebbc6f5e43de"
           class="scroll"
@@ -1164,9 +1204,16 @@
               <div class="section-header center-align">
                 <div class="chip">Отзывы гостей</div>
                 <h2>Нам доверяют отдых</h2>
-                <p class="reviews-rating" aria-label="Средняя оценка 4,9 из 5">
-                  <span aria-hidden="true">★★★★★</span
-                  ><span aria-hidden="true">4,9 / 5</span>
+                <p
+                  class="reviews-rating"
+                  aria-label="Средняя оценка 4,9 из 5 по 177 отзывам на 2ГИС"
+                >
+                  <span class="reviews-rating__stars" aria-hidden="true"
+                    >★★★★★</span
+                  ><span aria-hidden="true">4,9 из 5</span
+                  ><span class="reviews-rating__count" aria-hidden="true"
+                    >· 177 отзывов на 2ГИС</span
+                  >
                 </p>
               </div>
               <div class="reviews-grid">
@@ -1288,8 +1335,76 @@
                   href="https://2gis.kz/firm/70000001101591424/tab/reviews"
                   target="_blank"
                   rel="noopener"
-                  >Больше отзывов</a
+                  >Смотреть все 177 отзывов</a
                 >
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="faq" class="section">
+          <div class="w-layout-blockcontainer container w-container">
+            <div class="center-wrap">
+              <div class="section-header center-align">
+                <div class="chip">Вопросы и ответы</div>
+                <h2>Что важно знать перед поездкой</h2>
+              </div>
+              <div class="faq">
+                <details class="faq__item">
+                  <summary class="faq__q">Можно ли приехать с детьми?</summary>
+                  <p class="faq__a">
+                    Да, «Достык» — семейное место: здесь отдыхают с детьми, у
+                    воды есть песок и место для игр.<!-- TODO: подтвердить детскую площадку и её состав -->
+                  </p>
+                </details>
+                <details class="faq__item">
+                  <summary class="faq__q">Можно ли приехать с животными?</summary>
+                  <p class="faq__a">
+                    Условия для животных уточняйте при бронировании — напишите
+                    нам, и мы ответим по вашему случаю.<!-- TODO: указать правила по животным -->
+                  </p>
+                </details>
+                <details class="faq__item">
+                  <summary class="faq__q">Можно ли привезти свою еду и напитки?</summary>
+                  <p class="faq__a">
+                    Да, гости приезжают на пикник со своей едой и напитками. Если
+                    нужен мангал — он входит в отдых.<!-- TODO: подтвердить условия по своей еде и пробковому сбору -->
+                  </p>
+                </details>
+                <details class="faq__item">
+                  <summary class="faq__q">Есть ли мангал?</summary>
+                  <p class="faq__a">
+                    Да, мангал входит в отдых — можно жарить шашлыки на
+                    территории.<!-- TODO: подтвердить, что мангал входит в 6 000 ₸ -->
+                  </p>
+                </details>
+                <details class="faq__item">
+                  <summary class="faq__q">Можно ли с музыкой?</summary>
+                  <p class="faq__a">
+                    Громкость и время музыки уточняйте при бронировании: зона
+                    отдыха находится рядом с жильём, поэтому правила зависят от
+                    компании и даты.<!-- TODO: указать правила по музыке и тишине -->
+                  </p>
+                </details>
+                <details class="faq__item">
+                  <summary class="faq__q">Есть ли парковка?</summary>
+                  <p class="faq__a">
+                    Да, парковка на территории входит в отдых.<!-- TODO: подтвердить количество мест -->
+                  </p>
+                </details>
+                <details class="faq__item">
+                  <summary class="faq__q">Во сколько заезд и выезд?</summary>
+                  <p class="faq__a">
+                    Время начала и окончания отдыха уточняйте при бронировании —
+                    оно зависит от даты и загрузки.<!-- TODO: указать время заезда и выезда -->
+                  </p>
+                </details>
+                <details class="faq__item">
+                  <summary class="faq__q">Как отменить или перенести бронирование?</summary>
+                  <p class="faq__a">
+                    Отмена и перенос обсуждаются индивидуально — напишите нам в
+                    Instagram или позвоните по номеру в блоке контактов.<!-- TODO: указать условия отмены и предоплаты -->
+                  </p>
+                </details>
               </div>
             </div>
           </div>
@@ -1364,13 +1479,36 @@
                   </div>
                 </div>
               </div>
-              <a
-                data-wf--button--variant="primary-small"
-                href="https://www.instagram.com/dostyk_resort_topar"
-                target="_blank"
-                class="button w-button"
-                >Отправить сообщение</a
-              >
+              <div class="contact-cta-group">
+                <p class="contact-offer">
+                  <span class="contact-offer__price"
+                    >Отдых от 6&nbsp;000&nbsp;₸</span
+                  >
+                  <span class="contact-offer__meta"
+                    >4,9 из 5 · 177 отзывов на 2ГИС</span
+                  >
+                </p>
+                <a
+                  data-wf--button--variant="primary-small"
+                  href="https://www.instagram.com/dostyk_resort_topar"
+                  target="_blank"
+                  class="button w-button"
+                  data-cta="contact">Отправить сообщение</a
+                >
+                <p class="contact-secondary">
+                  <a class="contact-secondary__link" href="tel:+77782675901" data-cta="call"
+                    >Позвонить</a
+                  >
+                  <a
+                    class="contact-secondary__link"
+                    href="https://wa.me/77782675901"
+                    target="_blank"
+                    rel="noopener"
+                    data-cta="whatsapp"
+                    >WhatsApp</a
+                  >
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -1382,22 +1520,31 @@
                   <div class="chip">Как добраться</div>
                   <h2>Мы в Топаре</h2>
                 </div>
-                <p>Зона отдыха «Достык» — первая на выезде из Топара.</p>
-                <!-- PLACEHOLDER: replace with the exact address / coordinates -->
+                <p class="location-address">
+                  Зона отдыха «Достык» — первая на выезде из Топара,
+                  Карагандинская область.<!-- TODO: указать точный адрес или ориентир (улица, км трассы) -->
+                </p>
+                <p class="location-note">
+                  Парковка на территории — входит в отдых.<!-- TODO: подтвердить количество мест -->
+                </p>
                 <div class="location-hint">
                   <span>≈ 60 км от Караганды</span>
                   <span>≈ 260 км от Астаны</span>
-                  <span>49°30′46″N, 72°46′25″E</span>
+                  <span class="location-coords">49°30′46″N, 72°46′25″E</span>
                 </div>
-                <div>
-                  <!--              <a class="button w-button" href="https://yandex.com/maps/?ll=72.77361%2C49.51278&amp;z=13&amp;pt=72.77361%2C49.51278"-->
-                  <!--                 target="_blank" rel="noopener">Открыть в Яндекс Картах →</a>-->
+                <div class="location-actions">
                   <a
                     class="button w-button"
                     href="https://2gis.kz/firm/70000001101591424"
                     target="_blank"
                     rel="noopener"
-                    >Открыть в картах 2ГИС</a
+                    >Открыть в 2ГИС</a
+                  >
+                  <a
+                    class="contact-secondary__link location-call"
+                    href="tel:+77782675901"
+                    data-cta="call"
+                    >Позвонить</a
                   >
                 </div>
               </div>
@@ -1524,8 +1671,7 @@
       class="mobile-cta"
       href="https://www.instagram.com/dostyk_resort_topar"
       target="_blank"
-      onclick="gtag_report_conversion()"
-      >Забронировать</a
+       data-cta="mobile">Забронировать</a
     >
     <script
       src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"
