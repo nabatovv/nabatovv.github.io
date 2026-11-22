@@ -3939,6 +3939,17 @@ svg.menu-icon {
 
     .sticky-text .text-icon-wrap {
         justify-content: center;
+        /* A 479px rule sets text-align: left here; on phones the card is centred,
+           so multi-line item labels ("Место для пикника на свежем воздухе") must
+           centre with it instead of breaking ragged. */
+        text-align: center;
+    }
+
+    /* The price badge hugs its content, so at phone widths the box has to be
+       centred in the panel ourselves and its parts centred inside the badge. */
+    .subhero .price-line {
+        margin-inline: auto;
+        justify-content: center;
     }
 
     .sticky-text .button {
