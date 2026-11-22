@@ -4528,8 +4528,10 @@ summary:focus-visible,
     min-width: 2.2em;
     padding: 1px 6px;
     border-radius: 999px;
-    background: rgba(193, 79, 26, .14);
-    color: var(--color--accent);
+    /* Deep brand teal, not the orange accent: on a number an orange/red tint
+       reads as a warning or a price, which is the wrong signal for social proof. */
+    background: rgba(23, 79, 75, .10);
+    color: var(--color--primary);
     font-size: .95em;
     font-weight: 800;
     line-height: 1.35;
@@ -4548,7 +4550,7 @@ summary:focus-visible,
    its own colour and no inherited indent. */
 .reviews-rating .reviews-count {
     margin-left: 0;
-    color: var(--color--accent);
+    color: var(--color--primary);
 }
 
 /* Hero actions: one primary booking action, one quiet path into the details. */
