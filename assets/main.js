@@ -101,18 +101,24 @@
     update();
   }
 
-  /* ---------- Copy-to-clipboard buttons (phone numbers) ---------- */
+  /* ---------- Copy-to-clipboard buttons (phone, address, coordinates) ---------- */
   function initCopyButtons() {
     qsa("[data-copy]").forEach(function (btn) {
       var originalLabel = btn.getAttribute("aria-label") || "";
+      // Each button names its own confirmation ("Номер скопирован", "Адрес
+      // скопирован", …) so one handler serves the phone and the map facts.
+      var doneLabel = btn.getAttribute("data-copy-done") || "Скопировано";
+      var failLabel = btn.getAttribute("data-copy-fail") || "Не удалось скопировать";
       var row = btn.parentElement;
-      var status = row ? row.querySelector(".contact-phone__status") : null;
+      var status = row
+        ? row.querySelector(".contact-phone__status, .copy-status")
+        : null;
       var timer = null;
 
       function flash(ok) {
         btn.classList.add("is-copied");
-        btn.setAttribute("aria-label", ok ? "Номер скопирован" : "Не удалось скопировать");
-        if (status) status.textContent = ok ? "Номер скопирован" : "Не удалось скопировать";
+        btn.setAttribute("aria-label", ok ? doneLabel : failLabel);
+        if (status) status.textContent = ok ? doneLabel : failLabel;
         if (timer) window.clearTimeout(timer);
         timer = window.setTimeout(function () {
           btn.classList.remove("is-copied");

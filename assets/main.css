@@ -3443,9 +3443,70 @@ blockquote {
     animation-play-state: paused;
 }
 
+/* One leaf per photo card — the same idea as the glass text blocks, where a
+   single .card-leaf is tucked under a corner and only its tips show. Each card
+   owns its leaf, alternating corners along the row; the negative z-index drops
+   the leaf behind the photo, and the wrap is lifted into its own layer so the
+   cards always paint above the leaves. */
+.marquee-card {
+    position: relative;
+    display: block;
+    flex: none;
+}
+
+/* A leaf pressed onto every photo as a mask: the leaf silhouette carries a
+   faint white sheen, so the shape is only just legible over the picture and
+   never competes with it. Corners alternate along the row, and the mask is
+   sized to sit inside the frame so no clipping or radius work is needed. */
+.marquee-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+    background: linear-gradient(142deg, rgba(255, 255, 255, .34) 0%, rgba(255, 255, 255, .06) 66%);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 66% auto;
+    mask-size: 66% auto;
+    -webkit-mask-image: url(left-leaf.avif);
+    mask-image: url(left-leaf.avif);
+    /* A plain light sheen rather than a blend mode: it lifts the same amount on
+       a bright sky and on a dark roof, so the leaf stays a whisper everywhere. */
+    mix-blend-mode: normal;
+    opacity: .9;
+}
+
+.marquee-card:nth-child(odd)::after {
+    -webkit-mask-image: url(right-leaf.avif);
+    mask-image: url(right-leaf.avif);
+    -webkit-mask-position: 76% 72%;
+    mask-position: 76% 72%;
+    transform: rotate(-6deg);
+}
+
+.marquee-card:nth-child(even)::after {
+    -webkit-mask-position: 24% 28%;
+    mask-position: 24% 28%;
+    transform: rotate(6deg);
+}
+
+.marquee-wrap {
+    position: relative;
+    z-index: 1;
+}
+
+@media screen and (max-width: 767px) {
+    .marquee-card::after {
+        -webkit-mask-size: 70% auto;
+        mask-size: 70% auto;
+    }
+}
+
 /* Image tiles with gently varied proportions, a continupous (squircle)
    outline and the same pebble-style outline + hover morph as the framed photos */
-.marquee-item img {
+.marquee-card img {
     width: 300px;
     height: 200px;
     object-fit: cover;
@@ -3458,24 +3519,24 @@ blockquote {
     transition: border-radius .8s ease, transform .5s ease, box-shadow .5s ease;
 }
 
-.marquee-item img:nth-child(4n+2) {
+.marquee-card:nth-child(4n+2) img {
     width: 232px;
     height: 240px;
     border-radius: 14% 10% 16% 12% / 12% 16% 10% 14%;
 }
-.marquee-item img:nth-child(4n+3) {
+.marquee-card:nth-child(4n+3) img {
     width: 320px;
     height: 188px;
     border-radius: 10% 14% 12% 16% / 16% 10% 14% 12%;
 }
-.marquee-item img:nth-child(4n+4) {
+.marquee-card:nth-child(4n+4) img {
     width: 250px;
     height: 220px;
     border-radius: 16% 12% 14% 10% / 10% 14% 12% 16%;
 }
 
 /* pebble-style morph on hover (the outline follows the changing radius) */
-.marquee-item img:hover {
+.marquee-card img:hover {
     border-radius: 18% 12% 20% 14% / 14% 20% 12% 18%;
     transform: scale(1.03);
     box-shadow: 0 12px 26px -8px rgba(28, 43, 45, 0.25);
@@ -3722,8 +3783,36 @@ svg.menu-icon {
 
 
 
-.bottom-logo {
-    min-width: 64px;
+/* Footer logo: the same cream medallion the header uses, so the brand reads
+   identically top and bottom of the page.
+   • the disc diameter (--footer-logo) reproduces the size the logo always had —
+     64px on phones, ~8.6vw in between, 168px on a 1920px screen;
+   • the cream padding is 5% of that diameter, exactly the measure of
+     `.navbar .brand` (padding: calc(var(--brand-visual) * .05)), so the halo is
+     the same visual thickness relative to the emblem at every width;
+   • padding lives inside the box (border-box), so the disc keeps the footprint
+     the layout already reserves and only the emblem steps 10% in. */
+.footer-brand {
+    --footer-logo: clamp(64px, 8.6vw, 168px);
+    width: var(--footer-logo);
+    height: var(--footer-logo);
+    /* Webflow's .w-inline-block caps any inline block at 10% of its column,
+       which is what silently sized the footer logo before — override it so the
+       disc follows --footer-logo (and stays square) at every width. */
+    max-width: none;
+    padding: calc(var(--footer-logo) * .05);
+    border-radius: 50%;
+    background: #EFEEDF;
+    display: grid;
+    place-items: center;
+}
+
+.footer-brand .bottom-logo {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    object-fit: contain;
+    display: block;
 }
 
 
@@ -3937,9 +4026,35 @@ body {
 
 @media screen and (max-width: 479px) {
     .small-box,
-    .medium-box,
-    .subhero {
+    .medium-box {
         width: 100%;
+    }
+}
+
+/* Phones: the hero panel keeps a 16px gutter instead of running edge to edge
+   (the ≤991 rule above already sizes it at calc(100% - 32px)), and the price
+   block folds into two tidy rows — label + price on top, "сутки/чел." + the
+   3+1 chip underneath — so the promo chip never sits alone on a half-empty
+   line. Six amenities then fill a clean 2 × 3 matrix below. */
+@media screen and (max-width: 767px) {
+    .subhero .price-line {
+        display: grid;
+        grid-template-columns: auto auto;
+        justify-content: center;
+        align-items: baseline;
+        row-gap: 5px;
+        column-gap: 10px;
+    }
+
+    .subhero .price-line .price-line__label { grid-area: 1 / 1; }
+    .subhero .price-line .price-line__value { grid-area: 1 / 2; }
+    .subhero .price-line .price-line__unit  { grid-area: 2 / 1; justify-self: end; }
+    .subhero .price-line .offer-badge       { grid-area: 2 / 2; justify-self: start; }
+
+    /* On a 320px screen the hero label breaks into two lines; balance them so
+       the second one never carries a single orphaned word. */
+    .hero-cta {
+        text-wrap: balance;
     }
 }
 
@@ -4409,6 +4524,77 @@ summary:focus-visible,
     border: 0;
 }
 
+/* ---------- Copy buttons outside the phone block ----------
+   The address and the coordinates copy the same way the phone number does, so
+   they reuse the phone button's shape: a quiet 40px square, a copy glyph that
+   flips to a check for 1.6s, and a screen-reader status line. */
+.copy-btn {
+    display: inline-grid;
+    place-items: center;
+    flex: none;                     /* flex rows would otherwise shrink it */
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid rgba(23, 79, 75, .25);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .65);
+    color: var(--color--primary);
+    cursor: pointer;
+    transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+}
+
+.copy-btn:hover,
+.copy-btn:focus-visible {
+    border-color: var(--color--accent);
+    background: rgba(193, 79, 26, .08);
+    color: var(--color--accent);
+}
+
+/* Inside the muted travel-hint column a 40px square would shout, so the
+   coordinates get a 32px variant — still a comfortable target, quieter ink. */
+.copy-btn--sm {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+}
+
+.copy-btn__icon {
+    width: 18px;
+    height: 18px;
+}
+
+.copy-btn--sm .copy-btn__icon {
+    width: 15px;
+    height: 15px;
+}
+
+.copy-btn__icon--check { display: none; }
+
+.copy-btn.is-copied {
+    border-color: rgba(23, 79, 75, .55);
+    background: rgba(23, 79, 75, .12);
+    color: var(--color--primary);
+}
+
+.copy-btn.is-copied .copy-btn__icon--copy { display: none; }
+.copy-btn.is-copied .copy-btn__icon--check { display: block; }
+
+/* Two-line address + its copy square, vertically centred on each other and
+   hugging the text, so the square never drifts to the column's far edge. */
+.location-copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 46ch;
+}
+
+.location-coords-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+}
+
 .contact-offer {
     display: flex;
     flex-wrap: wrap;
@@ -4503,7 +4689,12 @@ summary:focus-visible,
 
 .included-list {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, max-content));
+    /* Six amenities read as three pairs — Беседка/Мангал, Баня/Рыбалка,
+       Спортзал/Парковка. On desktop and tablet each pair is one column, so the
+       grid fills top-to-bottom first; phones fall back to rows of two. */
+    grid-template-rows: repeat(2, auto);
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
     justify-content: center;
     gap: 14px 32px;
     margin: 0;
@@ -5246,7 +5437,7 @@ a:focus-visible > .link-ext {
 }
 
 /* Gallery + mobile feature photos: crisp glass rim at the photo edge */
-.marquee-item img {
+.marquee-card img {
     border: 1px solid rgba(255, 255, 255, .38);
     filter: saturate(1.05);
 }
@@ -5783,6 +5974,12 @@ body.lightbox-open {
     flex-direction: column;
     gap: 16px;
     font-size: .95rem;
+}
+
+/* Muted travel facts — the opacity sits on the text, not the column, so the
+   coordinates' copy square keeps full contrast beside the dimmed numbers. */
+.location-hint > span:not(.location-coords-row),
+.location-coords {
     opacity: .75;
 }
 
@@ -6315,6 +6512,10 @@ dd {
 
     /* --- Spacing scaled with the smaller type (~25-30% less) --- */
     .included-list {
+        /* Phones: the pairs read as rows of two instead of columns of two */
+        grid-template-rows: none;
+        grid-template-columns: repeat(2, minmax(0, max-content));
+        grid-auto-flow: row;
         gap: 10px 20px;        /* was 14px 32px */
     }
 
@@ -6591,4 +6792,283 @@ dd {
     letter-spacing: .04em;
     white-space: nowrap;
     line-height: 1.4;
+}
+
+/* ==========================================================================
+   Footer — brand + socials, two link columns, a quiet legal line
+   --------------------------------------------------------------------------
+   Composition: the emblem leads a narrow brand column (logo, one sentence,
+   the two social circles), the sections and contacts sit in a calm two-column
+   nav to its right, and a hairline closes the block before the © line.
+     • desktop ....... brand 1.3fr | nav 1fr (nav itself splits in two)
+     • tablet ....... brand on its own row, nav two columns underneath
+     • phone ........ one column, nav still two columns, © stacked left
+   The phone layout reserves a lane at the bottom for the sticky booking pill,
+   so nothing in the footer is ever hidden under it.
+   ========================================================================== */
+.footer-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(32px, 5vw, 88px);
+    padding: clamp(40px, 6vw, 80px) clamp(24px, 5vw, 72px)
+        clamp(28px, 3.5vw, 44px);
+    color: #fff;
+}
+
+.footer-brand-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: clamp(14px, 1.6vw, 20px);
+    max-width: 34ch;
+}
+
+.footer-text {
+    margin: 0;
+    max-width: 34ch;
+    color: rgba(255, 255, 255, .66);
+    font-size: .96rem;
+    line-height: 1.55;
+    text-wrap: pretty;
+    opacity: 1;                 /* the tint lives in the colour, not opacity */
+}
+
+.footer-nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(24px, 3vw, 48px);
+}
+
+.footer-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Small caps label: names the column without competing with the links. */
+.footer-title {
+    margin: 0 0 10px;
+    color: rgba(255, 255, 255, .5);
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .14em;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.footer-link {
+    width: fit-content;
+    padding: 5px 0;
+    color: rgba(255, 255, 255, .82);
+    font-size: .95rem;
+    line-height: 1.4;
+    text-decoration: none;
+    transition: color .2s ease;
+}
+
+/* Hover is a colour shift plus a hairline underline — no sideways slide, which
+   used to make the whole column twitch. */
+.footer-link:hover,
+.footer-link:focus-visible {
+    color: #fff;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: .28em;
+    transform: none;
+}
+
+.footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6px 24px;
+    margin: 0 clamp(24px, 5vw, 72px);
+    padding: 18px 0 clamp(24px, 3vw, 32px);
+    border-top: 1px solid rgba(255, 255, 255, .14);
+    color: rgba(255, 255, 255, .55);
+    font-size: .82rem;
+    line-height: 1.5;
+    text-align: left;
+}
+
+.footer-bottom__meta {
+    font-size: .82rem;
+}
+
+/* Tablet and below: the brand takes the full width, the two link columns sit
+   side by side under it. */
+@media screen and (max-width: 991px) {
+    .footer-top {
+        grid-template-columns: minmax(0, 1fr);
+        gap: clamp(28px, 4vw, 40px);
+        padding: 40px clamp(20px, 4vw, 40px) 28px;
+    }
+
+    .footer-brand-col {
+        max-width: 46ch;
+    }
+}
+
+/* Phones: single column, © stacked, and a lane kept for the sticky booking
+   pill (56px tall, 16px off the bottom edge) so it never covers the last line. */
+@media screen and (max-width: 767px) {
+    .footer-top {
+        padding: 32px 24px 20px;
+        gap: 28px;
+    }
+
+    .footer-brand-col {
+        gap: 16px;
+    }
+
+    /* 14px keeps the longest label («Отдых и развлечения») on one line inside a
+       half-width column, so the two link lists stay flush and even. */
+    .footer-link {
+        font-size: .875rem;
+    }
+
+    .footer-bottom {
+        margin-inline: 24px;
+        padding-bottom: 16px;
+    }
+
+    /* The lane for the sticky pill moves down to the wordmark: it is decorative,
+       so the pill floats over empty space instead of the © line. */
+    .footer-signature {
+        padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+    }
+}
+
+/* ---------- Back-to-top link + oversized signature ---------- */
+/* A text link rather than another floating control: the phone already has the
+   sticky booking pill, so the footer keeps one quiet way back up. */
+.footer-bottom__to-top {
+    display: inline-flex;
+    align-items: center;
+    gap: .45em;
+    color: rgba(255, 255, 255, .7);
+    font-size: .82rem;
+    text-decoration: none;
+    transition: color .2s ease;
+}
+
+.footer-bottom__to-top span {
+    display: inline-block;
+    transition: transform .2s ease;
+}
+
+.footer-bottom__to-top:hover,
+.footer-bottom__to-top:focus-visible {
+    color: #fff;
+}
+
+.footer-bottom__to-top:hover span,
+.footer-bottom__to-top:focus-visible span {
+    transform: translateY(-3px);
+}
+
+/* The wordmark closes the page the way a magazine closes an article: huge,
+   almost invisible, cropped by the footer's own overflow. Decorative only —
+   the name is already in the logo and the sentence above. */
+.footer-signature {
+    margin: 0;
+    padding: 0 clamp(16px, 4vw, 48px);
+    font-family: var(--typography--heading);
+    font-size: clamp(64px, 17vw, 232px);
+    font-weight: 400;
+    line-height: .78;
+    letter-spacing: -.01em;
+    text-align: center;
+    white-space: nowrap;
+    color: transparent;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .13) 0%, rgba(255, 255, 255, .015) 82%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    user-select: none;
+    pointer-events: none;
+}
+
+.footer-link:focus-visible,
+.footer-bottom__to-top:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, .85);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .footer-bottom__to-top,
+    .footer-bottom__to-top span,
+    .footer-bottom__to-top:hover span {
+        transition: none;
+        transform: none;
+    }
+}
+
+/* ==========================================================================
+   Leaves on the quiet cards — reviews and the offer strip
+   --------------------------------------------------------------------------
+   The photo cards, the sticky panels and the contact block all carry a leaf
+   tucked under a corner. These two close the set: every review quote gets its
+   own leaf, alternating sides down the grid, and the offer strip gets one at
+   its left edge so the price bar belongs to the same foliage system.
+   ========================================================================== */
+.review-card {
+    position: relative;
+}
+
+.review-card::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: clamp(120px, 14vw, 180px);
+    aspect-ratio: 1;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: .55;
+    pointer-events: none;
+    user-select: none;
+    filter: saturate(1.05);
+}
+
+.review-card:nth-child(3n + 1)::after {
+    right: -18px;
+    bottom: -20px;
+    background-image: url(right-leaf.avif);
+    transform: rotate(9deg) scaleX(-1);
+}
+
+.review-card:nth-child(3n + 2)::after {
+    left: -20px;
+    top: -18px;
+    background-image: url(left-leaf.avif);
+    transform: rotate(-8deg);
+}
+
+.review-card:nth-child(3n)::after {
+    right: -22px;
+    top: -20px;
+    background-image: url(left-leaf.avif);
+    transform: rotate(-6deg) scaleX(-1);
+}
+
+.offer-strip__inner {
+    position: relative;
+}
+
+.offer-strip__inner::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: clamp(-30px, -2vw, -14px);
+    bottom: clamp(-26px, -1.8vw, -12px);
+    width: clamp(130px, 13vw, 190px);
+    aspect-ratio: 1;
+    background: url(left-leaf.avif) center / contain no-repeat;
+    opacity: .5;
+    pointer-events: none;
+    user-select: none;
+    filter: saturate(1.05);
+    transform: rotate(-8deg);
 }
