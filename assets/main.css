@@ -4334,31 +4334,25 @@ summary:focus-visible,
     color: #fff;
 }
 
-.included--on-dark .included-list li::before {
-    background: rgba(255, 255, 255, .18);
-    border: 1px solid rgba(255, 255, 255, .24);
-    color: #ffd2b8;
-}
-
 .hero-trust {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
     margin: 4px 0 0;
     color: rgba(255, 255, 255, .95);
-    font-size: 1.05rem;
+    font-size: 1rem;
     line-height: 1.35;
 }
 
 .hero-trust__score {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 800;
 }
 
 .hero-trust__count {
     font-weight: 500;
-    opacity: .82;
+    color: rgba(255, 255, 255, .85);
 }
 
 .hero-trust__stars {
@@ -4400,7 +4394,7 @@ summary:focus-visible,
 
 .contact-offer__meta {
     font-size: .9rem;
-    opacity: .72;
+    color: rgba(23, 79, 75, .72);
 }
 
 /* Secondary contact actions: same number, quieter weight than the Instagram
@@ -4473,6 +4467,13 @@ summary:focus-visible,
     color: var(--color--primary);
 }
 
+/* The strip repeats the rating as well as the price: it is the last reminder
+   before the gallery, and the count pill keeps it scannable. */
+.offer-strip__meta {
+    font-size: .95rem;
+    color: rgba(23, 79, 75, .72);
+}
+
 .offer-strip__cta {
     flex: none;
 }
@@ -4498,23 +4499,54 @@ summary:focus-visible,
 .included-list li {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     text-align: left;
 }
 
-.included-list li::before {
-    content: "✓";
+/* One line icon per amenity (gazebo, grill, water, parking) drawn in the same
+   24px / 1.7px stroke language as the rest of the site's icons. */
+.included-icon {
     flex: none;
-    display: grid;
-    place-items: center;
     width: 24px;
     height: 24px;
-    border-radius: 50%;
-    background: rgba(193, 79, 22, .14);
     color: var(--color--accent);
-    font-size: .82rem;
-    font-weight: 700;
-    line-height: 1;
+}
+
+.included--on-dark .included-icon {
+    color: #ffd2b8;
+}
+
+/* The review count is the page's strongest proof point: wherever it is mentioned
+   the number rides in a small pill, so the eye catches "177" before it reads the
+   sentence. Same shape everywhere; only the tint flips on dark surfaces. */
+.reviews-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.2em;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: rgba(193, 79, 26, .14);
+    color: var(--color--accent);
+    font-size: .95em;
+    font-weight: 800;
+    line-height: 1.35;
+    font-variant-numeric: tabular-nums;
+    vertical-align: baseline;
+    text-decoration: none;         /* it sits inside links on the hero and reviews */
+}
+
+/* On the dark hero glass the pill flips to white. */
+.hero-trust .reviews-count {
+    background: rgba(255, 255, 255, .2);
+    color: #fff;
+}
+
+/* ".reviews-rating span" colours and indents every descendant; the pill needs
+   its own colour and no inherited indent. */
+.reviews-rating .reviews-count {
+    margin-left: 0;
+    color: var(--color--accent);
 }
 
 /* Hero actions: one primary booking action, one quiet path into the details. */
@@ -5640,9 +5672,8 @@ body.lightbox-open {
 }
 
 .reviews-rating .reviews-rating__count {
-    color: var(--color--primary);
+    color: rgba(23, 79, 75, .72);
     font-weight: 500;
-    opacity: .72;
 }
 
 .location-grid {
