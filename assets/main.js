@@ -862,6 +862,96 @@
     update();
   }
 
+  /* ---------- Browser UI strip: borrow the footer's shade ---------- */
+  /* On Android Chrome `theme-color` paints the strip above the page with a
+     single flat colour, so the footer's glass slab can never show through it.
+     Once the footer is what sits under the top edge of the screen, the strip
+     swaps the page colour for the shade the footer has at that row: the slab's
+     gradient runs vertically, so its stops are interpolated by scroll depth. */
+  function initThemeColor() {
+    var meta = document.querySelector('meta[name="theme-color"]');
+    var footer = document.querySelector(".footer");
+    if (!meta || !footer) return;
+
+    var base = meta.getAttribute("content") || "#174f4b";
+    var stops = readStops();
+    var current = base;
+    var ticking = false;
+
+    /* `linear-gradient(180deg, rgb(26, 84, 79) 0%, …)` -> [{ rgb, at }], `at`
+       normalised to 0..1. Stop positions are optional in CSS, so a gradient
+       without them degrades to its first colour instead of guessing. */
+    function readStops() {
+      var image = window.getComputedStyle(footer).backgroundImage || "";
+      var re = /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)[^)]*\)\s*(-?[\d.]+%)?/g;
+      var list = [];
+      var m;
+      var positioned = true;
+      while ((m = re.exec(image)) !== null) {
+        list.push({
+          rgb: [+m[1], +m[2], +m[3]],
+          at: m[4] === undefined ? null : Math.min(1, Math.max(0, parseFloat(m[4]) / 100)),
+        });
+        if (m[4] === undefined) positioned = false;
+      }
+      if (!list.length) return null;
+      if (!positioned || list.length < 2) {
+        return [
+          { rgb: list[0].rgb, at: 0 },
+          { rgb: list[0].rgb, at: 1 },
+        ];
+      }
+      return list;
+    }
+
+    function shade(progress) {
+      if (!stops) return null;
+      var a = stops[0];
+      var b = stops[stops.length - 1];
+      for (var i = 1; i < stops.length; i++) {
+        if (progress <= stops[i].at) {
+          a = stops[i - 1];
+          b = stops[i];
+          break;
+        }
+      }
+      var span = b.at - a.at;
+      var k = span > 0 ? Math.min(1, Math.max(0, (progress - a.at) / span)) : 1;
+      return (
+        "rgb(" +
+        Math.round(a.rgb[0] + (b.rgb[0] - a.rgb[0]) * k) + ", " +
+        Math.round(a.rgb[1] + (b.rgb[1] - a.rgb[1]) * k) + ", " +
+        Math.round(a.rgb[2] + (b.rgb[2] - a.rgb[2]) * k) + ")"
+      );
+    }
+
+    function update() {
+      ticking = false;
+      var rect = footer.getBoundingClientRect();
+      var next = base;
+      if (rect.height > 0 && rect.top <= 0 && rect.bottom > 0) {
+        // How far down the slab the top edge of the screen points (0..1),
+        // rounded to 5% so the status bar is not repainted on every frame.
+        var depth = Math.min(1, Math.max(0, -rect.top / rect.height));
+        var s = shade(Math.round(depth * 20) / 20);
+        if (s) next = s;
+      }
+      if (next === current) return;
+      current = next;
+      meta.setAttribute("content", next);
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(update);
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    update();
+  }
+
   function boot() {
     initHeroVideo();
     initStickyHeader();
@@ -874,6 +964,7 @@
     initReveals();
     initHeroGlide();
     initScrollHint();
+    initThemeColor();
     initGallery();
     initMap();
     initLibreMap();
