@@ -3443,65 +3443,11 @@ blockquote {
     animation-play-state: paused;
 }
 
-/* One leaf per photo card — the same idea as the glass text blocks, where a
-   single .card-leaf is tucked under a corner and only its tips show. Each card
-   owns its leaf, alternating corners along the row; the negative z-index drops
-   the leaf behind the photo, and the wrap is lifted into its own layer so the
-   cards always paint above the leaves. */
+/* Photo tile wrapper: one image per card, so the tiles can carry their own
+   varied proportions and keep the marquee halves equal. */
 .marquee-card {
-    position: relative;
     display: block;
     flex: none;
-}
-
-/* A leaf pressed onto every photo as a mask: the leaf silhouette carries a
-   faint white sheen, so the shape is only just legible over the picture and
-   never competes with it. Corners alternate along the row, and the mask is
-   sized to sit inside the frame so no clipping or radius work is needed. */
-.marquee-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    user-select: none;
-    background: linear-gradient(142deg, rgba(255, 255, 255, .34) 0%, rgba(255, 255, 255, .06) 66%);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-size: 66% auto;
-    mask-size: 66% auto;
-    -webkit-mask-image: url(left-leaf.avif);
-    mask-image: url(left-leaf.avif);
-    /* A plain light sheen rather than a blend mode: it lifts the same amount on
-       a bright sky and on a dark roof, so the leaf stays a whisper everywhere. */
-    mix-blend-mode: normal;
-    opacity: .9;
-}
-
-.marquee-card:nth-child(odd)::after {
-    -webkit-mask-image: url(right-leaf.avif);
-    mask-image: url(right-leaf.avif);
-    -webkit-mask-position: 76% 72%;
-    mask-position: 76% 72%;
-    transform: rotate(-6deg);
-}
-
-.marquee-card:nth-child(even)::after {
-    -webkit-mask-position: 24% 28%;
-    mask-position: 24% 28%;
-    transform: rotate(6deg);
-}
-
-.marquee-wrap {
-    position: relative;
-    z-index: 1;
-}
-
-@media screen and (max-width: 767px) {
-    .marquee-card::after {
-        -webkit-mask-size: 70% auto;
-        mask-size: 70% auto;
-    }
 }
 
 /* Image tiles with gently varied proportions, a continupous (squircle)
@@ -4670,6 +4616,15 @@ summary:focus-visible,
     color: var(--color--primary);
 }
 
+/* The price block wraps inside the strip on narrow screens. `inline-flex` has no
+   line alignment of its own, so a wrapped row (the 3+1 chip) used to hug the
+   left edge while the row above it was centred. Centre every row, at every
+   width. */
+.offer-strip__text .price-line {
+    justify-content: center;
+    text-align: center;
+}
+
 /* The strip repeats the rating as well as the price: it is the last reminder
    before the gallery, and the count pill keeps it scannable. */
 .offer-strip__meta {
@@ -5211,12 +5166,16 @@ a:focus-visible > .link-ext {
     box-shadow: 0 14px 30px -12px rgba(193, 79, 26, .6);
     transform: translate(-50%, 140%);
     opacity: 0;
+    /* While it is off screen the pill must not swallow taps: it sits exactly
+       where the hero's down-arrow lives and was stealing its clicks. */
+    pointer-events: none;
     transition: transform .35s ease, opacity .35s ease;
 }
 
 .mobile-cta.is-visible {
     transform: translate(-50%, 0);
     opacity: 1;
+    pointer-events: auto;
 }
 
 @media screen and (max-width: 767px) {
@@ -6199,9 +6158,20 @@ body.lightbox-open {
     }
 
     .scroll-hint {
-        width: 40px;
-        height: 40px;
-        bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+        /* Fixed, not absolute: on 430×932 the hero runs ~10px past 100svh, which
+           pushed an absolutely-positioned cue to the very edge of the fold (and
+           off it on phones with a shorter visual viewport). Pinned to the visible
+           screen it is always on the main screen, and `is-hidden` (0.6 of the
+           viewport) takes it away before the sticky pill arrives. */
+        position: fixed;
+        left: 50%;
+        z-index: 6;
+        width: 44px;
+        height: 44px;
+        /* 20px of clearance plus the 44px badge fills the 64px lane exactly. */
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+        border-color: rgba(255, 255, 255, .62);
+        background: rgba(9, 30, 28, .72);
     }
 }
 

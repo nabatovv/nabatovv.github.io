@@ -843,10 +843,11 @@
     var ticking = false;
 
     function update() {
-      // Keep the cue while the main screen still dominates the view; drop it
-      // once three quarters of it has scrolled away.
+      // Keep the cue while the main screen still dominates the view; drop it as
+      // soon as the sticky booking pill slides in (0.6 of the viewport), so the
+      // two bottom affordances never sit on top of each other.
       var heroBottom = hero.getBoundingClientRect().bottom;
-      hint.classList.toggle("is-hidden", heroBottom < window.innerHeight * 0.25);
+      hint.classList.toggle("is-hidden", heroBottom < window.innerHeight * 0.4);
       ticking = false;
     }
 
