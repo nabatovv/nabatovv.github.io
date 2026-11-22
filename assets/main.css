@@ -3937,12 +3937,25 @@ svg.menu-icon {
         margin-bottom: 0;
     }
 
+    /* Icon rows on phones: the copy stays centred on the card axis, while the
+       icons sit in one fixed left rail — centring the icon+text group moved every
+       icon to a different x, so the moon never lined up with the cutlery. The
+       symmetric padding keeps the text optically centred and stops it colliding
+       with the rail. */
     .sticky-text .text-icon-wrap {
-        justify-content: center;
-        /* A 479px rule sets text-align: left here; on phones the card is centred,
-           so multi-line item labels ("Место для пикника на свежем воздухе") must
-           centre with it instead of breaking ragged. */
+        position: relative;
+        display: block;
+        width: 100%;
+        padding-inline: 34px;          /* 24px icon + 10px gap, mirrored */
         text-align: center;
+    }
+
+    .sticky-text .text-icon-wrap .icon {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        margin: 0;
+        transform: translateY(-50%);
     }
 
     /* The price badge hugs its content, so at phone widths the box has to be
