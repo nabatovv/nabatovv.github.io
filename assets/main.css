@@ -4060,6 +4060,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;   /* each wrapped line centres on the column axis */
     gap: 12px;
 }
 
@@ -6090,5 +6091,32 @@ body.lightbox-open {
         bottom: 10px;
         width: 40px;
         height: 40px;
+    }
+}
+
+/* ==========================================================================
+   Phones: one booking action, not eight
+   --------------------------------------------------------------------------
+   Below 768px the sticky orange "Забронировать" bar slides in once you are past
+   ~60% of the first viewport and then stays pinned, so every Instagram booking
+   CTA deeper in the page is a second copy of a button already under the thumb.
+   Drop them:
+
+     • the three service cards' buttons (Instagram)
+     • the offer strip's button — the strip itself stays, because its price
+       line ("от 6 000 ₸") is information, not a repeat of the bar
+     • the reviews block's booking row (Instagram, and its only child)
+
+   Three entry points survive, each with a job the bar cannot do:
+     • the hero CTA — the first screen, before the bar slides in
+     • the contact card's "Написать в Instagram" — the "Контакты" destination
+     • "Написать в WhatsApp" in #location — asks the way there, which the
+       booking bar does not answer (and it is the only WhatsApp channel left)
+   ========================================================================== */
+@media screen and (max-width: 767px) {
+    .sticky-text-card .button,
+    .offer-strip__cta,
+    .reviews-actions {
+        display: none;
     }
 }
