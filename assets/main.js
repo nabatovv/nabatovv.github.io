@@ -862,21 +862,40 @@
     update();
   }
 
-  /* ---------- Browser UI strip: borrow the footer's shade ---------- */
-  /* On Android Chrome `theme-color` paints the strip above the page with a
-     single flat colour, so the footer's glass slab can never show through it.
-     Once the footer is what sits under the top edge of the screen, the strip
-     swaps the page colour for the shade the footer has at that row: the slab's
-     gradient runs vertically, so its stops are interpolated by scroll depth. */
+  /* ---------- Browser UI strip: sky → page background → footer ---------- */
+  /* On Android Chrome `theme-color` paints the strip above the page with one
+     flat colour, so it has to follow whatever sits at the top edge of the
+     screen: the hero's sky while the hero is there, the page's own background
+     once the content has scrolled under that edge, and the footer's shade as
+     soon as the footer comes into the viewport — interpolated along the slab's
+     gradient so the strip slides into it rather than jumping at the boundary.
+
+     Cost control: one rAF-throttled handler drives it, geometry is read once
+     per frame, the gradient depth is rounded to 5% and the meta attribute is
+     only written when the resulting colour string actually changes. The sky is
+     sampled a single time from a single canvas pixel, not per scroll. */
   function initThemeColor() {
     var meta = document.querySelector('meta[name="theme-color"]');
+    if (!meta) return;
+    var hero = document.querySelector(".section.hero");
     var footer = document.querySelector(".footer");
-    if (!meta || !footer) return;
+    var page = document.querySelector(".page-wrapper") || document.body;
 
     var base = meta.getAttribute("content") || "#174f4b";
-    var stops = readStops();
-    var current = base;
+    var pageColor = readBackground(page) || readBackground(document.body) || base;
+    var sky = base;
+    var stops = footer ? readStops() : null;
+    var current = null;
     var ticking = false;
+
+    /* Usable background colours only: `transparent` would repaint the strip
+       with whatever the compositor last had. */
+    function readBackground(el) {
+      if (!el) return null;
+      var colour = window.getComputedStyle(el).backgroundColor;
+      if (!colour || colour === "transparent" || /rgba\([^)]*,\s*0\s*\)$/.test(colour)) return null;
+      return colour;
+    }
 
     /* `linear-gradient(180deg, rgb(26, 84, 79) 0%, …)` -> [{ rgb, at }], `at`
        normalised to 0..1. Stop positions are optional in CSS, so a gradient
@@ -925,17 +944,52 @@
       );
     }
 
+    /* The sky is the top band of the hero photo, averaged down to one pixel.
+       Sampling it beats hard-coding a hex: swapping the photo keeps the strip in
+       step. On file:// (or any cross-origin image) the canvas is tainted and the
+       read throws — the meta then simply keeps the colour it was served with. */
+    function sampleSky() {
+      var wrap = document.querySelector(".video-wrap") || hero;
+      if (!wrap) return;
+      var url = /url\(["']?([^"')]+)["']?\)/.exec(window.getComputedStyle(wrap).backgroundImage || "");
+      if (!url) return;
+      var img = new Image();
+      img.decoding = "async";
+      img.onload = function () {
+        try {
+          var band = Math.max(1, Math.round(img.naturalHeight * 0.06));
+          var canvas = document.createElement("canvas");
+          canvas.width = 1;
+          canvas.height = 1;
+          var ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, img.naturalWidth, band, 0, 0, 1, 1);
+          var d = ctx.getImageData(0, 0, 1, 1).data;
+          sky = "rgb(" + d[0] + ", " + d[1] + ", " + d[2] + ")";
+          update();
+        } catch (e) {
+          /* tainted canvas or decode hiccup: keep the served colour */
+        }
+      };
+      img.src = url[1];
+    }
+
     function update() {
       ticking = false;
-      var rect = footer.getBoundingClientRect();
-      var next = base;
-      if (rect.height > 0 && rect.top <= 0 && rect.bottom > 0) {
-        // How far down the slab the top edge of the screen points (0..1),
-        // rounded to 5% so the status bar is not repainted on every frame.
-        var depth = Math.min(1, Math.max(0, -rect.top / rect.height));
-        var s = shade(Math.round(depth * 20) / 20);
-        if (s) next = s;
+      var vh = window.innerHeight || 0;
+      var next = pageColor;
+
+      // The hero still reaches the top edge -> its sky.
+      if (hero && hero.getBoundingClientRect().bottom > 0) next = sky;
+
+      // The footer is anywhere in the viewport -> its shade at the strip's row.
+      if (footer) {
+        var rect = footer.getBoundingClientRect();
+        if (rect.height > 0 && rect.top < vh) {
+          var progress = (vh - rect.top) / (vh + rect.height);
+          next = shade(Math.round(Math.min(1, Math.max(0, progress)) * 20) / 20) || readBackground(footer) || next;
+        }
       }
+
       if (next === current) return;
       current = next;
       meta.setAttribute("content", next);
@@ -949,6 +1003,7 @@
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
+    sampleSky();
     update();
   }
 

@@ -10,7 +10,10 @@
          All type is rem-based with no root font-size override, so the layout
          scales with the user's accessibility setting. -->
     <meta name="text-scale" content="scale" />
-    <meta name="theme-color" content="#174f4b" />
+    <!-- The strip starts on the hero sky (sampled from main.avif); main.js
+         re-samples it at runtime and walks it through the page background
+         and the footer shade as you scroll. -->
+    <meta name="theme-color" content="#52adf3" />
     <meta name="color-scheme" content="light" />
     <!-- Event snippet for Contact conversion page
   In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
@@ -1389,7 +1392,7 @@
                       <path d="m5 13 4.5 4.5L19 7" />
                     </svg>
                   </button>
-                  <span class="contact-phone__status" role="status" aria-live="polite"></span>
+                  <span class="contact-phone__status sr-only" role="status" aria-live="polite"></span>
                   </span>
                 </p>
               </div>

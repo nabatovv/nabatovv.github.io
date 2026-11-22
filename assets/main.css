@@ -4387,6 +4387,26 @@ summary:focus-visible,
     gap: 10px;
 }
 
+/* The phone line carries two icons of different width — the glyph inside the
+   tel: link and the copy square after it — so in flow they pushed the number
+   14px left of the card's axis (17px on phones, where the glyph and its gap
+   both shrink). An invisible counterweight on the leading side makes the
+   *number* the centred element again, while both icons stay in flow: the copy
+   square keeps its tap target and the link keeps its underline.
+   The weight is the copy square minus the glyph and the glyph's own gap:
+   40 − 22 − 10 = 8px here, 40 − 18 − 8 = 14px on phones. */
+.contact-phone__row::before {
+    content: "";
+    flex: none;
+    width: 8px;
+}
+
+@media screen and (max-width: 767px) {
+    .contact-phone__row::before {
+        width: 14px;
+    }
+}
+
 /* The number is the card's most practical fact, so it runs large and heavy. */
 .contact-phone__number {
     display: inline-flex;
@@ -4531,7 +4551,11 @@ summary:focus-visible,
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    max-width: 46ch;
+    /* The copy square sits beside the address, so the row's own width is the
+       address plus the button — the counterweight below pays that back on the
+       left. Widening the cap by the same 50px keeps the address's measure
+       exactly as it was before the counterweight existed. */
+    max-width: calc(46ch + 50px);
 }
 
 .location-coords-row {
@@ -4539,6 +4563,58 @@ summary:focus-visible,
     align-items: center;
     gap: 8px;
     align-self: flex-start;
+}
+
+/* Three rows in «Как добраться» carry an icon beside their text: the address
+   copy square, the route's pin and the coordinates' copy square. In flow, each
+   carrier shifted its text off the column axis the chip and the h2 sit on — by
+   25px (40px button + 10px gap), 15px (20px pin + 10px gap) and 20px (32px
+   button + 8px gap) respectively, i.e. exactly half the carrier it sits next
+   to. An invisible counterweight of the same width on the opposite side makes
+   the *text* the centred element again, while the carrier stays in flow: it
+   keeps its tap target and its focus ring, and it can never overlap the text
+   the way an absolutely positioned icon can on a 320px screen.
+   The counterweight equals the carrier's width, not its width plus the gap:
+   the two gaps it introduces on either side of the text already cancel. */
+.location-copy::before {
+    content: "";
+    flex: none;
+    width: 40px;               /* mirrors .copy-btn */
+}
+
+.location-coords-row::before {
+    content: "";
+    flex: none;
+    width: 32px;               /* mirrors .copy-btn--sm */
+}
+
+.location-route::after {
+    content: "";
+    flex: none;
+    width: 20px;               /* mirrors .location-route .location-note__icon */
+}
+
+/* In the two-column tablet band the text column is at its narrowest (≈305px at
+   768) while the address still sets in 1rem, so a 40px copy square and its
+   counterweight leave ~205px for the address — enough to orphan «область» on a
+   line of its own. The small square (the one the coordinates already use) buys
+   back 16px and the address sets in two lines again. Both the button and its
+   counterweight shrink together, so the text stays on the axis. */
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .location-copy::before {
+        width: 32px;
+    }
+
+    .location-copy > .copy-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 10px;
+    }
+
+    .location-copy > .copy-btn .copy-btn__icon {
+        width: 15px;
+        height: 15px;
+    }
 }
 
 .contact-offer {
@@ -6589,6 +6665,18 @@ dd {
     margin: 0;
 }
 
+/* The header ends inside this section's `.container`, and `.container` hides
+   its overflow (a Webflow leftover). The link's underline hangs `text-underline
+   -offset: 4px` below its text box, so on the widths where the header is the
+   last thing inside that container the line was clipped away — visible at 1024
+   and 320, missing at 1440 and 390, which is exactly the width-dependent report.
+   Padding the container moves its clip edge below the underline. 8px clears the
+   4px offset with a little air, and the section keeps its look: this is the
+   bottom edge of a header block, not a spacing decision. */
+#gallery .container {
+    padding-bottom: 8px;
+}
+
 /* Same visual grammar as .reviews-rating__link — and the same size, so the
    1px underline carries the same weight as the reviews link's. */
 .gallery-more__link {
@@ -6762,7 +6850,9 @@ dd {
     align-items: flex-start;
     gap: 10px;
     margin: 0;
-    max-width: 46ch;
+    /* +30px pays for the counterweight that balances the pin (see the
+       ::after below); without it the text measure would shrink. */
+    max-width: calc(46ch + 30px);
     color: rgba(23, 79, 75, .78);
 }
 
