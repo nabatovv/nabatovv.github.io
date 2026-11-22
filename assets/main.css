@@ -4687,6 +4687,17 @@ a:focus-visible > .link-ext {
     opacity: 1;
 }
 
+/* Nav Instagram entry: the page's only Instagram link, and since WhatsApp took
+   over ordering it is social proof rather than a CTA — so it stays a labelled
+   pill (glyph + word) instead of a bare icon. `.button` is already a centred
+   flex row with `gap`, so icon and label sit as one unit; only the glyph needs
+   a size (an unsized <svg> defaults to 300×150). */
+.top-contact-us-button .nav-instagram__icon {
+    flex: none;
+    width: 17px;
+    height: 17px;
+}
+
 /* Hero actions: one primary booking action, one quiet path into the details. */
 /* Larger primary actions: the booking buttons carry the page, so they run one
    step above the 40px default (48px, 26px side padding, 17px label). */
@@ -5059,6 +5070,16 @@ a:focus-visible > .link-ext {
     opacity: 1;
     background: rgba(255, 255, 255, .16);
 }
+
+/* ---------- Channel policy: WhatsApp orders, Instagram shows ----------
+   WhatsApp (+7 778 267 59 01) is the ordering channel: every booking CTA on
+   the page — hero, service cards, offer strip, reviews, contact card, this
+   sticky bar — points at wa.me with a pre-filled booking message, and the
+   only register of Instagram is the «Наш инстаграм» pill in the nav (social
+   proof, not checkout). A two-hop "Instagram → DM → WhatsApp" funnel loses
+   people at each app switch, and it hides the tap from measurement, so do not
+   put Instagram back into a booking button. The phone (tel:) stays alongside
+   WhatsApp for people who would rather call. */
 
 /* ---------- Compact sticky CTA on phones ---------- */
 .mobile-cta {
