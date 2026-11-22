@@ -4790,12 +4790,18 @@ a:focus-visible > .link-ext {
     margin: 0;
     color: var(--color--primary);
     line-height: 1.25;
+    /* The phrase may wrap between its parts, never inside one of them: the
+       phone copy of `p { hyphens: auto }` used to let "Проживание" hyphenate
+       (Прожи-вание) wherever the badge ran out of room. */
+    hyphens: none;
 }
 
 .price-line__label {
     font-size: .95rem;
     font-weight: 500;
     opacity: .8;
+    /* Keep the label on one line, like the value and the unit beside it. */
+    white-space: nowrap;
 }
 
 .price-line__value {
@@ -4951,6 +4957,24 @@ a:focus-visible > .link-ext {
         padding: 20px 22px;
         border-radius: 18px;
     }
+}
+
+/* ---------- Hero glass panel: one centred axis ----------
+   The slab is a centred card on phones and a bottom-right overlay on desktop,
+   but its copy always hung on the left edge of whichever box it sat in: with
+   `align-items: flex-start` the header only grew to its max-content width, so
+   on 480-767px the text ran left of the panel's axis with a wide empty lane on
+   the right. Aligning the panel's children to the centre pins every block — the
+   headline, the price badge, the amenity grid, the rating line and the CTA — to
+   the same axis, leaving equal gutters to both borders at any width. */
+.subhero {
+    align-items: center;
+    text-align: center;
+}
+
+.subhero .section-header {
+    align-items: center;
+    text-align: center;
 }
 
 /* ==========================================================================
