@@ -4594,6 +4594,20 @@ summary:focus-visible,
     text-decoration-color: currentColor;
 }
 
+/* The familiar "opens elsewhere" mark after the label. */
+.reviews-rating__ext {
+    flex: none;
+    width: 13px;
+    height: 13px;
+    opacity: .7;
+    transition: opacity .2s ease;
+}
+
+.reviews-rating__link:hover .reviews-rating__ext,
+.reviews-rating__link:focus-visible .reviews-rating__ext {
+    opacity: 1;
+}
+
 /* Hero actions: one primary booking action, one quiet path into the details. */
 /* Larger primary actions: the booking buttons carry the page, so they run one
    step above the 40px default (48px, 26px side padding, 17px label). */
