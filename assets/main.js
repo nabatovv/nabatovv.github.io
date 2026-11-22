@@ -862,29 +862,38 @@
     update();
   }
 
-  /* ---------- Browser UI strip: sky → page background → footer ---------- */
+  /* ---------- Browser UI strip: sky → subhero glass → page background ---------- */
   /* On Android Chrome `theme-color` paints the strip above the page with one
-     flat colour, so it has to follow whatever sits at the top edge of the
-     screen: the hero's sky while the hero is there, the page's own background
-     once the content has scrolled under that edge, and the footer's shade as
-     soon as the footer comes into the viewport — interpolated along the slab's
-     gradient so the strip slides into it rather than jumping at the boundary.
+     flat colour. It takes a CSS colour but the strip is painted opaque — alpha
+     is not honoured consistently across browsers, and `filter` /
+     `backdrop-filter` cannot be expressed at all — so the panel's translucent,
+     blurred glass is resolved to the opaque pixel it actually produces: the
+     photo band under the strip is averaged (a blur *is* a local average), the
+     panel's `saturate()` is applied to that backdrop, and its rgba is composited
+     over it.
 
-     Cost control: one rAF-throttled handler drives it, geometry is read once
-     per frame, the gradient depth is rounded to 5% and the meta attribute is
-     only written when the resulting colour string actually changes. The sky is
-     sampled a single time from a single canvas pixel, not per scroll. */
+     The strip then follows what sits at the top edge: the hero's sky, the
+     subhero's glass while the panel is under that edge (which is the case that
+     matters on phones, where the panel takes up most of the hero), and the
+     page's own background otherwise. The footer deliberately has no state of its
+     own: its dark slab read as a flicker against the light page, so it keeps the
+     background colour.
+
+     Cost: one rAF-throttled handler, geometry read once per frame, the meta
+     written only when the colour actually changes, and the canvas read at most
+     once per 48px of scroll (cached in between). */
   function initThemeColor() {
     var meta = document.querySelector('meta[name="theme-color"]');
     if (!meta) return;
     var hero = document.querySelector(".section.hero");
-    var footer = document.querySelector(".footer");
+    var subhero = document.querySelector(".subhero");
+    var wrap = document.querySelector(".video-wrap") || hero;
     var page = document.querySelector(".page-wrapper") || document.body;
 
     var base = meta.getAttribute("content") || "#174f4b";
     var pageColor = readBackground(page) || readBackground(document.body) || base;
     var sky = base;
-    var stops = footer ? readStops() : null;
+    var heroImage = null;
     var current = null;
     var ticking = false;
 
@@ -897,65 +906,128 @@
       return colour;
     }
 
-    /* `linear-gradient(180deg, rgb(26, 84, 79) 0%, …)` -> [{ rgb, at }], `at`
-       normalised to 0..1. Stop positions are optional in CSS, so a gradient
-       without them degrades to its first colour instead of guessing. */
-    function readStops() {
-      var image = window.getComputedStyle(footer).backgroundImage || "";
-      var re = /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)[^)]*\)\s*(-?[\d.]+%)?/g;
-      var list = [];
-      var m;
-      var positioned = true;
-      while ((m = re.exec(image)) !== null) {
-        list.push({
-          rgb: [+m[1], +m[2], +m[3]],
-          at: m[4] === undefined ? null : Math.min(1, Math.max(0, parseFloat(m[4]) / 100)),
-        });
-        if (m[4] === undefined) positioned = false;
-      }
-      if (!list.length) return null;
-      if (!positioned || list.length < 2) {
-        return [
-          { rgb: list[0].rgb, at: 0 },
-          { rgb: list[0].rgb, at: 1 },
-        ];
-      }
-      return list;
+    function parseRgb(colour) {
+      var m = /rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)/.exec(colour || "");
+      return m ? [+m[1], +m[2], +m[3]] : null;
     }
 
-    function shade(progress) {
-      if (!stops) return null;
-      var a = stops[0];
-      var b = stops[stops.length - 1];
-      for (var i = 1; i < stops.length; i++) {
-        if (progress <= stops[i].at) {
-          a = stops[i - 1];
-          b = stops[i];
-          break;
-        }
+    function rgbString(c) {
+      return "rgb(" + Math.round(c[0]) + ", " + Math.round(c[1]) + ", " + Math.round(c[2]) + ")";
+    }
+
+    /* Saturation in HSL, the way `backdrop-filter: saturate(k)` scales it. */
+    function saturate(rgb, k) {
+      if (!rgb || !(k > 0) || k === 1) return rgb;
+      var r = rgb[0] / 255, g = rgb[1] / 255, b = rgb[2] / 255;
+      var max = Math.max(r, g, b), min = Math.min(r, g, b);
+      var l = (max + min) / 2;
+      var d = max - min;
+      if (!d) return rgb;
+      var s = l > .5 ? d / (2 - max - min) : d / (max + min);
+      s = Math.min(1, s * k);
+      var h;
+      if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+      else if (max === g) h = ((b - r) / d + 2) / 6;
+      else h = ((r - g) / d + 4) / 6;
+      function hue(t) {
+        t = (t + 1) % 1;
+        if (t < 1 / 6) return min + (max - min) * 6 * t;
+        if (t < 1 / 2) return max;
+        if (t < 2 / 3) return min + (max - min) * (2 / 3 - t) * 6;
+        return min;
       }
-      var span = b.at - a.at;
-      var k = span > 0 ? Math.min(1, Math.max(0, (progress - a.at) / span)) : 1;
-      return (
-        "rgb(" +
-        Math.round(a.rgb[0] + (b.rgb[0] - a.rgb[0]) * k) + ", " +
-        Math.round(a.rgb[1] + (b.rgb[1] - a.rgb[1]) * k) + ", " +
-        Math.round(a.rgb[2] + (b.rgb[2] - a.rgb[2]) * k) + ")"
+      var q = l < .5 ? l * (1 + s) : l + s - l * s;
+      var p2 = 2 * l - q;
+      var out = [hue(h + 1 / 3), hue(h), hue(h - 1 / 3)];
+      return [out[0] * 255, out[1] * 255, out[2] * 255];
+    }
+
+    /* The panel's own look: its rgba fill plus the saturate it applies. */
+    function panelLook() {
+      if (!subhero) return null;
+      var cs = window.getComputedStyle(subhero);
+      var m = /rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:[,\s/]+([\d.]+))?\s*\)/.exec(
+        cs.backgroundColor || ""
       );
+      if (!m) return null;
+      var filter = cs.backdropFilter || cs.webkitBackdropFilter || "";
+      var sat = /saturate\(\s*([\d.]+)\s*\)/.exec(filter);
+      return {
+        fill: [+m[1], +m[2], +m[3]],
+        alpha: m[4] === undefined ? 1 : Math.min(1, Math.max(0, parseFloat(m[4]))),
+        saturate: sat ? parseFloat(sat[1]) : 1,
+      };
     }
 
-    /* The sky is the top band of the hero photo, averaged down to one pixel.
-       Sampling it beats hard-coding a hex: swapping the photo keeps the strip in
-       step. On file:// (or any cross-origin image) the canvas is tainted and the
-       read throws — the meta then simply keeps the colour it was served with. */
+    /* Average the photo band that sits under the strip row, blurred the way the
+       panel blurs it. Cover-fit is resolved against the hero box, or against the
+       viewport when the photo is fixed to it (desktop); the strip is at the top
+       edge in both cases, so only the vertical mapping matters here. */
+    function sampleBackdrop() {
+      if (!heroImage || !hero || !wrap) return null;
+      var cs = window.getComputedStyle(wrap);
+      var fixed = /fixed/.test(cs.backgroundAttachment || "");
+      var heroRect = hero.getBoundingClientRect();
+      var boxW = fixed ? window.innerWidth : heroRect.width;
+      var boxH = fixed ? window.innerHeight : heroRect.height;
+      if (!boxW || !boxH) return null;
+      var scale = Math.max(boxW / heroImage.naturalWidth, boxH / heroImage.naturalHeight);
+      var offsetY = (boxH - heroImage.naturalHeight * scale) / 2;
+      var localY = fixed ? 0 : -heroRect.top;         // strip row inside the box
+      var imgY = (localY - offsetY) / scale;
+      imgY = Math.min(heroImage.naturalHeight - 1, Math.max(0, imgY));
+      // the 22px blur pulls in roughly twice its radius of neighbourhood
+      var band = Math.max(1, Math.round((44 / scale) || 1));
+      try {
+        var canvas = document.createElement("canvas");
+        canvas.width = 1;
+        canvas.height = 1;
+        var ctx = canvas.getContext("2d");
+        var top = Math.max(0, Math.min(heroImage.naturalHeight - band, Math.round(imgY - band / 2)));
+        ctx.drawImage(heroImage, 0, top, heroImage.naturalWidth, band, 0, 0, 1, 1);
+        var d = ctx.getImageData(0, 0, 1, 1).data;
+        return [d[0], d[1], d[2]];
+      } catch (e) {
+        return null;                                   // tainted canvas on file://
+      }
+    }
+
+    var glassKey = null;
+    var glass = base;
+
+    /* The colour the panel actually paints at the strip row: saturate the
+       backdrop, then the rgba over it. Recomputed at most once per 48px. */
+    function glassAt() {
+      var look = panelLook();
+      if (!look) return sky;
+      var key = (function () {
+        if (!hero) return "fixed";
+        var cs = wrap ? window.getComputedStyle(wrap) : null;
+        if (cs && /fixed/.test(cs.backgroundAttachment || "")) return "fixed";
+        // the photo scrolls with the page here, so cache per 48px of depth
+        return Math.round(-hero.getBoundingClientRect().top / 48);
+      })();
+      if (key === glassKey) return glass;
+      var under = sampleBackdrop() || parseRgb(sky) || [0, 0, 0];
+      under = saturate(under, look.saturate);
+      glass =
+        "rgb(" +
+        Math.round(under[0] * (1 - look.alpha) + look.fill[0] * look.alpha) + ", " +
+        Math.round(under[1] * (1 - look.alpha) + look.fill[1] * look.alpha) + ", " +
+        Math.round(under[2] * (1 - look.alpha) + look.fill[2] * look.alpha) + ")";
+      glassKey = key;
+      return glass;
+    }
+
+    /* The sky is the top band of the hero photo, averaged down to one pixel. */
     function sampleSky() {
-      var wrap = document.querySelector(".video-wrap") || hero;
       if (!wrap) return;
       var url = /url\(["']?([^"')]+)["']?\)/.exec(window.getComputedStyle(wrap).backgroundImage || "");
       if (!url) return;
       var img = new Image();
       img.decoding = "async";
       img.onload = function () {
+        heroImage = img;
         try {
           var band = Math.max(1, Math.round(img.naturalHeight * 0.06));
           var canvas = document.createElement("canvas");
@@ -964,29 +1036,27 @@
           var ctx = canvas.getContext("2d");
           ctx.drawImage(img, 0, 0, img.naturalWidth, band, 0, 0, 1, 1);
           var d = ctx.getImageData(0, 0, 1, 1).data;
-          sky = "rgb(" + d[0] + ", " + d[1] + ", " + d[2] + ")";
-          update();
+          sky = rgbString([d[0], d[1], d[2]]);
         } catch (e) {
           /* tainted canvas or decode hiccup: keep the served colour */
         }
+        glassKey = null;               // the panel colour can use the photo now
+        update();
       };
       img.src = url[1];
     }
 
     function update() {
       ticking = false;
-      var vh = window.innerHeight || 0;
       var next = pageColor;
 
-      // The hero still reaches the top edge -> its sky.
-      if (hero && hero.getBoundingClientRect().bottom > 0) next = sky;
-
-      // The footer is anywhere in the viewport -> its shade at the strip's row.
-      if (footer) {
-        var rect = footer.getBoundingClientRect();
-        if (rect.height > 0 && rect.top < vh) {
-          var progress = (vh - rect.top) / (vh + rect.height);
-          next = shade(Math.round(Math.min(1, Math.max(0, progress)) * 20) / 20) || readBackground(footer) || next;
+      if (hero) {
+        var h = hero.getBoundingClientRect();
+        if (h.bottom > 0) next = sky;
+        // The strip is over the subhero panel -> its resolved glass colour.
+        if (subhero) {
+          var p = subhero.getBoundingClientRect();
+          if (p.height > 0 && p.top <= 0 && p.bottom > 0) next = glassAt();
         }
       }
 
