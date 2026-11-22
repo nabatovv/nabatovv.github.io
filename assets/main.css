@@ -4737,6 +4737,17 @@ a:focus-visible > .link-ext {
     font-size: 1.3rem;
 }
 
+/* Phones: the hero panel is centred, but .section-header stretches its children
+   (a ≤991px rule), so the rating line filled the width and its items hugged the
+   left edge — the wrapped second line read as a ragged orphan. Centre the line's
+   items so both rows sit on the panel axis. */
+@media screen and (max-width: 767px) {
+    .hero-trust {
+        justify-content: center;
+        text-align: center;
+    }
+}
+
 /* On 320-380px screens the 48px button would wrap its label onto two lines;
    a touch less type and padding keeps it on one line. */
 @media screen and (max-width: 380px) {
