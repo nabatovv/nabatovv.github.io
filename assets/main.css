@@ -4344,9 +4344,16 @@ summary:focus-visible,
     font-weight: 800;
 }
 
-.hero-trust__count {
-    font-weight: 500;
-    color: rgba(255, 255, 255, .85);
+/* The separator and the reviews link wrap as one unit, so a narrow screen never
+   leaves a dangling "·" at the end of the line. */
+.hero-trust__proof {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.hero-trust__sep {
+    color: rgba(255, 255, 255, .7);
 }
 
 .hero-trust__stars {
@@ -4355,6 +4362,9 @@ summary:focus-visible,
 }
 
 .hero-trust a {
+    display: inline-flex;
+    align-items: center;
+    gap: .28em;
     color: inherit;
     text-decoration: underline;
     text-decoration-thickness: 1px;
@@ -4379,15 +4389,6 @@ summary:focus-visible,
     margin: 0;
 }
 
-.contact-phone__label {
-    font-size: .76rem;
-    font-weight: 600;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--color--primary);
-    opacity: .72;
-}
-
 .contact-phone__row {
     display: inline-flex;
     align-items: center;
@@ -4404,14 +4405,20 @@ summary:focus-visible,
     font-size: 1.35rem;
     font-weight: 800;
     letter-spacing: .01em;
-    text-decoration: none;
+    /* A phone number must read as a link: underline it like the other in-page
+       links rather than relying on the colour alone. */
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    text-decoration-color: rgba(23, 79, 75, .4);
     white-space: nowrap;
-    transition: color .2s ease;
+    transition: color .2s ease, text-decoration-color .2s ease;
 }
 
 .contact-phone__number:hover,
 .contact-phone__number:focus-visible {
     color: var(--color--accent);
+    text-decoration-color: currentColor;
 }
 
 .contact-phone__number .icon {
@@ -4657,8 +4664,9 @@ summary:focus-visible,
     text-decoration-color: currentColor;
 }
 
-/* The familiar "opens elsewhere" mark after the label. */
-.reviews-rating__ext {
+/* The familiar "opens elsewhere" mark: shared by the hero rating line and the
+   reviews header link. */
+.link-ext {
     flex: none;
     width: 13px;
     height: 13px;
@@ -4666,8 +4674,8 @@ summary:focus-visible,
     transition: opacity .2s ease;
 }
 
-.reviews-rating__link:hover .reviews-rating__ext,
-.reviews-rating__link:focus-visible .reviews-rating__ext {
+a:hover > .link-ext,
+a:focus-visible > .link-ext {
     opacity: 1;
 }
 
