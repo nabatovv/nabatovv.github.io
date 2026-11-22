@@ -75,6 +75,60 @@
     });
   }
 
+  /* ---------- Copy-to-clipboard buttons (phone numbers) ---------- */
+  function initCopyButtons() {
+    qsa("[data-copy]").forEach(function (btn) {
+      var originalLabel = btn.getAttribute("aria-label") || "";
+      var row = btn.parentElement;
+      var status = row ? row.querySelector(".contact-phone__status") : null;
+      var timer = null;
+
+      function flash(ok) {
+        btn.classList.add("is-copied");
+        btn.setAttribute("aria-label", ok ? "Номер скопирован" : "Не удалось скопировать");
+        if (status) status.textContent = ok ? "Номер скопирован" : "Не удалось скопировать";
+        if (timer) window.clearTimeout(timer);
+        timer = window.setTimeout(function () {
+          btn.classList.remove("is-copied");
+          btn.setAttribute("aria-label", originalLabel);
+          if (status) status.textContent = "";
+        }, 1600);
+      }
+
+      // Older browsers / non-secure contexts have no async clipboard.
+      function legacyCopy(text) {
+        var field = document.createElement("textarea");
+        field.value = text;
+        field.setAttribute("readonly", "");
+        field.style.cssText = "position:fixed;top:-1000px;opacity:0";
+        document.body.appendChild(field);
+        field.select();
+        var ok = false;
+        try {
+          ok = document.execCommand("copy");
+        } catch (e) {}
+        document.body.removeChild(field);
+        flash(ok);
+      }
+
+      btn.addEventListener("click", function () {
+        var text = btn.getAttribute("data-copy") || "";
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(
+            function () {
+              flash(true);
+            },
+            function () {
+              legacyCopy(text);
+            }
+          );
+        } else {
+          legacyCopy(text);
+        }
+      });
+    });
+  }
+
   /* ---------- Sticky, condensed glass header ---------- */
   function initStickyHeader() {
     var nav = document.querySelector(".navbar");
@@ -686,6 +740,7 @@
     initScrollSpy();
     initMobileCta();
     initCtaTracking();
+    initCopyButtons();
     initReveals();
     initHeroGlide();
     initScrollHint();

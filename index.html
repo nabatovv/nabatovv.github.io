@@ -1415,7 +1415,8 @@
                   <span class="contact-phone__label"
                     >Бронирование и общие вопросы</span
                   >
-                  <a href="tel:+77782675901">
+                  <span class="contact-phone__row">
+                  <a class="contact-phone__number" href="tel:+77782675901">
                     <svg
                       class="icon"
                       viewBox="0 0 24 24"
@@ -1433,6 +1434,44 @@
                     </svg>
                     +7 (778) 267 59 01</a
                   >
+                  <button
+                    type="button"
+                    class="contact-phone__copy"
+                    data-copy="+77782675901"
+                    aria-label="Скопировать номер телефона"
+                  >
+                    <svg
+                      class="contact-phone__icon contact-phone__icon--copy"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <rect x="9" y="9" width="11" height="11" rx="2.5" />
+                      <path
+                        d="M15 5.5A2.5 2.5 0 0 0 12.5 3H6.5A2.5 2.5 0 0 0 4 5.5v6A2.5 2.5 0 0 0 6.5 14"
+                      />
+                    </svg>
+                    <svg
+                      class="contact-phone__icon contact-phone__icon--check"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <path d="m5 13 4.5 4.5L19 7" />
+                    </svg>
+                  </button>
+                  <span class="contact-phone__status" role="status" aria-live="polite"></span>
+                  </span>
                 </p>
               </div>
               <a
