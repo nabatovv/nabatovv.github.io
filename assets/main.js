@@ -600,7 +600,11 @@
       /* Places shown on the map: Dostyk resort + the town of Topar */
       var markerEl = document.createElement("div");
       markerEl.className = "dostyk-marker";
-      markerEl.innerHTML = '<span class="dostyk-marker__label">Зона отдыха «Достык»</span>';
+      markerEl.innerHTML =
+        '<span class="dostyk-marker__label">' +
+        '<span class="marker-label__full">Зона отдыха «Достык»</span>' +
+        '<span class="marker-label__short">Достык</span>' +
+        "</span>";
       new maplibregl.Marker({ element: markerEl })
         .setLngLat([72.77361, 49.51278])
         .addTo(map);

@@ -4252,39 +4252,64 @@ summary:focus-visible,
 
 .hero-eyebrow {
     margin: 0;
+    /* This is the page's H1 (the descriptive title was removed), so it keeps the
+       eyebrow's body face instead of inheriting Playfair from h1. */
+    font-family: var(--typography--body);
     color: rgba(255, 255, 255, .82);
     font-size: .8rem;
     font-weight: 600;
     letter-spacing: .14em;
+    line-height: 1.4;
     text-transform: uppercase;
-}
-
-.hero-title {
-    font-family: "Manrope", var(--typography--body);
-    font-size: clamp(1.9rem, 3.8vw, 3rem);
-    font-weight: 400;
-    line-height: 1.2;
-    letter-spacing: 0;
-    color: #fff;
-    text-wrap: balance;
-}
-
-.hero-sub {
-    margin: 0;
-    max-width: 42ch;
-    color: rgba(255, 255, 255, .92);
-    font-size: 1.0625rem;
-    line-height: 1.62;
 }
 
 /* Offer + proof in the hero: price answers the first question a resort visitor
    asks, the 2GIS rating answers the second. Both sit on the glass panel with the
    copy, above the CTA. */
+/* Hero panel composition: brand → price (the loudest element) → what's included
+   → social proof → CTA, on one optical rhythm. */
+.subhero {
+    gap: 24px;
+}
+
+.subhero .section-header {
+    gap: 14px;
+}
+
+.subhero .price-line {
+    width: fit-content;
+    max-width: 100%;
+    padding: 10px 14px;
+    border: 1px solid rgba(255, 255, 255, .18);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, .10);
+}
+
+.subhero .price-line--on-dark .price-line__value {
+    font-size: 1.55rem;
+}
+
+.included--on-dark .included-title {
+    color: rgba(255, 255, 255, .72);
+    opacity: 1;
+}
+
+.included--on-dark .included-list {
+    color: #fff;
+}
+
+.included--on-dark .included-list li::before {
+    background: rgba(255, 255, 255, .18);
+    border: 1px solid rgba(255, 255, 255, .24);
+    color: #ffd2b8;
+}
+
 .hero-trust {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 8px;
+    margin-top: 4px;
     margin: 0;
     color: rgba(255, 255, 255, .92);
     font-size: .95rem;
@@ -4315,7 +4340,7 @@ summary:focus-visible,
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 18px;               /* price → primary CTA → phone/WhatsApp */
 }
 
 .contact-offer {
@@ -4339,7 +4364,7 @@ summary:focus-visible,
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 8px 10px;
+    gap: 12px 16px;
     margin: 0;
 }
 
@@ -4634,14 +4659,6 @@ summary:focus-visible,
     .subhero {
         padding: 20px 22px;
         border-radius: 18px;
-    }
-
-    .hero-title {
-        font-size: clamp(2rem, 8vw, 2.75rem);
-    }
-
-    .hero-sub {
-        font-size: 1rem;
     }
 }
 
@@ -5668,7 +5685,11 @@ body.lightbox-open {
     position: absolute;
     left: 24px;
     top: 50%;
-    transform: translateY(-50%);
+    /* Rides above the dot so it can never meet the town label below. */
+    transform: translateY(calc(-50% - 16px));
+    max-width: min(240px, 55vw);
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
     background: var(--color--primary);
     color: #fff;
@@ -5677,6 +5698,15 @@ body.lightbox-open {
     padding: 4px 10px;
     border-radius: 999px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
+}
+
+/* The resort's name is long; on phones the pill shows just "Достык" so the two
+   labels stay short enough never to touch. */
+.marker-label__short { display: none; }
+
+@media screen and (max-width: 767px) {
+    .marker-label__full { display: none; }
+    .marker-label__short { display: inline; }
 }
 
 /* Town marker (Topar) — quieter than the resort marker */
@@ -5695,7 +5725,11 @@ body.lightbox-open {
     position: absolute;
     left: 20px;
     top: 50%;
-    transform: translateY(-50%);
+    /* Mirrors the resort label: it hangs below its own dot. */
+    transform: translateY(calc(-50% + 16px));
+    max-width: min(180px, 45vw);
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
     background: rgba(252, 250, 248, .96);
     color: var(--color--primary);
