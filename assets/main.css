@@ -4253,13 +4253,14 @@ summary:focus-visible,
 .hero-eyebrow {
     margin: 0;
     /* This is the page's H1 (the descriptive title was removed), so it keeps the
-       eyebrow's body face instead of inheriting Playfair from h1. */
+       eyebrow's body face instead of inheriting Playfair from h1 — but it now
+       opens the panel, so it runs bigger and brighter than a caption. */
     font-family: var(--typography--body);
-    color: rgba(255, 255, 255, .82);
-    font-size: .8rem;
-    font-weight: 600;
-    letter-spacing: .14em;
-    line-height: 1.4;
+    color: rgba(255, 255, 255, .96);
+    font-size: .95rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    line-height: 1.35;
     text-transform: uppercase;
 }
 
@@ -4289,11 +4290,6 @@ summary:focus-visible,
     font-size: 1.55rem;
 }
 
-.included--on-dark .included-title {
-    color: rgba(255, 255, 255, .72);
-    opacity: 1;
-}
-
 .included--on-dark .included-list {
     color: #fff;
 }
@@ -4309,11 +4305,20 @@ summary:focus-visible,
     flex-wrap: wrap;
     align-items: center;
     gap: 8px;
-    margin-top: 4px;
-    margin: 0;
-    color: rgba(255, 255, 255, .92);
-    font-size: .95rem;
+    margin: 4px 0 0;
+    color: rgba(255, 255, 255, .95);
+    font-size: 1.05rem;
     line-height: 1.35;
+}
+
+.hero-trust__score {
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.hero-trust__count {
+    font-weight: 500;
+    opacity: .82;
 }
 
 .hero-trust__stars {
@@ -4428,11 +4433,6 @@ summary:focus-visible,
     color: var(--color--primary);
 }
 
-.offer-strip__meta {
-    font-size: .95rem;
-    opacity: .78;
-}
-
 .offer-strip__cta {
     flex: none;
 }
@@ -4441,16 +4441,6 @@ summary:focus-visible,
    has a visible content behind it. */
 .included {
     margin-top: 4px;
-}
-
-.included-title {
-    margin: 0 0 12px;
-    font-size: .88rem;
-    font-weight: 600;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--color--primary);
-    opacity: .72;
 }
 
 .included-list {
