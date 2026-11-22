@@ -75,6 +75,32 @@
     });
   }
 
+  /* ---------- Hero rating line: drop the separator when it wraps ---------- */
+  function initHeroTrustWrap() {
+    var trust = document.querySelector(".hero-trust");
+    var proof = trust && trust.querySelector(".hero-trust__proof");
+    var stars = trust && trust.querySelector(".hero-trust__stars");
+    if (!trust || !proof || !stars) return;
+
+    function update() {
+      // When the proof row starts below the stars' row, the line has wrapped and
+      // the "·" separator is no longer doing any work — the break is the
+      // separator. Measuring beats guessing at breakpoints: the wrap point moves
+      // with font loading, zoom and translated copy.
+      var wrapped = proof.getBoundingClientRect().top - stars.getBoundingClientRect().top > 4;
+      trust.classList.toggle("is-wrapped", wrapped);
+    }
+
+    window.addEventListener("resize", update, { passive: true });
+    if ("ResizeObserver" in window) {
+      new ResizeObserver(update).observe(trust);
+    }
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(update);
+    }
+    update();
+  }
+
   /* ---------- Copy-to-clipboard buttons (phone numbers) ---------- */
   function initCopyButtons() {
     qsa("[data-copy]").forEach(function (btn) {
@@ -741,6 +767,7 @@
     initMobileCta();
     initCtaTracking();
     initCopyButtons();
+    initHeroTrustWrap();
     initReveals();
     initHeroGlide();
     initScrollHint();

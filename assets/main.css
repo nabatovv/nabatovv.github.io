@@ -4356,6 +4356,13 @@ summary:focus-visible,
     color: rgba(255, 255, 255, .7);
 }
 
+/* Wrapped (phones, narrow embeds): the line break already separates the score
+   from the review count, so the "·" is dropped rather than left dangling at the
+   start of the second row. */
+.hero-trust.is-wrapped .hero-trust__sep {
+    display: none;
+}
+
 .hero-trust__stars {
     color: #f2b21b;                 /* gold reads on the dark glass */
     letter-spacing: .08em;
