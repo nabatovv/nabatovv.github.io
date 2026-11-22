@@ -2555,14 +2555,7 @@ blockquote {
     display: flex
 }
 
-.script {
-    font-family: "Marck Script", var(--typography--script);
-    font-size: 34px;
-    line-height: 150%
-}
-
 /* A leaf tucked at the edge of each glass text block, peeking out from under it */
-#hi .center-wrap,
 .sticky-text-card,
 .contact-text {
     position: relative;
@@ -2581,12 +2574,6 @@ blockquote {
     pointer-events: none;
     user-select: none;
     filter: saturate(1.05);
-}
-
-#hi .center-wrap .card-leaf {
-    right: -18px;
-    bottom: -22px;
-    transform: rotate(-10deg);
 }
 
 .sticky-text-card .card-leaf {
@@ -2670,29 +2657,6 @@ blockquote {
         width: 40vw;
         opacity: .3;
     }
-}
-
-.image-bridge-left {
-    left: 0%;
-    /*top: var(--padding-vh\<deleted\|variable-ab9ce940-3a1c-5770-fb62-26227efa1a9e\>);*/
-    z-index: 2;
-    justify-content: flex-end;
-    align-items: center;
-    width: 30%;
-    display: flex;
-    position: absolute;
-    bottom: auto;
-    right: auto
-}
-
-.image-bridge-right {
-    top: auto;
-    left: auto;
-    right: 0%;
-    bottom: var(--padding-vh\<deleted\|variable-ab9ce940-3a1c-5770-fb62-26227efa1a9e\>);
-    z-index: 2;
-    width: 30%;
-    position: absolute
 }
 
 .await-grid {
@@ -2902,24 +2866,6 @@ blockquote {
     background-color: var(--color--primary)
 }
 
-.image-reveal {
-    width: 35%;
-    overflow: hidden
-}
-
-.image-reveal.image-bridge-left {
-    justify-content: center;
-    align-items: flex-start;
-    top: 96px
-}
-
-.image-reveal.image-bridge-right {
-    justify-content: center;
-    align-items: flex-end;
-    display: flex;
-    bottom: 96px
-}
-
 .image-effect {
     transition: all .3s
 }
@@ -3086,10 +3032,6 @@ blockquote {
 
     .sticky-text._1 {
         padding: 48px
-    }
-
-    .image-reveal.image-bridge-left, .image-reveal.image-bridge-right {
-        display: none
     }
 
     .grid-contact {
@@ -3387,11 +3329,6 @@ blockquote {
     transform: scale(1.02);
 }
 
-.logo {
-    width:96px;
-    height: 96px;
-}
-
 
 
 /* ===== Scroll-driven image swap ===== */
@@ -3626,20 +3563,6 @@ blockquote {
    Each framed image gets its own organic outline (base + hover) so the
    decorations don't all look identical, while each still morphs on hover.
    Percent-based radii keep the shapes adapting to the image size/shape. */
-
-.image-bridge-left {
-    --pebble-radius: 61% 39% 55% 45% / 53% 49% 51% 47%;
-    --pebble-radius-hover: 52% 48% 60% 40% / 57% 44% 56% 43%;
-    --pebble-outline-radius: 55% 45% 60% 40% / 48% 55% 45% 52%;
-    --pebble-outline-radius-hover: 60% 40% 50% 50% / 52% 51% 49% 48%;
-}
-
-.image-bridge-right {
-    --pebble-radius: 57% 43% 47% 53% / 56% 44% 56% 44%;
-    --pebble-radius-hover: 63% 37% 55% 45% / 50% 56% 44% 50%;
-    --pebble-outline-radius: 50% 50% 52% 48% / 51% 50% 49% 50%;
-    --pebble-outline-radius-hover: 56% 44% 48% 52% / 54% 47% 53% 46%;
-}
 
 .sticky-image-1 {
     --pebble-radius: 64% 36% 50% 50% / 50% 53% 47% 50%;
@@ -5198,22 +5121,6 @@ a:focus-visible > .link-ext {
     }
 }
 
-/* ---------- Intro (#hi): frosted card around logo, heading and script ---------- */
-#hi .center-wrap {
-    position: relative;
-    z-index: 3;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: clamp(28px, 4vw, 56px);
-    border: 1px solid var(--glass-border-dark);
-    border-radius: 30px;
-    background: linear-gradient(160deg, rgba(255, 255, 255, .76), rgba(255, 255, 255, .44));
-    -webkit-backdrop-filter: blur(12px) saturate(1.3);
-    backdrop-filter: blur(12px) saturate(1.3);
-    box-shadow: 0 30px 60px -34px rgba(20, 60, 56, .40), inset 0 1px 0 rgba(255, 255, 255, .80);
-}
-
 /* ---------- Contact text block: frosted card ---------- */
 .contact-text {
     align-self: center;
@@ -5230,7 +5137,6 @@ a:focus-visible > .link-ext {
 
 /* More transparent glass so the leaves behind the cards show blurred through them */
 .sticky-text-card,
-#hi .center-wrap,
 .contact-text {
     background: var(--glass-light);
     -webkit-backdrop-filter: blur(9px) saturate(1.35);
@@ -5295,7 +5201,7 @@ a:focus-visible > .link-ext {
 /* These open the lightbox (see initGallery in main.js), so they get the same
    pointer cue as the marquee images and a keyboard focus ring. The ring is
    drawn inset because the photos sit inside overflow:hidden wrappers
-   (.image-reveal, .sticky-image-N, .await-image). */
+   (.sticky-image-N, .await-image). */
 .pebble-frame img {
     cursor: pointer;
 }
@@ -5354,7 +5260,6 @@ a:focus-visible > .link-ext {
     .nav-menu,
     .nav-menu-list,
     .sticky-text-card,
-    #hi .center-wrap,
     .contact-text,
     .footer {
         -webkit-backdrop-filter: none;
@@ -5370,7 +5275,6 @@ a:focus-visible > .link-ext {
     }
 
     .sticky-text-card,
-    #hi .center-wrap,
     .contact-text {
         background: rgba(255, 255, 255, .90);
     }
@@ -6140,4 +6044,551 @@ body.lightbox-open {
     .reviews-actions {
         display: none;
     }
+}
+
+/* ==========================================================================
+   Mobile reading rhythm (320–959px)
+   --------------------------------------------------------------------------
+   Follows GoogleChrome/modern-web-guidance — visual-design/typography,
+   css/responsive-design and accessibility/respect-os-text-scale:
+
+   • body copy keeps a 1rem (16px) floor and stays a rem+vw clamp, so the
+     max is never more than 2.5x the min and browser/OS text scaling still
+     works (WCAG 1.4.4, 1.4.10);
+   • line-height is unitless and tightens slightly as the measure narrows
+     (~1.5 on phones, ~1.55 above), so short lines read as one block instead
+     of a ladder of separate lines;
+   • hyphens: auto on narrow measures (the document declares lang="ru") gives
+     a straighter rag and removes 1-2 lines per paragraph on a 320px screen;
+   • text-wrap: pretty for running copy — headings keep text-wrap: balance;
+   • overflow-wrap keeps long words from forcing horizontal scroll at 320px;
+   • long reviews preview as six lines; the card stays one big link to the
+     full 2GIS list, so the affordance is a caption, not a nested button
+     (a <button> inside <a class="review-card"> would be invalid HTML).
+   ========================================================================== */
+
+body {
+    overflow-wrap: break-word;
+}
+
+p,
+blockquote,
+li,
+dd {
+    text-wrap: pretty;
+}
+
+@media screen and (max-width: 767px) {
+    p,
+    blockquote,
+    li,
+    dd,
+    .review-quote,
+    .faq__a {
+        hyphens: auto;
+    }
+
+    :root {
+        /* 80px of air between sections is a lot of thumb-work on a phone. */
+        --section-space: 64px;
+    }
+}
+
+/* Reviews: comfortable floor, tighter leading, six-line preview */
+.review-quote {
+    font-size: clamp(1rem, 0.94rem + 0.35vw, 1.0625rem);
+    line-height: 1.5;
+    text-wrap: pretty;
+}
+
+@media screen and (max-width: 959px) {
+    .review-card {
+        padding: clamp(16px, 4.2vw, 24px);
+        gap: 12px;
+    }
+}
+
+/* Other running copy: same treatment, no lead-paragraph bloat on phones */
+@media screen and (max-width: 767px) {
+    .small-box > p,
+    .section-text > p:first-of-type,
+    .sticky-text-card > p,
+    .contact-wrap > p:first-of-type {
+        font-size: clamp(1rem, 0.95rem + 0.35vw, 1.0625rem);
+        line-height: 1.5;
+    }
+
+    .await-card > p,
+    .section-text p {
+        line-height: 1.5;
+    }
+
+    .faq__a {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+}
+
+/* Reviews header on the narrowest screens: the stars, score and 2GIS count
+   cannot share one line at 320px, and an inline "·" separator ends up dangling
+   at a line break. Stack them into two deliberate rows instead: score above,
+   the whole 2GIS link unbroken below (composition: one idea per line). */
+@media screen and (max-width: 479px) {
+    .reviews-rating {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 6px .35em;
+        letter-spacing: .12em;
+    }
+
+    .reviews-rating__sep {
+        display: none;
+    }
+
+    .reviews-rating__link {
+        flex: 0 0 100%;
+        justify-content: center;
+        margin-left: 0;
+        white-space: nowrap;
+    }
+}
+
+/* Running copy keeps its full text on every screen — no truncation. */
+
+/* ==========================================================================
+   Compact mobile type & rhythm (phones)
+   --------------------------------------------------------------------------
+   Requested trade-off: smaller type, tighter leading and ~25-30% less spacing
+   so text blocks stop being a long scroll on small screens.
+
+   • 13px body / 12px dense metadata (chips, captions, sources) — the smallest
+     we go; nothing under 12px. Sizes stay in rem so the <meta name="text-scale">
+     opt-in and browser zoom can still enlarge everything for the reader.
+   • 1.4 leading with -0.01em tracking: short mobile lines track easily, and
+     the hair of negative tracking buys back horizontal space (fewer wraps).
+   • Section rhythm, container padding, card padding and stack gaps shrink by
+     roughly a quarter to a third, in proportion to the smaller type.
+   Headings, prices and buttons keep their own scale — only running text and
+   its surrounding spacing are compacted.
+   ========================================================================== */
+@media screen and (max-width: 767px) {
+    :root {
+        --type-body: .8125rem;   /* 13px */
+        --type-lead: .875rem;    /* 14px */
+        --section-space: 48px;   /* 64px -25% */
+    }
+
+    body {
+        line-height: 1.4;
+        letter-spacing: -0.01em;
+    }
+
+    .review-quote {
+        font-size: .8125rem;
+        line-height: 1.4;
+        letter-spacing: -0.01em;
+    }
+
+    .faq__a {
+        font-size: .8125rem;
+        line-height: 1.4;
+        margin-bottom: 10px;
+    }
+
+    /* Horizontal breathing room: give the text the full width it can take. */
+    .container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    /* Vertical rhythm around text, scaled with it (~25-33% less). */
+    .review-card {
+        padding: clamp(12px, 3.6vw, 16px);
+        gap: 9px;
+    }
+
+    .center-wrap { gap: 22px; }
+    .section-text { gap: 11px; }
+    .sticky-text-card { gap: 16px; }
+    .contact-wrap { gap: 16px; }
+    .await-card { gap: 11px; }
+}
+
+@media screen and (max-width: 479px) {
+    .container {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    /* Dense UI / metadata: the 12px floor, never smaller. */
+    .chip,
+    .review-source {
+        font-size: .75rem;
+    }
+
+    .reviews-rating {
+        font-size: .875rem;
+        letter-spacing: .1em;
+    }
+}
+
+/* ==========================================================================
+   Compact mobile type — the same scale applied to EVERY text block
+   --------------------------------------------------------------------------
+   The first pass covered the reviews, FAQ answers and the main intro blocks.
+   This completes the sweep: hero trust line, price labels, included list,
+   offer strip, location coordinates, rating line, FAQ questions, buttons and
+   the map labels all move onto the same compact scale.
+     • running copy ......... 13px / 1.4 / -0.01em
+     • metadata ............. 12px (never less)
+     • interactive labels ... 14-15px (tap comfort)
+   Spacing around these blocks shrinks ~25-30% in proportion.
+   Headings, the price value, the phone number and the script line keep their
+   own scale — they are emphasis, not running text.
+   ========================================================================== */
+@media screen and (max-width: 767px) {
+    /* --- Running copy: one size, one leading, one tracking --- */
+    p,
+    li,
+    dd,
+    dt,
+    blockquote,
+    figcaption,
+    label,
+    .small-box > p,
+    .section-text p,
+    .sticky-text-card > p,
+    .contact-wrap > p:first-of-type,
+    .await-card > p,
+    .included-list li span,
+    .hero-trust__proof,
+    .hero-trust__proof a {
+        font-size: .8125rem;   /* 13px */
+        line-height: 1.4;
+        letter-spacing: -0.01em;
+    }
+
+    /* --- Metadata floor: 12px --- */
+    .chip,
+    .review-source,
+    .price-line__label,
+    .price-line__unit,
+    .offer-strip__meta,
+    .location-coords,
+    .reviews-count,
+    .topar-marker__label,
+    .marker-label__short {
+        font-size: .75rem;     /* 12px */
+        line-height: 1.35;
+    }
+
+    /* --- Interactive labels stay comfortable to tap --- */
+    summary.faq__q {
+        font-size: .9375rem;   /* 15px */
+        line-height: 1.4;
+    }
+
+    .button {
+        font-size: .875rem;    /* 14px */
+    }
+
+    strong.hero-trust__score {
+        font-size: .9375rem;   /* 15px */
+    }
+
+    /* Rating line: compact text, display tracking kept, stars legible */
+    .reviews-rating {
+        font-size: .8125rem;
+        line-height: 1.4;
+    }
+
+    .reviews-rating__link {
+        font-size: .8125rem;
+    }
+
+    .reviews-rating__stars,
+    .hero-trust__stars {
+        font-size: .875rem;    /* 14px — glyphs, not running text */
+    }
+
+    /* --- Spacing scaled with the smaller type (~25-30% less) --- */
+    .included-list {
+        gap: 10px 20px;        /* was 14px 32px */
+    }
+
+    .included-list li {
+        gap: 9px;              /* was 12px */
+    }
+
+    .faq__item {
+        padding: 0 14px;       /* was 0 18px */
+    }
+
+    .faq__q {
+        gap: 12px;             /* was 16px */
+        padding: 12px 0;       /* was 16px 0 */
+    }
+
+    .faq__q::after {
+        font-size: 1.1rem;     /* was 1.25rem */
+    }
+}
+
+/* Specificity follow-up: a few components state their own size with higher
+   specificity than the generic rules above, so they're matched here exactly —
+   the lead paragraphs and the price labels inside the hero and the offer strip. */
+@media screen and (max-width: 767px) {
+    .small-box > p,
+    .section-text > p:first-of-type,
+    .sticky-text-card > p,
+    .contact-wrap > p:first-of-type {
+        font-size: .8125rem;   /* 13px */
+        line-height: 1.4;
+        letter-spacing: -0.01em;
+    }
+
+    .subhero .price-line .price-line__label,
+    .subhero .price-line .price-line__unit,
+    .price-line--on-dark .price-line__label,
+    .price-line--on-dark .price-line__unit,
+    .offer-strip__text .price-line .price-line__label,
+    .offer-strip__text .price-line .price-line__unit {
+        font-size: .75rem;     /* 12px */
+        line-height: 1.35;
+    }
+}
+
+/* Last of the running copy: the location block's address, parking note and
+   distance hints, plus the offer meta and the secondary contact link. */
+@media screen and (max-width: 767px) {
+    .location-address,
+    .location-note,
+    .location-note span,
+    .location-route,
+    .location-route span,
+    .location-hint,
+    .location-hint span {
+        font-size: .8125rem;   /* 13px */
+        line-height: 1.4;
+        letter-spacing: -0.01em;
+    }
+
+    .contact-offer__meta {
+        font-size: .75rem;     /* 12px */
+        line-height: 1.35;
+    }
+
+    /* Secondary actions stay in the interactive band, not the metadata one. */
+    .contact-secondary__link {
+        font-size: .875rem;    /* 14px */
+    }
+}
+
+/* ---------- Gallery: "more photos" link, mirroring the reviews link ---------- */
+/* Same visual grammar as .reviews-rating__link: underlined, primary colour,
+   quiet external mark — so the gallery header offers a next step just like the
+   reviews header does. */
+.gallery-more {
+    margin: 0;
+}
+
+/* Same visual grammar as .reviews-rating__link — and the same size, so the
+   1px underline carries the same weight as the reviews link's. */
+.gallery-more__link {
+    display: inline-flex;
+    align-items: center;
+    gap: .28em;
+    font-size: 1.1rem;
+    color: var(--color--primary);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    text-decoration-color: rgba(23, 79, 75, .35);
+    transition: text-decoration-color .2s ease;
+}
+
+.gallery-more__link:hover,
+.gallery-more__link:focus-visible {
+    text-decoration-color: currentColor;
+}
+
+@media screen and (max-width: 767px) {
+    /* The script line is display type, but 34px/150% is a phone-sized mistake:
+       two short lines became four tall ones. Sized and leaded for mobile. */
+    /* Phone number: the same compaction as every other mobile text block —
+       smaller type, tighter tracking — while keeping the 48px tap target. */
+    .contact-phone__number {
+        font-size: 1rem;          /* 16px, was 21.6px */
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+        gap: 8px;
+    }
+
+    .contact-phone__number .icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* Match the compact rating link used in the reviews header. */
+    .gallery-more__link {
+        font-size: .8125rem;      /* 13px */
+    }
+}
+
+@media screen and (max-width: 767px) {
+    /* The line is the whole band now, so it leads the eye — still compact. */
+}
+
+/* ==========================================================================
+   Sticky feature section — one shared rhythm
+   ========================================================================== */
+@media screen and (min-width: 768px) {
+    /* All three blocks share one vertical rhythm, centred in their panel, so a
+       block in view sits in the middle of the screen and scrolling 1 → 2 → 3
+       doesn't jump. */
+    .sticky-text,
+    .sticky-text._1,
+    .sticky-text._2,
+    .sticky-text._3 {
+        justify-content: center;
+        padding-top: 64px;
+    }
+
+    .feature-image {
+        align-items: center;
+        padding-top: 64px;
+    }
+
+    /* The last panel keeps the same 100svh track as the other two (base rules:
+       height 100svh, sticky top: 0). A shorter panel with a pin offset pulled
+       its card out of line with the sticky photo and dragged the offer strip
+       up underneath it. */
+
+    /* A slightly tighter card so it clears the fold on laptop heights too. */
+    .sticky-text-card {
+        gap: 18px;
+        padding: clamp(20px, 2.4vw, 34px);
+    }
+}
+
+@media screen and (max-width: 767px) {
+}
+
+/* Short desktop viewports (≤820px tall, e.g. 1366×768 laptops): the first
+   card still exceeded the fold by ~33px. Trim the band and the card a little
+   more so the landing holds both whole. */
+@media screen and (min-width: 768px) and (max-height: 900px) {
+    .sticky-text-card {
+        gap: 12px;
+        padding: 18px 22px;
+    }
+
+}
+
+/* ---------- Map: orientation markers (cities, fuel stations) ---------- */
+/* The resort dot stays the loudest thing on the map; towns/cities read as
+   quiet hollow dots with a soft pill label, fuel stations as small accent
+   squares. Labels sit beside the dot so they never stack on the resort label. */
+.city-marker {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid rgba(23, 79, 75, .55);
+    box-sizing: border-box;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .18);
+    position: relative;
+}
+
+.city-marker__label {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    pointer-events: none;
+    font-size: .75rem;
+    font-weight: 600;
+    color: rgba(23, 79, 75, .88);
+    background: rgba(252, 250, 248, .92);
+    border: 1px solid rgba(23, 79, 75, .14);
+    border-radius: 999px;
+    padding: 2px 7px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .10);
+}
+
+.fuel-marker {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: var(--color--accent);
+    border: 2px solid #fff;
+    box-sizing: border-box;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .22);
+    position: relative;
+}
+
+.fuel-marker__label {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    pointer-events: none;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: var(--color--accent);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, .9);
+}
+
+/* ==========================================================================
+   Address block + route hint (location section) and the 3+1 offer badge
+   ========================================================================== */
+/* <address> is italic by default — here it is a clean two-line postal address */
+.location-address {
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-weight: 600;
+}
+
+.location-address__line {
+    display: block;
+}
+
+/* How to get there: same quiet icon-plus-text shape as the parking note, but
+   without the pill, so the address stays the louder element. */
+.location-route {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 0;
+    max-width: 46ch;
+    color: rgba(23, 79, 75, .78);
+}
+
+.location-route .location-note__icon {
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+}
+
+/* «3+1» — the accent pill that carries the special offer through the page */
+.offer-badge {
+    display: inline-flex;
+    align-items: center;
+    align-self: center;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--color--accent);
+    color: #fff;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    white-space: nowrap;
+    line-height: 1.4;
 }

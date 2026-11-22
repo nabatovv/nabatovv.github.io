@@ -610,7 +610,59 @@
     var el = document.getElementById("maplibre-map");
     if (!el || typeof maplibregl === "undefined") return;
 
-    var bounds = [[72.77361, 49.51278], [72.830423, 49.5172874]];
+    var resort = [72.77361, 49.51278];
+    var topar = [72.8304230, 49.5172874];
+
+    /* Default framing stays exactly as before: the resort and its town. */
+    var bounds = [resort, topar];
+
+    /* Every Kazakh city — revealed only when the map is zoomed out, so the
+       default view still shows just «Достык» and Топар. */
+    var cities = [
+      ["Астана", 71.4491, 51.1694],
+      ["Алматы", 76.9286, 43.2380],
+      ["Шымкент", 69.5901, 42.3417],
+      ["Караганда", 73.1094, 49.8047],
+      ["Актобе", 57.1667, 50.2833],
+      ["Тараз", 71.3667, 42.9000],
+      ["Павлодар", 76.9500, 52.3000],
+      ["Усть-Каменогорск", 82.6103, 49.9483],
+      ["Семей", 80.2275, 50.4111],
+      ["Атырау", 51.9167, 47.1167],
+      ["Костанай", 63.6246, 53.2144],
+      ["Кызылорда", 65.5092, 44.8479],
+      ["Уральск", 51.3667, 51.2333],
+      ["Петропавловск", 69.1500, 54.8833],
+      ["Актау", 51.1667, 43.6500],
+      ["Темиртау", 72.9647, 50.0547],
+      ["Туркестан", 68.2519, 43.2973],
+      ["Кокшетау", 69.4000, 53.2833],
+      ["Талдыкорган", 78.3739, 45.0156],
+      ["Экибастуз", 75.3225, 51.7233],
+      ["Жезказган", 67.7667, 47.7833],
+      ["Балхаш", 74.9950, 46.8433],
+      ["Конаев", 77.0633, 43.8519],
+      ["Щучинск", 70.2000, 52.9333],
+      ["Рудный", 63.1167, 52.9667],
+      ["Степногорск", 71.5500, 52.3500],
+      ["Шахтинск", 72.5889, 49.7183],
+      ["Абай", 72.8667, 49.6333],
+      ["Аксу", 76.9333, 52.4667],
+      ["Кентау", 68.5167, 43.5167],
+      ["Жанаозен", 52.8000, 43.3500],
+      ["Талгар", 77.2300, 43.3050]
+    ];
+    /* Clouds of labels would swamp the local view; cities fade in only at or
+       below this zoom (≈ country scale), fuel stations only above it. */
+    var CITY_ZOOM = 9.5;
+    var FUEL_ZOOM = 13;
+
+    /* PLACEHOLDER: fuel stations along the Топар road. Positions are
+       approximate — replace with the real ones when known. */
+    var fuel = [
+      { coords: [72.7895, 49.5215] },
+      { coords: [72.8072, 49.5148] }
+    ];
     var fitOptions = { padding: { top: 48, bottom: 48, left: 48, right: 96 }, maxZoom: 14 };
 
     var map = new maplibregl.Map({
@@ -621,6 +673,25 @@
       attributionControl: false
     });
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
+
+    /* City markers are always in the DOM but only shown at country zoom, so the
+       default view remains just «Достык» + Топар. Fuel stations sit within a
+       couple of kilometres of the resort, so their labels collide with its
+       label at the default zoom — they appear once the reader zooms in. */
+    var cityMarkerEls = [];
+    var fuelMarkerEls = [];
+
+    function updateCityMarkers() {
+      var show = map.getZoom() <= CITY_ZOOM;
+      cityMarkerEls.forEach(function (el) {
+        el.style.display = show ? "" : "none";
+      });
+      var showFuel = map.getZoom() >= FUEL_ZOOM;
+      fuelMarkerEls.forEach(function (el) {
+        el.style.display = showFuel ? "" : "none";
+      });
+    }
+    map.on("zoom", updateCityMarkers);
 
     function refit() {
       var cam = map.cameraForBounds(bounds, fitOptions);
@@ -677,7 +748,7 @@
         });
       });
 
-      /* Places shown on the map: Dostyk resort + the town of Topar */
+      /* Resort marker (the anchor of the map) */
       var markerEl = document.createElement("div");
       markerEl.className = "dostyk-marker";
       markerEl.innerHTML =
@@ -686,15 +757,40 @@
         '<span class="marker-label__short">Достык</span>' +
         "</span>";
       new maplibregl.Marker({ element: markerEl })
-        .setLngLat([72.77361, 49.51278])
+        .setLngLat(resort)
         .addTo(map);
 
-      var cityEl = document.createElement("div");
-      cityEl.className = "topar-marker";
-      cityEl.innerHTML = '<span class="topar-marker__label">Топар</span>';
-      new maplibregl.Marker({ element: cityEl })
-        .setLngLat([72.8304230, 49.5172874])
+      /* Топар — always visible next to the resort */
+      var toparEl = document.createElement("div");
+      toparEl.className = "city-marker";
+      toparEl.innerHTML = '<span class="city-marker__label">Топар</span>';
+      new maplibregl.Marker({ element: toparEl })
+        .setLngLat(topar)
         .addTo(map);
+
+      /* Cities: built now, revealed only when the reader zooms out */
+      cities.forEach(function (c) {
+        var el = document.createElement("div");
+        el.className = "city-marker";
+        el.innerHTML = '<span class="city-marker__label">' + c[0] + "</span>";
+        new maplibregl.Marker({ element: el })
+          .setLngLat([c[1], c[2]])
+          .addTo(map);
+        cityMarkerEls.push(el);
+      });
+      updateCityMarkers();
+
+      /* Fuel stations along the road */
+      fuel.forEach(function (f) {
+        var el = document.createElement("div");
+        el.className = "fuel-marker";
+        el.innerHTML = '<span class="fuel-marker__label">АЗС</span>';
+        new maplibregl.Marker({ element: el })
+          .setLngLat(f.coords)
+          .addTo(map);
+        fuelMarkerEls.push(el);
+      });
+      updateCityMarkers();
     });
   }
 

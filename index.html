@@ -6,6 +6,10 @@
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
+    <!-- Opt into the OS text scale (Modern Web Guidance: respect-os-text-scale).
+         All type is rem-based with no root font-size override, so the layout
+         scales with the user's accessibility setting. -->
+    <meta name="text-scale" content="scale" />
     <meta name="theme-color" content="#174f4b" />
     <meta name="color-scheme" content="light" />
     <!-- Event snippet for Contact conversion page
@@ -128,7 +132,8 @@
           "@type": "PostalAddress",
           "addressCountry": "KZ",
           "addressRegion": "Карагандинская область",
-          "addressLocality": "Топар"
+          "addressLocality": "Топар",
+          "streetAddress": "Зона Отдыха, 40"
         },
         "geo": {
           "@type": "GeoCoordinates",
@@ -252,7 +257,7 @@
     />
   </head>
   <body>
-    <a class="skip-link" href="#hi">Перейти к содержанию</a>
+    <a class="skip-link" href="#service">Перейти к содержанию</a>
     <div class="scroll-progress" aria-hidden="true"></div>
     <div class="grain" aria-hidden="true"></div>
     <svg
@@ -363,7 +368,6 @@
                 class="nav-menu w-nav-menu"
               >
                 <div class="nav-menu-list">
-                  <a href="#hi" class="nav-link w-nav-link">Достык</a>
                   <a href="#service" class="nav-link w-nav-link"
                     >Отдых и развлечения</a
                   >
@@ -371,6 +375,7 @@
                     >Галерея</a
                   >
                   <a href="#reviews" class="nav-link w-nav-link">Отзывы</a>
+                  <a href="#faq" class="nav-link w-nav-link">Ответы</a>
                 </div>
                 <a
                   data-wf--button--variant="white-small"
@@ -398,7 +403,7 @@
                       fill="currentColor"
                       stroke="none"
                     /></svg
-                  ><span>Наш инстаграм</span></a
+                  ><span>Инстаграм</span></a
                 >
               </nav>
               <label for="nav-toggle" class="menu-button w-nav-button">
@@ -434,6 +439,7 @@
                 <span class="price-line__label">Проживание</span>
                 <span class="price-line__value">от 6&nbsp;000&nbsp;₸</span>
                 <span class="price-line__unit">сутки/чел.</span>
+                <span class="offer-badge">Акция 3+1</span>
               </p>
               <div class="included included--on-dark">
                 <ul class="included-list">
@@ -463,16 +469,17 @@
                     <span>Мангал</span><!-- TODO: подтвердить, что входит в цену -->
                   </li>
                   <li>
-                    <!-- water access -->
+                    <!-- banya: steam rising over a bench -->
                     <svg class="included-icon" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="1.7"
                          stroke-linecap="round" stroke-linejoin="round"
                          aria-hidden="true" focusable="false">
-                      <path d="M2 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0" />
-                      <path d="M2 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0" />
-                      <path d="M2 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0" />
+                      <path d="M8 16c-1.6-2.2 1.6-3.4 0-5.6" />
+                      <path d="M12 16c-1.6-2.2 1.6-3.4 0-5.6" />
+                      <path d="M16 16c-1.6-2.2 1.6-3.4 0-5.6" />
+                      <path d="M4 19.5h16" />
                     </svg>
-                    <span>Доступ к воде</span><!-- TODO: подтвердить, что входит в цену -->
+                    <span>Баня</span>
                   </li>
                   <li>
                     <!-- parking -->
@@ -523,12 +530,12 @@
               href="https://wa.me/77782675901?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%B1%D1%80%D0%BE%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%20%D0%BE%D1%82%D0%B4%D1%8B%D1%85%20%D0%B2%20%C2%AB%D0%94%D0%BE%D1%81%D1%82%D1%8B%D0%BA%C2%BB.%20%D0%94%D0%B0%D1%82%D0%B0%3A%20%E2%80%A6%20%D0%93%D0%BE%D1%81%D1%82%D0%B5%D0%B9%3A%20%E2%80%A6"
               target="_blank"
               class="button button--lg w-variant-3d9d3eee-8ac1-c6a8-fc62-ea95ebc37d24 w-button hero-cta"
-              data-cta="hero">Забронировать в WhatsApp</a
+              data-cta="hero">Забронировать 3+1 в вотсап</a
             >
           </div>
           <a
             class="scroll-hint"
-            href="#hi"
+            href="#service"
             aria-label="Прокрутите вниз — дальше ещё много интересного"
           >
             <span class="scroll-hint__icon" aria-hidden="true">
@@ -553,64 +560,6 @@
             role="img"
             aria-label="Живописный вид зоны отдыха «Достык»"
           ></div>
-        </section>
-        <section id="hi" class="section" tabindex="-1">
-          <div class="w-layout-blockcontainer container w-container">
-            <div class="center-wrap">
-              <img
-                class="card-leaf"
-                src="assets/left-leaf.avif"
-                width="400"
-                height="400"
-                alt=""
-                aria-hidden="true"
-                loading="lazy"
-                decoding="async"
-              />
-              <div class="section-header center-align">
-                <img
-                  src="assets/logo.svg"
-                  loading="lazy"
-                  alt="Достык"
-                  class="logo"
-                />
-                <div class="chip">Добро пожаловать в «Достык»</div>
-              </div>
-              <div class="small-box">
-                <h2>Ваше место для отдыха и перезагрузки</h2>
-                <p>
-                  «Достык» — место, чтобы замедлиться и зарядиться: вода, песок, беседки и
-                  свежий воздух. Оставьте суету в городе и наберитесь сил и позитивных впечатлений.
-                </p>
-              </div>
-              <div class="script">Будем рады видеть вас в «Достыке»!</div>
-            </div>
-          </div>
-          <div class="image-reveal image-bridge-left">
-            <div
-              data-w-id="9d2c2e42-9374-c7ae-fb43-51668c038bca"
-              class="pebble-frame"
-            >
-              <img
-                class="resort-pebble-img"
-                src="assets/image-left-resized_saturated.avif"
-                loading="lazy"
-                decoding="async"
-                alt="Открытые беседки и гамаки."
-              />
-            </div>
-          </div>
-          <div class="image-reveal image-bridge-right">
-            <div class="pebble-frame">
-              <img
-                class="resort-pebble-img"
-                src="assets/twin-img-small_saturated.avif"
-                loading="lazy"
-                decoding="async"
-                alt="Спортивный зал на открытом воздухе и деревянная баня"
-              />
-            </div>
-          </div>
         </section>
         <section id="service" class="section">
           <div class="sticky-wrap">
@@ -680,7 +629,7 @@
                   decoding="async"
                 />
                 <div class="section-header">
-                  <div class="chip">Домики и номера</div>
+                  <div class="chip">Бунгало, коттедж, номера</div>
                   <h2>Комфортный отдых на природе</h2>
                 </div>
                 <div class="section-text">
@@ -994,6 +943,7 @@
                 <span class="price-line__label">Проживание</span>
                 <span class="price-line__value">от 6&nbsp;000&nbsp;₸</span>
                 <span class="price-line__unit">сутки/чел.</span>
+                <span class="offer-badge">Акция 3+1</span>
               </span>
               <span class="offer-strip__meta"
                 >4,9 из 5 · <span class="reviews-count">177</span> отзывов на
@@ -1005,7 +955,7 @@
               href="https://wa.me/77782675901?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%B1%D1%80%D0%BE%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%20%D0%BE%D1%82%D0%B4%D1%8B%D1%85%20%D0%B2%20%C2%AB%D0%94%D0%BE%D1%81%D1%82%D1%8B%D0%BA%C2%BB.%20%D0%94%D0%B0%D1%82%D0%B0%3A%20%E2%80%A6%20%D0%93%D0%BE%D1%81%D1%82%D0%B5%D0%B9%3A%20%E2%80%A6"
               target="_blank"
               rel="noopener"
-               data-cta="strip">Забронировать</a
+               data-cta="strip">Забронировать 3+1</a
             >
           </div>
         </div>
@@ -1015,6 +965,30 @@
               <div class="section-header center-align">
                 <div class="chip">Галерея</div>
                 <h2>Создайте приятные воспоминания</h2>
+                <p class="gallery-more">
+                  <a
+                    class="gallery-more__link"
+                    href="https://www.instagram.com/dostyk_resort_topar"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Больше фото в инстаграме — откроется в новой вкладке"
+                    >Больше фото в инстаграме<svg
+                      class="link-ext"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.9"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <path d="M4 6.5A1.5 1.5 0 0 1 5.5 5H10" />
+                      <path d="M19 14v4.5A1.5 1.5 0 0 1 17.5 20h-12A1.5 1.5 0 0 1 4 18.5v-12" />
+                      <path d="M14 4h6v6" />
+                      <path d="M20 4 11.5 12.5" /></svg
+                  ></a>
+                </p>
               </div>
             </div>
           </div>
@@ -1091,6 +1065,20 @@
                   height="200"
                   alt="Аллея на территории отдыха"
                   class="image-effect"
+                /><img
+                  src="assets/image-left-resized_saturated.avif"
+                  loading="lazy"
+                  width="300"
+                  height="200"
+                  alt="Открытые беседки и гамаки"
+                  class="image-effect"
+                /><img
+                  src="assets/twin-img-small_saturated.avif"
+                  loading="lazy"
+                  width="300"
+                  height="200"
+                  alt="Спортивный зал на открытом воздухе и деревянная баня"
+                  class="image-effect"
                 />
               </div>
               <div class="marquee-item">
@@ -1164,6 +1152,20 @@
                   height="200"
                   alt="Аллея на территории отдыха"
                   class="image-effect"
+                /><img
+                  src="assets/image-left-resized_saturated.avif"
+                  loading="lazy"
+                  width="300"
+                  height="200"
+                  alt="Открытые беседки и гамаки"
+                  class="image-effect"
+                /><img
+                  src="assets/twin-img-small_saturated.avif"
+                  loading="lazy"
+                  width="300"
+                  height="200"
+                  alt="Спортивный зал на открытом воздухе и деревянная баня"
+                  class="image-effect"
                 />
               </div>
             </div>
@@ -1174,7 +1176,7 @@
             <div class="center-wrap">
               <div class="section-header center-align">
                 <div class="chip">Отзывы гостей</div>
-                <h2>Нам доверяют отдых</h2>
+                <h2>Нам доверяют</h2>
                 <p class="reviews-rating">
                   <span class="reviews-rating__stars" aria-hidden="true"
                     >★★★★★</span
@@ -1324,7 +1326,7 @@
                   target="_blank"
                   rel="noopener"
                   data-cta="reviews"
-                  >Забронировать</a
+                  >Забронировать 3+1</a
                 >
               </div>
             </div>
@@ -1369,8 +1371,7 @@
                 <details class="faq__item">
                   <summary class="faq__q">Можно ли с музыкой?</summary>
                   <p class="faq__a">
-                    Громкость и время музыки уточняйте при бронировании: зона
-                    отдыха находится рядом с жильём, поэтому правила зависят от
+                    Громкость и время музыки уточняйте при бронировании — правила зависят от
                     компании и даты.<!-- TODO: указать правила по музыке и тишине -->
                   </p>
                 </details>
@@ -1381,10 +1382,9 @@
                   </p>
                 </details>
                 <details class="faq__item">
-                  <summary class="faq__q">Во сколько заезд и выезд?</summary>
+                  <summary class="faq__q">Во сколько заезд?</summary>
                   <p class="faq__a">
-                    Время начала и окончания отдыха уточняйте при бронировании —
-                    оно зависит от даты и загрузки.<!-- TODO: указать время заезда и выезда -->
+                    Заезд — 24/7: приехать можно в любое время суток.
                   </p>
                 </details>
                 <details class="faq__item">
@@ -1516,7 +1516,7 @@
                 target="_blank"
                 rel="noopener"
                 class="button button--lg w-button"
-                data-cta="contact">Написать в WhatsApp</a
+                data-cta="contact">Написать в вотсап</a
               >
               </div>
             </div>
@@ -1530,9 +1530,26 @@
                   <div class="chip">Как добраться</div>
                   <h2>Мы в Топаре</h2>
                 </div>
-                <p class="location-address">
-                  Зона отдыха «Достык» — первая на выезде из Топара,
-                  Карагандинская область.<!-- TODO: указать точный адрес или ориентир (улица, км трассы) -->
+                <address class="location-address">
+                  <span class="location-address__line">Зона Отдыха, 40</span>
+                  <span class="location-address__line">Абайский район, Карагандинская область</span>
+                </address>
+                <p class="location-route">
+                  <svg
+                    class="location-note__icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path d="M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11Z" />
+                    <circle cx="12" cy="10" r="2.6" />
+                  </svg>
+                  <span>Правый берег водохранилища, 1-я зона — на выезде из Топара.</span>
                 </p>
                 <p class="location-note">
                   <svg
@@ -1571,7 +1588,7 @@
                     target="_blank"
                     rel="noopener"
                     data-cta="whatsapp-route"
-                    >Написать в WhatsApp</a
+                    >Написать в вотсап</a
                   >
                 </div>
               </div>
@@ -1604,8 +1621,7 @@
             <div class="footer-right">
               <div class="footer-menu" style="display: none">
                 <div class="footer-title">Меню</div>
-                <a href="#hi" class="footer-link">Достык</a
-                ><a href="#service" class="footer-link">Отдых и развлечения</a
+                <a href="#service" class="footer-link">Отдых и развлечения</a
                 ><a href="#gallery" class="footer-link">Галерея</a>
                 <a href="#faq" class="footer-link">Вопросы</a>
               </div>
@@ -1698,7 +1714,7 @@
       class="mobile-cta"
       href="https://wa.me/77782675901?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%B1%D1%80%D0%BE%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%20%D0%BE%D1%82%D0%B4%D1%8B%D1%85%20%D0%B2%20%C2%AB%D0%94%D0%BE%D1%81%D1%82%D1%8B%D0%BA%C2%BB.%20%D0%94%D0%B0%D1%82%D0%B0%3A%20%E2%80%A6%20%D0%93%D0%BE%D1%81%D1%82%D0%B5%D0%B9%3A%20%E2%80%A6"
       target="_blank"
-       data-cta="mobile">Забронировать</a
+       data-cta="mobile">Забронировать 3+1</a
     >
     <script
       src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"
