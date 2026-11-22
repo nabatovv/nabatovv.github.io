@@ -4527,6 +4527,9 @@ summary:focus-visible,
     justify-content: center;
     min-width: 2.2em;
     padding: 1px 6px;
+    /* Breathing room from the words around it: the pill's own tint made the
+       default word-space look like no space at all. */
+    margin-inline: .12em;
     border-radius: 999px;
     /* Deep brand teal, not the orange accent: on a number an orange/red tint
        reads as a warning or a price, which is the wrong signal for social proof. */
@@ -5656,6 +5659,12 @@ body.lightbox-open {
     justify-content: center;
     gap: 12px 16px;
     margin-top: clamp(24px, 3vw, 36px);
+}
+
+/* The "Все отзывы" link is an inline-flex, so the spaces around the count pill
+   collapse into nothing there — a real gap has to be declared. */
+.reviews-actions .contact-secondary__link {
+    gap: .28em;
 }
 
 .reviews-rating span {
