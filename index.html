@@ -1140,16 +1140,17 @@
               <div class="section-header center-align">
                 <div class="chip">Отзывы гостей</div>
                 <h2>Нам доверяют отдых</h2>
-                <p
-                  class="reviews-rating"
-                  aria-label="Средняя оценка 4,9 из 5 по 177 отзывам на 2ГИС"
-                >
+                <p class="reviews-rating">
                   <span class="reviews-rating__stars" aria-hidden="true"
                     >★★★★★</span
                   ><span aria-hidden="true">4,9 из 5</span
-                  ><span class="reviews-rating__count" aria-hidden="true"
-                    >· <span class="reviews-count">177</span> отзывов на
-                    2ГИС</span
+                  ><span class="reviews-rating__sep" aria-hidden="true">·</span
+                  ><a
+                    class="reviews-rating__link"
+                    href="https://2gis.kz/firm/70000001101591424/tab/reviews"
+                    target="_blank"
+                    rel="noopener"
+                    ><span class="reviews-count">177</span> отзывов на 2ГИС</a
                   >
                 </p>
               </div>
@@ -1274,13 +1275,6 @@
                   rel="noopener"
                   data-cta="reviews"
                   >Забронировать</a
-                >
-                <a
-                  class="contact-secondary__link"
-                  href="https://2gis.kz/firm/70000001101591424/tab/reviews"
-                  target="_blank"
-                  rel="noopener"
-                  >Смотреть <span class="reviews-count">177</span> отзывов</a
                 >
               </div>
             </div>
@@ -1464,7 +1458,22 @@
                   Карагандинская область.<!-- TODO: указать точный адрес или ориентир (улица, км трассы) -->
                 </p>
                 <p class="location-note">
-                  Парковка входит в отдых.<!-- TODO: подтвердить количество мест -->
+                  <svg
+                    class="location-note__icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
+                    <path d="M8.7 16.75V7.25h3.4a3.2 3.2 0 0 1 0 6.4H8.7" />
+                  </svg>
+                  <span>Парковка входит в отдых.</span
+                  ><!-- TODO: подтвердить количество мест -->
                 </p>
                 <div class="location-hint">
                   <span>≈ 60 км от Караганды</span>

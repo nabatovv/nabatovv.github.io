@@ -4055,8 +4055,22 @@ body {
 }
 
 .location-note {
-    font-size: .95rem;
-    opacity: .78;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(23, 79, 75, .10);
+    color: var(--color--primary);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.location-note__icon {
+    flex: none;
+    width: 22px;
+    height: 22px;
 }
 
 .location-coords {
@@ -4554,6 +4568,30 @@ summary:focus-visible,
 .reviews-rating .reviews-count {
     margin-left: 0;
     color: var(--color--primary);
+}
+
+/* The count itself is the way into the 2GIS reviews — it must read as a link
+   without competing with the (already underlined) review cards. */
+.reviews-rating__sep {
+    margin-left: .5em;
+}
+
+.reviews-rating__link {
+    display: inline-flex;
+    align-items: center;
+    gap: .28em;
+    margin-left: .35em;
+    color: var(--color--primary);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    text-decoration-color: rgba(23, 79, 75, .35);
+    transition: text-decoration-color .2s ease;
+}
+
+.reviews-rating__link:hover,
+.reviews-rating__link:focus-visible {
+    text-decoration-color: currentColor;
 }
 
 /* Hero actions: one primary booking action, one quiet path into the details. */
@@ -5661,11 +5699,6 @@ body.lightbox-open {
     margin-top: clamp(24px, 3vw, 36px);
 }
 
-/* The "Все отзывы" link is an inline-flex, so the spaces around the count pill
-   collapse into nothing there — a real gap has to be declared. */
-.reviews-actions .contact-secondary__link {
-    gap: .28em;
-}
 
 .reviews-rating span {
     letter-spacing: normal;
